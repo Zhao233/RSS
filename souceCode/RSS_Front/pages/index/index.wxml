@@ -1,0 +1,9 @@
+<!--index.wxml-->
+  <!--分类栏-->
+    <scroll-view scroll-y="true" class="scroll_left">
+      <block wx:for="{{classfiyList}}">
+        <view class="nav_left_items">
+          <text class="item_text" bindtap="getList" id="{{item.idenity_name}}">{{item.name}}</text>
+        </view>
+      </block>
+    </scroll-view>
