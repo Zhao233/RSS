@@ -28,33 +28,51 @@ Page({
     recommend_circly:[//轮播展示的推荐菜的列表
       { 
         pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name : "test_1"},
-      {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_2"
+        name: "test_1",
+        price: 20
       },
       {
         pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_3"
+        name: "test_2",
+        price: 20
+      },
+      {
+        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        name: "test_3",
+        price: 20
       }
     ],
 
     recommend_list: [
       {
-        pic_url: url1,
-        name: "test_1"
+        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        name: "test_1",
+        price: 20
       },
       {
-        pic_url: url1,
-        name: "test_2"
+        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        name: "test_2",
+        price: 20
       },
       {
-        pic_url: url1,
-        name: "test_3"
+        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        name: "test_3",
+        price: 20
       },
       {
-        pic_url: url1,
-        name: "test_4"
+        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        name: "test_4",
+        price: 20
+      },
+      {
+        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        name: "test_5",
+        price: 20
+      },
+      {
+        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        name: "test_6",
+        price: 20
       }
     ]
   },

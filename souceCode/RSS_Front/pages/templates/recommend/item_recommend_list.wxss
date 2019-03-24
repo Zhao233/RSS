@@ -1,0 +1,30 @@
+.item{
+  width: 100%;
+  height: 100%;
+}
+
+.box{
+  height: 230rpx;
+  width: 250rpx;
+  display: flex;
+  flex-direction: column;
+
+  padding-top: 20rpx;
+
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+  margin-bottom: 30rpx;
+}
+
+.box_info{
+  height: 20rpx;
+  width: 100%;
+
+  display:flex;
+  justify-content: space-between;
+}
+
+.add_button{
+  height: 30rpx;
+  width: 30rpx;
+}
