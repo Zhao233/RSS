@@ -14,7 +14,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.0.4",
 	"appid": "wxd203f27f77d9902b",
-	"projectname": "rss_front",
+	"projectname": "RSS_Front",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

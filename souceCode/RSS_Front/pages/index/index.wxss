@@ -4,6 +4,7 @@
   width: 25%;
 }
 
+/*左侧一级菜单中的子项*/
 .nav_left_items{  
   /*每个高30px*/  
   height: 80px;  
@@ -17,6 +18,11 @@
   font-size: 18px;  
   /*水平居中*/
   text-align: center;
+}
+
+/*一级菜单，选中状态*/
+.item_choosed{
+  background-color: #dedede;
 }
 
 .container_template{
@@ -43,4 +49,24 @@
 
 .item_text{
   align-content: center;
+}
+
+/*=======推荐页面=======*/
+.view_right {
+  height: 100%;
+  width: 75%;
+  float: right;
+
+  margin-left: 10px
+}
+
+.swiper {
+  height: 400rpx;
+  width: 100%;
+
+  padding-bottom: 20rpx;
+}
+
+.hide {
+  display: none
 }

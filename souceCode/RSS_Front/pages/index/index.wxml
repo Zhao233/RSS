@@ -2,8 +2,30 @@
   <!--分类栏-->
     <scroll-view scroll-y="true" class="scroll_left">
       <block wx:for="{{classfiyList}}">
-        <view class="nav_left_items">
+        <view data-num="{{index}}" bindtap='chooseMenuItem' class="nav_left_items {{choose_status==index ? 'item_choosed' : ' '}}" bindtap='chooseMenuItem'>
           <text class="item_text" bindtap="getList" id="{{item.idenity_name}}">{{item.name}}</text>
         </view>
       </block>
     </scroll-view>
+
+
+    <!--首页(推荐)时的展示界面-->
+    <view class="view_right {{choose_status == 0 ? '': 'hide'}}">
+      <!--推荐页面中的滚动展示栏-->
+      <swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000">    
+        <block wx:for="{{recommend_circly}}" wx:for-index="index">    
+          <swiper-item>    
+            <image src="{{item.pic_url}}" class="slide-image" mode="aspectFill"/>    
+          </swiper-item>    
+        </block>  
+      </swiper>
+
+      <!---->
+
+    </view>
+
+    
+    <!--点击下面任意一一级菜单时的展示界面-->
+    <view id='menu_view'>
+
+    </view>
