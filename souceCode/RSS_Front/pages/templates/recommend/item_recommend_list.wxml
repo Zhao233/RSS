@@ -1,10 +1,10 @@
 <template name="item">
-  <view class="box">
-    <image src="{{item.pic_url}}" class="item" mode="aspectFill"></image>
+  <view class="box_recommend">
+    <image src="{{item.pic_url}}" class="item_recommend" mode="aspectFill"></image>
 
      <text>{{item.name}}</text>
     
-    <view class="box_info">
+    <view class="box_info_recommend">
       <text>{{item.price}}￥/每份</text>
     </view>  
   </view>

@@ -11,9 +11,10 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
 
+    /*判断点击的侧栏目录是否为推荐或者其他一级菜单*/
     choose_status : 0,
 
-    classfiyList: [
+    classfiyList: [//一级菜单
       { id: 1, name: "推荐", idenity_name: "recommend" },
       { id: 2, name: "精品凉菜", idenity_name: "food_cool" },
       { id: 3, name: "下酒菜", idenity_name: "food_auxiliary" },
@@ -43,7 +44,7 @@ Page({
       }
     ],
 
-    recommend_list: [
+    recommend_list: [//列表视图的推荐菜列表
       {
         pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
         name: "test_1",
@@ -74,14 +75,54 @@ Page({
         name: "test_6",
         price: 20
       }
+    ],
+
+    food_list : [
+      {
+        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        name: "test_1",
+        price: 20
+      },
+
+      {
+        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        name: "test_1",
+        price: 20
+      },
+
+      {
+        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        name: "test_1",
+        price: 20
+      },
+
+      {
+        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        name: "test_1",
+        price: 20
+      },
+
+      {
+        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        name: "test_1",
+        price: 20
+      },
+
+      {
+        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        name: "test_1",
+        price: 20
+      },
     ]
   },
+
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
+
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({

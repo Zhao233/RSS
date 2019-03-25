@@ -1,0 +1,11 @@
+<template name="item-menu">
+  <view class="box_menu">
+    <image src="{{item.pic_url}}" class="picture_menu" mode="aspectFill"></image>
+
+     <text>{{item.name}}</text>
+    
+    <view class="box_info_menu">
+      <text>{{item.price}}￥/每份</text>
+    </view>  
+  </view>
+</template>

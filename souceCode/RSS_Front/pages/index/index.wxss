@@ -1,9 +1,15 @@
 @import "../templates/recommend/item_recommend_list.wxss";
+@import "../templates/menu/item_menu.wxss";
+
 
 /* pages/classification.wxss */
 .nav_left{  
   height: 100%;
   width: 25%;
+}
+
+.picture_index{
+  width: 100%;
 }
 
 /*左侧一级菜单中的子项*/
@@ -29,8 +35,8 @@
 
 .container_template{
   width: 95%;
-  height: 500rpx;
-
+  padding-left: 20rpx;
+  padding-right: 50rpx;
   padding-bottom: 20rpx;
   padding-top: 20rpx;
 }
@@ -40,12 +46,11 @@
   width: 25%;
   float: left;
   position: fixed;
-  scrollbar
+  
 }
 
 .scroll_right{
   height: 100%;
-  width: 75%;
   float: right;
 }
 
@@ -59,7 +64,8 @@
   width: 75%;
   float: right;
 
-  margin-left: 10px
+  padding-left: 10rpx;
+  padding-right: 10rpx;
 }
 
 .swiper {
@@ -67,6 +73,9 @@
   width: 100%;
 
   padding-bottom: 20rpx;
+  
+  margin-left : 20rpx;
+  margin-right: 20rpx;
 }
 
 .hide {
@@ -82,4 +91,12 @@
 
   padding-top: 20rpx;
   flex-wrap: wrap;
+
+  margin-left : 10rpx;
+  margin-right: 10rpx;
+}
+
+.header{
+  margin-left : 20rpx;
+  margin-right: 20rpx;
 }
