@@ -26,13 +26,13 @@
       {
         "selectedIconPath": "images/tabBar/quick_service_fill.png",
         "iconPath": "images/tabBar/quick_service.png",
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/quickService/quickService",
         "text": "快捷服务"  
       },
       {
         "selectedIconPath": "images/tabBar/cart_fill.png",
         "iconPath": "images/tabBar/cart.png",
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/cart/cart",
         "text": "购物车"  
       },
       {
