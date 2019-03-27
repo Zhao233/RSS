@@ -1,0 +1,29 @@
+<!--index.wxml-->
+<view class="container" style='padding: 0;'>
+  <scroll-view style='height:100%;'>
+      <block wx:for="{{food_cart}}">
+        <view style='margin:10rpx'>
+
+          <van-card
+          num="{{item.num}}"
+          price="{{item.price}}"
+          desc="{{item.desc}}"
+          title="{{item.name}}"
+          thumb="{{ item.pic_url }}"
+          >
+            <view slot="footer" style='padding:10rpx'>
+              <van-button size="mini" round="true" style='margin-right:5rpx;'>-</van-button>
+              <van-button size="mini" round="true" style='margin-left:5rpx;'>+</van-button>
+            </view>
+
+          </van-card>
+        </view>
+      </block>
+  </scroll-view>
+
+  <van-submit-bar
+    price="{{ 3050 }}"
+    button-text="提交订单"
+    bind:submit="onSubmit"
+  />
+</view>

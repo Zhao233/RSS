@@ -2,9 +2,13 @@
   "pages":[
     "pages/index/index",
     "pages/cart/cart",
+      "pages/cart/complaints/complaints",
     "pages/mine/mine",
-    "pages/quickService/quickService",
-    "pages/logs/logs"
+      "pages/mine/consumption_statistics/consumption_statistics",
+      "pages/mine/menu_management/menu_management",
+      "pages/mine/score/score",
+      "pages/mine/order_record/order_record",
+    "pages/quickService/quickService"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -38,7 +42,7 @@
       {
         "selectedIconPath": "images/tabBar/people_fill.png",
         "iconPath": "images/tabBar/people.png",
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/mine/mine",
         "text": "我的"
       }
     ]  
