@@ -1,0 +1,15 @@
+<view class='container_score'>
+  <!-- 显示头像和积分区域 -->
+  <view>
+    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+
+    <view class='container_score'>
+      <text>积分： {{score}}</text>  
+    </view>
+  </view>
+
+  <!-- 显示可使用的兑换卷 -->
+  <view>
+
+  </view>
+</view>

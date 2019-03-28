@@ -2,3 +2,7 @@
   margin-bottom: 50rpx;
   width: 100%;
 }
+
+.container_score{
+  height:100;
+}
