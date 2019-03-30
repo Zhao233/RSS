@@ -1,9 +1,9 @@
-package com.example.demo.repository.user;
+package com.example.demo.repository.info;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface Customer extends JpaRepository<Customer,Long> {
+public interface PreferenceRecordDao extends JpaRepository<PreferenceRecordDao,Long> {
 }
 
