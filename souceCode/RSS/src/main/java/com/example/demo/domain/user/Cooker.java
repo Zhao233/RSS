@@ -25,8 +25,8 @@ public class Cooker {
     /**
      * 微信名
      * */
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "log_in_times")
     private int logInTimes;
