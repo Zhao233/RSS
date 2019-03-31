@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/admin/food")
+
 public class AdminMenuController {
     @ResponseBody
     @RequestMapping(value = "/getMenuList")

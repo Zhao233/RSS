@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FoodDao extends JpaRepository<FoodDao,Long> {
+public interface FoodDao extends JpaRepository<Food,Long> {
 
     @Query(value = "SELECT food from Food food where food.menuId = ?1")
     List<Food> getFoodsByMenuId(long id);

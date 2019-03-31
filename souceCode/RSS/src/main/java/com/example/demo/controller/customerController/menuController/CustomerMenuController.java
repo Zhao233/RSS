@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/customer/food")
+
 public class CustomerMenuController {
     @ResponseBody
     @RequestMapping(value = "/getMenuList")

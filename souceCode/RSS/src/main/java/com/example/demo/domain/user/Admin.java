@@ -8,25 +8,23 @@ import java.sql.Timestamp;
 
 @Entity
 @Component
-@Table(name = "waiter")
+@Table(name = "admin")
 @Data
-public class waiter {
+public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "user_id")
-    private String userid;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "log_in_times")
     private int logInTimes;
-
-    @Column(name = "enable")
-    private boolean enable;
 
     @Column(name = "create_time")
     private Timestamp createTime;
 
     @Column(name = "update_time")
     private Timestamp updateTime;
+
 }

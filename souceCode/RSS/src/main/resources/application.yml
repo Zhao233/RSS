@@ -12,10 +12,10 @@ spring:
   # 配置数据库连接信息
   datasource:
     # local server configuration(Mysql)
-    url: cdb-fqh1b3fq.bj.tencentcdb.com:10104/RSS?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://cdb-fqh1b3fq.bj.tencentcdb.com:10104/RSS?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: "root_RSS"
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
       # local server configuration(Sql Server)
       # url: jdbc:sqlserver://139.198.19.162:1433;DatabaseName=device_status_db
@@ -44,3 +44,5 @@ spring:
     mode: LEGACYHTML5
     encoding: UTF-8
     cache: false
+    servlet:
+      content-type: text/html

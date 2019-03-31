@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/customer/food")
 public class CustomerStyleController {
     @ResponseBody
     @RequestMapping(value="/getStylesByFoodId")

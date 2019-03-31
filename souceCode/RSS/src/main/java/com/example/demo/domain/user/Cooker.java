@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Component
 @Table(name = "cooker")
 @Data
-public class cooker {
+public class Cooker {
     /**
      * 数据库id
      * */

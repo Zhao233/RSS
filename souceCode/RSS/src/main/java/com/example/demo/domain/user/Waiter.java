@@ -8,9 +8,9 @@ import java.sql.Timestamp;
 
 @Entity
 @Component
-@Table(name = "customer")
+@Table(name = "waiter")
 @Data
-public class customer {
+public class Waiter {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -18,17 +18,11 @@ public class customer {
     @Column(name = "user_id")
     private String userid;
 
-    @Column(name = "user_name")
-    private String userName;
-
     @Column(name = "log_in_times")
     private int logInTimes;
 
-    @Column(name = "level")
-    private int level;
-
-    @Column(name = "credit")
-    private int credit;
+    @Column(name = "enable")
+    private boolean enable;
 
     @Column(name = "create_time")
     private Timestamp createTime;

@@ -10,6 +10,7 @@ import java.util.Map;
 
 
 @Controller
+@RequestMapping("/customer/food")
 public class CustomerFoodController {
     @ResponseBody
     @RequestMapping(value="/getFoodByMenuId")
