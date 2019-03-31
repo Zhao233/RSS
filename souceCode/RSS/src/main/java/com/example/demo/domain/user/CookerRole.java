@@ -18,9 +18,17 @@ public class CookerRole {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    /**
+     * 厨师角色的区分字段（
+     * 例如：1，为凉菜师
+     *       2，为糕点师
+     * */
     @Column(name = "role_id")
     private int roleId;
 
+    /**
+     * 厨师角色的名称
+     * */
     @Column(name = "role_name")
     private String roleName;
 
