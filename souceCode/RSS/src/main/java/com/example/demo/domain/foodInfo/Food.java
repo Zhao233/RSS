@@ -27,6 +27,9 @@ public class Food {
     @Column(name = "role")
     private int role;
 
+    @Column(name = "pic_url")
+    private String picUrl;
+
     @Column(name = "create_time")
     private Timestamp createTime;
 
