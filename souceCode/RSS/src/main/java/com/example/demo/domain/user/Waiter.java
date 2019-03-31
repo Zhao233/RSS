@@ -25,7 +25,7 @@ public class Waiter {
     private boolean enable;
 
     @Column(name = "name")
-    private boolean name;
+    private String name;
 
     @Column(name = "create_time")
     private Timestamp createTime;
