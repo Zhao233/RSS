@@ -46,7 +46,8 @@ public class AdminMenuController {
 
     @ResponseBody
     @RequestMapping(value = "/update")
-    public Map<String, Object> updateMenu(@RequestParam(name = "name") String name)  {
+    public Map<String, Object> updateMenu(@RequestParam(name = "id") long id,
+                                          @RequestParam(name = "name") String name)  {
         Map<String, Object> map = new HashMap();
 
         return map;

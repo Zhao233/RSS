@@ -46,11 +46,12 @@ public class AdminFoodController {
 
     @ResponseBody
     @RequestMapping(value = "/update")
-    public Map<String, Object> updateFood(MultipartHttpServletRequest request,
-                                       @RequestParam(name = "menuId") long menuId,
-                                       @RequestParam(name = "name") String name,
-                                       @RequestParam(name = "role") int role,
-                                       @RequestParam(name = "styles") String styles){
+    public Map<String, Object> updateFood(@RequestParam(name = "id") long id,
+                                          MultipartHttpServletRequest request,
+                                          @RequestParam(name = "menuId") long menuId,
+                                          @RequestParam(name = "name") String name,
+                                          @RequestParam(name = "role") int role,
+                                          @RequestParam(name = "styles") String styles){
         Map<String, Object> map = new HashMap();
 
         return null;
