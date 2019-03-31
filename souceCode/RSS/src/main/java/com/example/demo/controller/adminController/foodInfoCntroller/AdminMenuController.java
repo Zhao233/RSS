@@ -1,4 +1,4 @@
-package com.example.demo.controller.adminController.menuController;
+package com.example.demo.controller.adminController.foodInfoCntroller;
 
 import com.example.demo.domain.foodInfo.Menu;
 import com.example.demo.service.foodInfo.FoodService;

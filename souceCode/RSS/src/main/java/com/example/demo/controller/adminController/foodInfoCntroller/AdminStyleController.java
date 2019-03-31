@@ -1,4 +1,4 @@
-package com.example.demo.controller.adminController.styleController;
+package com.example.demo.controller.adminController.foodInfoCntroller;
 
 import com.example.demo.domain.foodInfo.Style;
 import com.example.demo.service.foodInfo.StyleService;
