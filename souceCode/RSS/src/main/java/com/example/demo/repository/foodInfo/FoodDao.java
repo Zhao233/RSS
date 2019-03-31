@@ -10,6 +10,15 @@ import java.util.List;
 @Repository
 public interface FoodDao extends JpaRepository<Food,Long> {
 
-    @Query(value = "SELECT food from Food food where food.menuId = ?1")
+    /**
+     * 根据食物母菜单获取食物列表
+     * */
+    @Query(value = "SELECT food FROM Food food WHERE food.menuId = ?1")
     List<Food> getFoodsByMenuId(long id);
+
+    /**
+     *根据食物id获取该食物下所有的口味id字符串
+     * */
+    @Query(value = "SELECT food.stylesId FROM Food food WHERE food.id = ?1")
+    String getStylesByFoodId(long foodId);
 }
