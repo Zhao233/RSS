@@ -20,7 +20,10 @@ public class CustomerStyleController {
 
     @ResponseBody
     @RequestMapping(value="/getStylesByFoodId")
-    public Map<String, Object> getStylesByFoodId(@RequestParam(name = "foodId") Long foodId){//根据食物id获取该食物下的所有口味
+    public Map<String, Object> getStylesByFoodId(@RequestParam(name = "foodId") Long foodId,
+                                                 @RequestParam(name = "search") String search,
+                                                 @RequestParam(name = "offset") int offset,
+                                                 @RequestParam(name = "limit") int limit){//根据食物id获取该食物下的所有口味
         Map<String, Object> map = new HashMap();
         List<Style> styleList;
 
@@ -29,6 +32,31 @@ public class CustomerStyleController {
         map.put("styleList", styleList);
         map.put("foodId", String.valueOf(foodId));
         map.put("status", "SUCCESS");
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/add")
+    public Map<String, Object> addStyle(@RequestParam(name = "name") String name){
+        Map<String, Object> map = new HashMap();
+
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/update")
+    public Map<String, Object> updateStyle(@RequestParam(name = "id") Long styleId,
+                                           @RequestParam(name = "name") String name){
+        Map<String, Object> map = new HashMap();
+
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/delete")
+    public Map<String, Object> deleteStyle(@RequestParam(name = "id") Long styleId){
+        Map<String, Object> map = new HashMap();
+
         return map;
     }
 
