@@ -1,4 +1,4 @@
-package com.example.demo.controller.adminController.menuController;
+package com.example.demo.controller.customerController.styleController;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,13 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class MenuController {
+public class CustomerStyleController {
     @ResponseBody
-    @RequestMapping(value = "/getMenuList")
-    public Map<String, Object> getMenuList() {
+    @RequestMapping(value="/getStylesByFoodId")
+    public Map<String, Object> getStylesByFoodId(){//获取所有一级菜单
         Map<String, Object> map = new HashMap();
 
-        map.put("response", "getMenuList");
+
+        map.put("response", "getStylesByFoodId");
         return map;
     }
+
 }

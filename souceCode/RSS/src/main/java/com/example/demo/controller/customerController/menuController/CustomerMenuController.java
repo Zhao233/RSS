@@ -1,22 +1,21 @@
-package com.example.demo.controller.customerController.styleController;
+package com.example.demo.controller.customerController.menuController;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
-public class styleController {
+public class CustomerMenuController {
     @ResponseBody
-    @RequestMapping(value="/getStylesByFoodId")
-    public Map<String, Object> getStylesByFoodId(){//获取所有一级菜单
+    @RequestMapping(value = "/getMenuList")
+    public Map<String, Object> getMenuList() {
         Map<String, Object> map = new HashMap();
 
-
-        map.put("response", "getStylesByFoodId");
+        map.put("response", "getMenuList");
         return map;
     }
-
 }

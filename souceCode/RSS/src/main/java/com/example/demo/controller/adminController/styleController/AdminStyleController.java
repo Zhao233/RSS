@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class StyleController {
+public class AdminStyleController {
 
     @ResponseBody
     @RequestMapping(value = "/getAllStyles")

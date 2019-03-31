@@ -5,18 +5,17 @@ server:
   port: 8881
 
 spring:
-
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: GMT+8
 
   # 配置数据库连接信息
   datasource:
     # local server configuration(Mysql)
-        url: cdb-fqh1b3fq.bj.tencentcdb.com:10104/RSS?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
-        username: root
-        password: "root_RSS"
-        driver-class-name: com.mysql.jdbc.Driver
+    url: cdb-fqh1b3fq.bj.tencentcdb.com:10104/RSS?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: "root_RSS"
+    driver-class-name: com.mysql.jdbc.Driver
 
       # local server configuration(Sql Server)
       # url: jdbc:sqlserver://139.198.19.162:1433;DatabaseName=device_status_db

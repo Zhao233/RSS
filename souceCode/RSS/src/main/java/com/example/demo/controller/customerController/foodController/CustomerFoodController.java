@@ -10,7 +10,7 @@ import java.util.Map;
 
 
 @Controller
-public class FoodController {
+public class CustomerFoodController {
     @ResponseBody
     @RequestMapping(value="/getFoodByMenuId")
     public Map<String, Object> getFoodByMenuId(){//获取所有一级菜单
