@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin/food")
+@RequestMapping("/admin/style")
 public class AdminStyleController {
 
     @ResponseBody
