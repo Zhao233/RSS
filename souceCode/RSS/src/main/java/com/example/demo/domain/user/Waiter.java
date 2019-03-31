@@ -24,6 +24,9 @@ public class Waiter {
     @Column(name = "enable")
     private boolean enable;
 
+    @Column(name = "name")
+    private boolean name;
+
     @Column(name = "create_time")
     private Timestamp createTime;
 
