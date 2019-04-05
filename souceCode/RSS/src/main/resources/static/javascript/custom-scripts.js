@@ -350,7 +350,7 @@ function getFormmattedTime(time){
 
 function getPrimaryMenuNumber(secondaryMenuName){
     switch (secondaryMenuName){
-        case "discountManagement" :
+        case "recommendManagement" :
             return {primaryMenuNumber : 0,
                     secondaryMenu : 0};
 
@@ -358,27 +358,85 @@ function getPrimaryMenuNumber(secondaryMenuName){
             return {primaryMenuNumber : 0,
                     secondaryMenu : 1};
 
-        case "recommendManagement" :
+        case "discountManagement" :
             return {primaryMenuNumber : 0,
                     secondaryMenu : 2};
 
-        case "foodManagement" :
+
+
+
+
+        case "userManagement" :
             return {primaryMenuNumber : 1,
                     secondaryMenu : 0};
 
-        case "menuManagement" :
+        case "waiterManagement" :
             return {primaryMenuNumber : 1,
                     secondaryMenu : 1};
 
         case "cookerManagement" :
+            return {primaryMenuNumber : 1,
+                    secondaryMenu : 2};
+
+
+
+
+
+
+        case "menuManagement" :
             return {primaryMenuNumber : 2,
                     secondaryMenu : 0};
-
-        case "userManagement" :
+        case "foodManagement" :
             return {primaryMenuNumber : 2,
                     secondaryMenu : 1};
-        case "waiterManagement" :
-            return {primaryMenuNumber : 2,
-                    secondaryMenu : 2};
+
+
+
+
     }
+}
+
+function loadMenu(){
+    $.ajax({
+        url : '/admin/getMenu',
+        type : 'GET',
+        dataType : 'html',
+        async:false,
+        success : function(res){
+
+            console.log(res);
+            $("#nave_side").append( $(res).find('nav') );
+        },
+
+        fail : function (res) {
+
+        },
+
+        timeout : function (res) {
+
+        }
+    });
+
+    //获取确认当前界面
+    var url = window.location.pathname;
+
+    var paths = url.split("/");
+    var presentPath = paths[paths.length-1]
+
+    //添加隐藏效果
+    var primaryMenus = $("#nave_side").find('.primaryMenu');
+    var menuNum = getPrimaryMenuNumber(presentPath);
+
+    var primaryMenu = primaryMenus.get(menuNum.primaryMenuNumber);
+
+    //展开一级菜单
+    setTimeout(function () {
+        $(primaryMenu).find("a")[0].click();
+    }, 10);
+
+    var secondaryMenus = $(primaryMenu).find('li');
+
+    var secondaryMenu = secondaryMenus.get(menuNum.secondaryMenu);
+
+    $(secondaryMenu).addClass("active-menu-item");
 }

@@ -63,7 +63,7 @@ public class consoleController {
         return new ModelAndView("console/peopleManagement/userManagement");
     }
 
-    @RequestMapping("/admin/waiterMenuManagement")
+    @RequestMapping("/admin/waiterManagement")
     public ModelAndView toUserMenuManagement(){
         return new ModelAndView("console/peopleManagement/waiterMenuManagement");
     }
