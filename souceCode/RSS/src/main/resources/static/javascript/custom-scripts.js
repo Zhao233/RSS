@@ -347,3 +347,38 @@ function getFormmattedTime(time){
 
 
 }
+
+function getPrimaryMenuNumber(secondaryMenuName){
+    switch (secondaryMenuName){
+        case "discountManagement" :
+            return {primaryMenuNumber : 0,
+                    secondaryMenu : 0};
+
+        case "preferenceManagement" :
+            return {primaryMenuNumber : 0,
+                    secondaryMenu : 1};
+
+        case "recommendManagement" :
+            return {primaryMenuNumber : 0,
+                    secondaryMenu : 2};
+
+        case "foodManagement" :
+            return {primaryMenuNumber : 1,
+                    secondaryMenu : 0};
+
+        case "menuManagement" :
+            return {primaryMenuNumber : 1,
+                    secondaryMenu : 1};
+
+        case "cookerManagement" :
+            return {primaryMenuNumber : 2,
+                    secondaryMenu : 0};
+
+        case "userManagement" :
+            return {primaryMenuNumber : 2,
+                    secondaryMenu : 1};
+        case "waiterManagement" :
+            return {primaryMenuNumber : 2,
+                    secondaryMenu : 2};
+    }
+}

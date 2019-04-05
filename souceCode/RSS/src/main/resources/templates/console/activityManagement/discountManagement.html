@@ -148,6 +148,7 @@
                 url : '/admin/getMenu',
                 type : 'GET',
                 dataType : 'html',
+                async:false,
                 success : function(res){
 
                     console.log(res);
@@ -161,87 +162,31 @@
                 timeout : function (res) {
 
                 }
-
-
             });
+
+            //获取确认当前界面
+            var url = window.location.pathname;
+
+            var paths = url.split("/");
+            var presentPath = paths[paths.length-1]
+
+            //添加隐藏效果
+            var primaryMenus = $("#nave_side").find('.primaryMenu');
+            var menuNum = getPrimaryMenuNumber(presentPath);
+
+            var primaryMenu = primaryMenus.get(menuNum.primaryMenuNumber);
+
+            //展开一级菜单
+            setTimeout(function () {
+                $(primaryMenu).find("a")[0].click();
+            }, 10);
+
+            var secondaryMenus = $(primaryMenu).find('li');
+
+            var secondaryMenu = secondaryMenus.get(menuNum.secondaryMenu);
+
+            $(secondaryMenu).addClass("active-menu-item")
         </script>
-<!--
-        <nav class="navbar-default navbar-side" role="navigation">
-            <div class="sidebar-collapse">
-                <ul class="nav" id="main-menu">
-                    &lt;!&ndash;管理员信息&ndash;&gt;
-                    <li>
-                        <div style="display: table; width: auto; margin-left: auto;margin-right: auto">
-
-                            <img src="/style/images/avtar.png">
-
-                        </div>
-                        <br>
-                    </li>
-
-                    <li>
-                        <a><i class="fa fa-sitemap"></i> 活动管理<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse in" aria-expanded="true">
-                            &lt;!&ndash;推荐菜品&ndash;&gt;
-                            <li>
-                                <a href="/admin/recommendManagement">推荐菜品管理</a>
-                            </li>
-
-                            &lt;!&ndash;优惠信息&ndash;&gt;
-                            <li>
-                                <a href="/admin/preferenceManagement" >优惠信息管理</a>
-                            </li>
-
-                            &lt;!&ndash;轨迹统计图表_小时&ndash;&gt;
-                            <li>
-                                <a href="/admin/recommendManagement">积分优惠信息管理</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    &lt;!&ndash;人员管理&ndash;&gt;
-                    <li>
-                        <a><i class="fa fa-sitemap"></i> 人员管理<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse in" aria-expanded="true">
-                            &lt;!&ndash;用户信息&ndash;&gt;
-                            <li>
-                                <a href="/admin/userManagement">用户信息</a>
-                            </li>
-
-                            &lt;!&ndash;服务员管理&ndash;&gt;
-                            <li>
-                                <a href="/admin/waiterMenuManagement" >服务员管理</a>
-                            </li>
-
-                            &lt;!&ndash;厨师管理&ndash;&gt;
-                            <li>
-                                <a href="/admin/cookerManagement" class="active-menu-item">厨师管理</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    &lt;!&ndash;菜单管理 &ndash;&gt;
-                    <li>
-                        <a><i class="fa fa-sitemap"></i> 人员管理<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse in" aria-expanded="true">
-                            &lt;!&ndash;一级菜单管理&ndash;&gt;
-                            <li>
-                                <a href="/admin/menuManagement">一级菜单管理</a>
-                            </li>
-
-                            &lt;!&ndash;菜品管理&ndash;&gt;
-                            <li>
-                                <a href="/admin/foodManagement" >菜品管理</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </nav>
--->
     </div>
 
 </body>
