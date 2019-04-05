@@ -137,10 +137,39 @@
             </div>
         </nav>
         <!--/. NAV TOP  -->
+
+        <div id="nave_side">
+
+        </div>
+
+        <!--加载侧栏菜单-->
+        <script>
+            $.ajax({
+                url : '/admin/getMenu',
+                type : 'GET',
+                dataType : 'html',
+                success : function(res){
+
+                    console.log(res);
+                    $("#nave_side").append( $(res).find('nav') );
+                },
+
+                fail : function (res) {
+
+                },
+
+                timeout : function (res) {
+
+                }
+
+
+            });
+        </script>
+<!--
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
-                    <!--管理员信息-->
+                    &lt;!&ndash;管理员信息&ndash;&gt;
                     <li>
                         <div style="display: table; width: auto; margin-left: auto;margin-right: auto">
 
@@ -150,12 +179,69 @@
                         <br>
                     </li>
 
-                    <iframe src="/admin/getMenu"></iframe>
+                    <li>
+                        <a><i class="fa fa-sitemap"></i> 活动管理<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse in" aria-expanded="true">
+                            &lt;!&ndash;推荐菜品&ndash;&gt;
+                            <li>
+                                <a href="/admin/recommendManagement">推荐菜品管理</a>
+                            </li>
+
+                            &lt;!&ndash;优惠信息&ndash;&gt;
+                            <li>
+                                <a href="/admin/preferenceManagement" >优惠信息管理</a>
+                            </li>
+
+                            &lt;!&ndash;轨迹统计图表_小时&ndash;&gt;
+                            <li>
+                                <a href="/admin/recommendManagement">积分优惠信息管理</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    &lt;!&ndash;人员管理&ndash;&gt;
+                    <li>
+                        <a><i class="fa fa-sitemap"></i> 人员管理<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse in" aria-expanded="true">
+                            &lt;!&ndash;用户信息&ndash;&gt;
+                            <li>
+                                <a href="/admin/userManagement">用户信息</a>
+                            </li>
+
+                            &lt;!&ndash;服务员管理&ndash;&gt;
+                            <li>
+                                <a href="/admin/waiterMenuManagement" >服务员管理</a>
+                            </li>
+
+                            &lt;!&ndash;厨师管理&ndash;&gt;
+                            <li>
+                                <a href="/admin/cookerManagement" class="active-menu-item">厨师管理</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    &lt;!&ndash;菜单管理 &ndash;&gt;
+                    <li>
+                        <a><i class="fa fa-sitemap"></i> 人员管理<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse in" aria-expanded="true">
+                            &lt;!&ndash;一级菜单管理&ndash;&gt;
+                            <li>
+                                <a href="/admin/menuManagement">一级菜单管理</a>
+                            </li>
+
+                            &lt;!&ndash;菜品管理&ndash;&gt;
+                            <li>
+                                <a href="/admin/foodManagement" >菜品管理</a>
+                            </li>
+                        </ul>
+                    </li>
+
                 </ul>
 
             </div>
 
         </nav>
+-->
     </div>
 
 </body>
