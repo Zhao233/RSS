@@ -30,6 +30,9 @@ public class Waiter {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Column(name = "create_time")
     private Timestamp createTime;
 

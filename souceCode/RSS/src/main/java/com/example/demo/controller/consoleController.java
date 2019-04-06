@@ -50,7 +50,7 @@ public class consoleController {
 
     @RequestMapping("/admin/cookerManagement")
     public ModelAndView toCookerManagement(){
-        return new ModelAndView("console/peopleManagement/peopleManagement");
+        return new ModelAndView("console/peopleManagement/cookerManagement");
     }
 
     @RequestMapping("/admin/frequentlyUsedMenuManagement")

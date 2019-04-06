@@ -17,22 +17,35 @@ public class Cooker {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     /**
      * 微信id
      * */
     @Column(name = "user_id")
     private String userid;
+
     /**
      * 微信名
      * */
     @Column(name = "name")
     private String name;
 
+
+    /**
+     * 登录凭证
+     * */
+    @Column(name = "login_id")
+    private String loginID;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Column(name = "log_in_times")
     private int logInTimes;
 
     @Column(name = "enable")
     private boolean enable;
+
     /**
      * 厨师的身份
      * 0：熟食

@@ -172,6 +172,7 @@
                                         <th data-field="user_id"  class="W100" style="border:none;">微信ID</th>
                                         <th data-field="login_id" class="W100" style="border:none;">登陆码</th>
                                         <th data-field="name"  class="W100" style="border:none;">名称</th>
+                                        <th data-field="phoneNumber"  class="W100" style="border:none;">电话号码</th>
                                         <th data-field="login_times" class="W100" style="border:none;">登录次数</th>
                                         <th data-field="enable" class="W100" style="border:none;">是否启动</th>
                                         <th data-field="create_time"  class="W100" style="border:none;">创建时间</th>
@@ -208,83 +209,79 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title">设备管理 | <span id="dialog-visitor-management-update-title"></span></h4>
+                    <h4 class="modal-title">服务员管理 | <span id="dialog-update-title"></span></h4>
                 </div>
 
                 <div class="modal-body">
-                    <form role="form" class="form-horizontal add-new-user form-uploadfiles"
+                    <form role="form" class="form-horizontal add-new form-uploadfiles"
                           enctype="multipart/form-data"
                           method="POST">
                         <input type="text" style="display:none;" id="id" name="id"/>
-                        <input type="text" style="display:none;" id="deviceId_old" name="deviceId_old"/>
-                        <input type="text" style="display:none;" id="createTime" name="createTime"/>
-                        <input type="text" style="display:none;" id="updateTime" name="updateTime"/>
 
                         <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="form-group">
-                                    <label for="mac_id" class="col-sm-4 control-label">设备Id</label>
+                                    <label for="userID" class="col-sm-4 control-label">微信ID</label>
 
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="mac_id" name="mac_id"
+                                        <input type="text" class="form-control" id="userID" name="userID"
                                                data-toggle="tooltip" data-placement="top" maxlength="30"
-                                               required="required"/>
+                                               required="required" disabled/>
                                     </div>
 
                                     <div class="col-sm-1"></div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="name" class="col-sm-4 control-label">设备名称</label>
+                                    <label for="loginID" class="col-sm-4 control-label">登录码</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="loginID" name="loginID"
+                                               data-toggle="tooltip" data-placement="top" maxlength="30"
+                                               required="required"/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-4 control-label">名称</label>
                                     <div class="col-sm-7">
                                         <input type="text" class="form-control" id="name" name="name"
-                                               data-toggle="tooltip" data-placement="top" maxlength="30"
-                                               required="required"/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="attributionOfDevice" class="col-sm-4 control-label">设备归属</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="attributionOfDevice" name="attributionOfDevice"
                                                maxlength="30"/>
                                     </div>
                                     <div class="col-sm-1"></div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="organization_name" class="col-sm-4 control-label">组织</label>
+                                    <label for="phoneNumber" class="col-sm-4 control-label">电话号码</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="organization_name" name="organization_name"
+                                        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
                                                maxlength="30"/>
                                     </div>
                                     <div class="col-sm-1"></div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="addressOfDevice" class="col-sm-4 control-label">设备安装地址</label>
+                                    <label for="loginTimes" class="col-sm-4 control-label">登录次数</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="addressOfDevice" name="addressOfDevice"
-                                               maxlength="30"/>
+                                        <input type="text" class="form-control" id="loginTimes" name="loginTimes"
+                                               maxlength="30" disabled/>
                                     </div>
                                     <div class="col-sm-1"></div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="type" class="col-sm-4 control-label">类型</label>
+                                    <label for="enable" class="col-sm-4 control-label">是否启动</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="type" name="type"
-                                               maxlength="30"/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
+                                        <select class="form-control" id="enable" name="enable">
+                                            <option value="true">
+                                                是
+                                            </option>
 
-                                <div class="form-group">
-                                    <label for="level" class="col-sm-4 control-label">等级</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="level" name="level"
-                                               maxlength="30"/>
+                                            <option value="false">
+                                                否
+                                            </option>
+                                        </select>
+
                                     </div>
                                     <div class="col-sm-1"></div>
                                 </div>
@@ -343,13 +340,13 @@
     $(".btn.btn-primary.open-add-dialog").click(function () {
         window.flag = 'add';
 
-        _reset($(".form-horizontal.add-new-user"));
+        _reset($(".form-horizontal.add-new"));
 
-        $("#choosedPic").attr("src","/images/default_avatar_male.jpg");
+        // $("#choosedPic").attr("src","/images/default_avatar_male.jpg");
 
-        $("#dialog-visitor-management-update-title").html("新增");
+        $("#dialog-update-title").html("新增");
 
-        $("#dialog-visitor-management-update").modal("show");
+        $("#dialog-update").modal("show");
     });
 
     //打开修改弹出框
@@ -381,12 +378,12 @@
                 return ;
             }
 
-            _reset($(".form-horizontal.add-new-user"));
+            _reset($(".form-horizontal.add-new"));
 
 
-            $("#dialog-visitor-management-update-title").html("修改");
+            $("#dialog-title").html("修改");
 
-            $("#dialog-visitor-management-update").modal("show");
+            $("#dialog-update").modal("show");
 
             // 读取用户选中的用户信息
             $.get("/console/device_management/get/" + id[0], null, function (r, status) {
@@ -411,7 +408,7 @@
             });
 
         } else {
-            $(".bs-example-modal-sm").find(".modal-body").html("请选中设备后操作");
+            $(".bs-example-modal-sm").find(".modal-body").html("请选中人员后操作");
             $(".bs-example-modal-sm").modal("show");
         }
     });
