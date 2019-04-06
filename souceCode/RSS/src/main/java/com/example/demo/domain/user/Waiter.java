@@ -24,6 +24,9 @@ public class Waiter {
     @Column(name = "enable")
     private boolean enable;
 
+    @Column(name = "login_id")
+    private long loginId;
+
     @Column(name = "name")
     private String name;
 

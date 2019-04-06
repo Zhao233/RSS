@@ -146,7 +146,426 @@
     <script>
         loadMenu();
     </script>
+
+    <!--内容主体-->
+    <div id="page-wrapper">
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header" style="color: #FFFFFF;">
+                        用户管理
+                    </h1>
+                </div>
+            </div>
+            <!-- /. ROW  -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Advanced Tables -->
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table id="_table_user_search" class="table table-striped table-bordered table-hover" data-toolbar="#toolbar">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="doAllCheckBtn" type="checkbox" onclick="doAllCheck(this)"></th>
+                                        <th data-field="user_id"  class="W100" style="border:none;">微信ID</th>
+                                        <th data-field="name"  class="W100" style="border:none;">名称</th>
+                                        <th data-field="login_times" class="W100" style="border:none;">登录次数</th>
+                                        <th data-field="level" class="W100" style="border:none;">等级</th>
+                                        <th data-field="credit" class="W100" style="border:none;">信用分</th>
+                                        <th data-field="create_time"  class="W100" style="border:none;">创建时间</th>
+                                        <th data-field="update_time"  class="W100" style="border:none;">修改时间</th>
+                                    </tr>
+                                    </thead>
+
+                                </table>
+
+                                <div id="toolbar">
+                                    <button class="btn btn-primary open-add-dialog" data-toggle="modal">新增
+                                    </button>
+                                    <button class="btn btn-success open-update-dialog" data-toggle="modal">修改
+                                    </button>
+                                    <button class="btn btn-danger delete-dialog">删除</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Advanced Tables -->
+                </div>
+            </div>
+            <!-- /. ROW  -->
+        </div>
+    </div>
+
+
+    <!--弹出框-->
+
+    <!--添加，修改弹出框-->
+    <div id="dialog-update" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">设备管理 | <span id="dialog-visitor-management-update-title"></span></h4>
+                </div>
+
+                <div class="modal-body">
+                    <form role="form" class="form-horizontal add-new-user form-uploadfiles"
+                          enctype="multipart/form-data"
+                          method="POST">
+                        <input type="text" style="display:none;" id="id" name="id"/>
+                        <input type="text" style="display:none;" id="deviceId_old" name="deviceId_old"/>
+                        <input type="text" style="display:none;" id="createTime" name="createTime"/>
+                        <input type="text" style="display:none;" id="updateTime" name="updateTime"/>
+
+                        <div class="row">
+                            <div class="col-sm-12 ">
+                                <div class="form-group">
+                                    <label for="mac_id" class="col-sm-4 control-label">设备Id</label>
+
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="mac_id" name="mac_id"
+                                               data-toggle="tooltip" data-placement="top" maxlength="30"
+                                               required="required"/>
+                                    </div>
+
+                                    <div class="col-sm-1"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-4 control-label">设备名称</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="name" name="name"
+                                               data-toggle="tooltip" data-placement="top" maxlength="30"
+                                               required="required"/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="attributionOfDevice" class="col-sm-4 control-label">设备归属</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="attributionOfDevice" name="attributionOfDevice"
+                                               maxlength="30"/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="organization_name" class="col-sm-4 control-label">组织</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="organization_name" name="organization_name"
+                                               maxlength="30"/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="addressOfDevice" class="col-sm-4 control-label">设备安装地址</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="addressOfDevice" name="addressOfDevice"
+                                               maxlength="30"/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="type" class="col-sm-4 control-label">类型</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="type" name="type"
+                                               maxlength="30"/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="level" class="col-sm-4 control-label">等级</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="level" name="level"
+                                               maxlength="30"/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9" style="text-align: right;padding-top: 20px;">
+                                <button type="button" class="btn btn-primary add-new">保存</button>
+                                <button type="button" class="btn btn-default add-new-close" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--提示弹出框-->
+    <div id="dialog-return" class="modal fade" style="z-index:99999" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="mySmallModalLabel">提示</h4>
+                </div>
+                <div class="modal-body"></div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 </div>
+
+<script>
+    //重置input
+    function _reset_input(input) {
+        input.removeClass("alert-danger");
+        input.tooltip('destroy');
+
+    }
+
+    //重置表单
+    function _reset(from) {
+        $("#show-process").empty();
+
+        from[0].reset();
+
+        _reset_input(from.find("input"));
+
+        $("#choosedPic").attr("src","/images/default_avatar_male.jpg");
+    }
+
+    //打开添加弹出框
+    $(".btn.btn-primary.open-add-dialog").click(function () {
+        window.flag = 'add';
+
+        _reset($(".form-horizontal.add-new-user"));
+
+        $("#choosedPic").attr("src","/images/default_avatar_male.jpg");
+
+        $("#dialog-visitor-management-update-title").html("新增");
+
+        $("#dialog-visitor-management-update").modal("show");
+    });
+
+    //打开修改弹出框
+    $(".btn.btn-success.open-update-dialog").click(function () {
+        window.flag = 'update'
+
+        var id = new Array();
+
+        var selectedBox = $("input[name='visitor_id']:checked");
+
+        window.id = id;
+        console.log('clicked update');
+
+        for(var i = 0; i < selectedBox.length; i++){
+            id.push( selectedBox[i].value );
+
+            if(id.length > 2){
+                break;
+            }
+        }
+
+        console.log(id);
+
+        if (id.length != 0) {
+            if(id.length > 1){
+                $("#dialog-return").find(".modal-body").html("请选择一个访客");
+                $("#dialog-return").modal("show");
+
+                return ;
+            }
+
+            _reset($(".form-horizontal.add-new-user"));
+
+
+            $("#dialog-visitor-management-update-title").html("修改");
+
+            $("#dialog-visitor-management-update").modal("show");
+
+            // 读取用户选中的用户信息
+            $.get("/console/device_management/get/" + id[0], null, function (r, status) {
+                console.log(r);
+
+                $("#dialog-visitor-management-update-title").html("修改");
+                $("#dialog-visitor-management-update").modal("show");
+
+                $("#dialog-visitor-management-update").find("input[id='deviceId_old']").val(r.mac_id);
+
+                $("#dialog-visitor-management-update").find("input[id='mac_id']").val(r.mac_id);
+                $("#dialog-visitor-management-update").find("input[id='id']").val(r.id);
+                $("#dialog-visitor-management-update").find("input[id='name']").val(r.name);
+                $("#dialog-visitor-management-update").find("input[id='attributionOfDevice']").val(r.attributionOfDevice);
+                $("#dialog-visitor-management-update").find("input[id='organization_name']").val(r.organization_name);
+                $("#dialog-visitor-management-update").find("input[id='addressOfDevice']").val(r.addressOfDevice);
+                $("#dialog-visitor-management-update").find("input[id='type']").val(r.type);
+                $("#dialog-visitor-management-update").find("input[id='level']").val(r.level);
+                $("#dialog-visitor-management-update").find("input[id='createTime']").val(r.create_time);
+                $("#dialog-visitor-management-update").find("input[id='updateTime']").val(r.update_time);
+
+            });
+
+        } else {
+            $(".bs-example-modal-sm").find(".modal-body").html("请选中设备后操作");
+            $(".bs-example-modal-sm").modal("show");
+        }
+    });
+
+    //重置input框的状态
+    function _set(el, message) {
+        el.addClass("alert-danger");
+        el.attr("title", message);
+        el.tooltip('show');
+    }
+
+    //为点击添加弹出框中的确认添加了点击事件
+    $(".btn.btn-primary.add-new").click(function () {
+        var startTime;
+        var endTime;
+
+        var isComplete = true;
+        var isFormatted = true;
+
+        //check input
+        if ($("input[id='mac_id']").val() == "") {
+            _set($("input[id='mac_id']"), "设备id");
+            isComplete = false;
+        }
+        if ($("input[id='name']").val() == "") {
+            _set($("input[id='name']"), "设备名称");
+            isComplete = false;
+        }
+        if ($("input[id='attributionOfDevice']").val() == "") {
+            _set($("input[id='attributionOfDevice']"), "设备归属");
+            isComplete = false;
+        }
+        if ($("input[id='organization_name']").val() == "") {
+            _set($("input[id='organization_name']"), "组织");
+            isComplete = false;
+        }
+        if ($("input[id='addressOfDevice']").val() == "") {
+            _set($("input[id='addressOfDevice']"), "设备安装地址");
+            isComplete = false;
+        }
+        if ($("input[id='type']").val() == "") {
+            _set($("input[id='type']"), "类型");
+            isComplete = false;
+        }
+        if ($("input[id='level']").val() == "") {
+            _set($("input[id='level']"), "等级");
+            isComplete = false;
+        }
+
+        var flag_ = window.flag;
+        console.log(window.flag);
+
+
+        var form = new FormData();
+
+        if(flag_ == "update") {
+            form.append("id", $("input[id='id']").val());
+        } else {
+            form.append("id", 0);
+        }
+        form.append("mac_id", $("input[id='mac_id']").val());
+        form.append("name", $("input[id='name']").val());
+        form.append("attributionOfDevice", $("input[id='attributionOfDevice']").val());
+        form.append("organization_name", $("input[id='organization_name']").val());
+        form.append("addressOfDevice", $("input[id='addressOfDevice']").val());
+        form.append("type", $("input[id='type']").val());
+        form.append("level", $("input[id='level']").val());
+        form.append("deviceId_old", $("input[id='deviceId_old']").val());
+        form.append("updateTime", $("input[id='updateTime']").val());
+
+        getFormmattedTime($("input[id='createTime']").val())
+
+        form.append("createTime", getFormmattedTime( $("input[id='createTime']").val() ) );
+
+
+        $.ajax({
+            url: "/console/device_management/" + flag,
+            timeout : timeout_network,
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                switch (r.status) {
+                    case "SUCCEED" :
+                        var message;
+                        if (flag_ == 'add') {
+                            message = "新增成功";
+                        } else {
+                            message = "修改成功";
+                        }
+
+                        $("#dialog-return").find(".modal-body").html(message);
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.add-new-close").click();
+                        $(".panel.panel-default").find("button[name='refresh']").click();
+
+                        break
+
+                    case "FAILED" :
+                        if (flag_ == 'add') {
+                            message = "新增失败";
+                        } else {
+                            message = "修改失败";
+                        }
+
+                        $("#dialog-return").find(".modal-body").html(message);
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.add-new-close").click();
+
+                        break
+                }
+            },
+            error: function (r) {
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
+
+        form = '';//避免重复点击
+
+    });
+
+    function doAllCheck(e){
+        var list = $("input[name='visitor_id']");
+
+        for(i in list){
+            list[i].checked = !list[i].checked;
+        }
+    }
+
+    function _formatte_id(value, row, index) {
+        if(index == 0){
+            contactsNameMap = new Map();
+        }
+
+        contactsNameMap.set(value,row.name);
+
+        return '<input name="visitor_id" type="checkbox" value="' + value + '" />';
+    }
+
+    //注销
+    $(".btn.btn-danger.btn-logout").click(function () {
+        window.location.href = "/logout";
+    })
+</script>
 
 </body>
 </html>

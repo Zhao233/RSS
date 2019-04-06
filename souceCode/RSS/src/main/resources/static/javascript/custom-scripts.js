@@ -403,8 +403,6 @@ function loadMenu(){
         dataType : 'html',
         async:false,
         success : function(res){
-
-            console.log(res);
             $("#nave_side").append( $(res).find('nav') );
         },
 
