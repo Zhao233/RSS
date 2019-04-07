@@ -168,16 +168,15 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="_table_user_search" class="table table-striped table-bordered table-hover" data-toolbar="#toolbar">
+                                <table id="_table_discount_" class="table table-striped table-bordered table-hover" data-toolbar="#toolbar">
                                     <thead>
                                         <tr>
-                                            <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="doAllCheckBtn" type="checkbox" onclick="doAllCheck(this)"></th>
-                                            <th data-field="picUrl" class="W100" data-formatter="_formatte_image">图像</th>
-                                            <th data-field="name" class="W100">名称</th>
-                                            <th data-field="menuId" class="W100" style="border:none;">一级菜单</th>
-                                            <th data-field="styles" class="W100"  data-formatter="_formatte_select">风味</th>
-                                            <th data-field="role"  class="W100" style="border:none;">分配厨师</th>
-                                            <th data-field="enable" class="W100" style="border:none;">是否启用</th>
+                                            <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="id_discount_" type="checkbox" name="id_discount_" onclick="doAllCheck('id_discount_')"></th>
+                                            <th data-field="type" class="W100">类型</th>
+                                            <th data-field="discount" class="W100">折扣</th>
+                                            <th data-field="money_limit" class="W100" style="border:none;">条件金额</th>
+                                            <th data-field="startTime"  class="W100" style="border:none;">有效时间</th>
+                                            <th data-field="endTime" class="W100" style="border:none;">失效时间</th>
                                             <th data-field="createTime" class="W100" style="border:none;">创建时间</th>
                                             <th data-field="updateTime" class="W100" style="border:none;">修改时间</th>
                                         </tr>
@@ -186,11 +185,11 @@
                                 </table>
 
                                 <div id="toolbar">
-                                    <button class="btn btn-primary open-add-dialog" data-toggle="modal">新增
+                                    <button class="btn btn-primary open-add-discount-dialog" data-toggle="modal">新增
                                     </button>
-                                    <button class="btn btn-success open-update-dialog" data-toggle="modal">修改
+                                    <button class="btn btn-success open-update-discount-dialog" data-toggle="modal">修改
                                     </button>
-                                    <button class="btn btn-danger delete-dialog">删除</button>
+                                    <button class="btn btn-danger delete-discount-dialog">删除</button>
                                 </div>
                             </div>
                         </div>
@@ -215,10 +214,10 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="_table_user_search_discount" class="table table-striped table-bordered table-hover" data-toolbar="#toolbar">
+                                <table id="_table_recommend_" class="table table-striped table-bordered table-hover" data-toolbar="#toolbar">
                                     <thead>
                                     <tr>
-                                        <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="doAllCheckBtn" type="checkbox" onclick="doAllCheck(this)"></th>
+                                        <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="id_recommend_" name="id_recommend_" type="checkbox" onclick="doAllCheck('id_recommend_')"></th>
                                         <th data-field="picUrl" class="W100" data-formatter="_formatte_image">图像</th>
                                         <th data-field="name" class="W100">名称</th>
                                         <th data-field="menuId" class="W100" style="border:none;">一级菜单</th>
@@ -233,11 +232,11 @@
                                 </table>
 
                                 <div id="toolbar_discount">
-                                    <button class="btn btn-primary open-add-dialog" data-toggle="modal">新增
+                                    <button class="btn btn-primary open-add-recommend-dialog" data-toggle="modal">新增
                                     </button>
-                                    <button class="btn btn-success open-update-dialog" data-toggle="modal">修改
+                                    <button class="btn btn-success open-update-recommend-dialog" data-toggle="modal">修改
                                     </button>
-                                    <button class="btn btn-danger delete-dialog">删除</button>
+                                    <button class="btn btn-danger delete-recommend-dialog">删除</button>
                                 </div>
                             </div>
                         </div>
@@ -252,153 +251,77 @@
 
     <!--弹出框-->
 
-    <!--添加，修改弹出框-->
-    <div id="dialog-update" class="modal fade" tabindex="-1" role="dialog">
+    <!--添加，修改折扣弹出框-->
+    <div id="dialog-discount-update" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title">菜品管理 | <span id="dialog-update-title"></span></h4>
+                    <h4 class="modal-title">折扣管理 | <span id="dialog-discount-update-title"></span></h4>
                 </div>
 
                 <div class="modal-body">
                     <form role="form" class="form-horizontal add-new form-uploadfiles"
                           enctype="multipart/form-data"
                           method="POST">
-                        <input type="text" style="display:none;" id="id" name="id"/>
+                        <input type="text" style="display:none;" id="id_discount" name="id"/>
 
                         <div class="row">
-                            <div class="col-sm-5 text-center ">
-                                <div class="thumbnail">
-                                    <img id="choosedPic" style="height: 160px" src="/images/default_avatar_male.jpg">
-                                    <div class="caption">
-                                        <p>
-                                            <label class="btn btn-primary choosePic" for="avatar-2">选择文件</label>
-                                            <input id="avatar-2" name="avatar-2"
-                                                   type="file" style="display:none"/>
-
-                                            <a class="btn btn-default deletePic" role="button"
-                                               style="display: none">删除图片</a>
-                                        </p>
-                                    </div>
-
-                                    <lable id="show-process" class="control-label" style="color: #f50000;"></lable>
-
+                            <div class="form-group">
+                                <label for="limit_discount" class="col-sm-4 control-label">折扣类型</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control">
+                                        <option value="discount"> 折扣 </option>
+                                        <option value="preference"> 满减 </option>
+                                    </select>
                                 </div>
+
+                                <div class="col-sm-1"></div>
                             </div>
 
-                            <div class="col-sm-7 ">
-                                <div class="form-group">
-                                    <label for="name" class="col-sm-4 control-label">名称</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="name" name="name"
-                                               data-toggle="tooltip" data-placement="top" maxlength="30"
-                                               required="required"/>
-                                    </div>
-
-                                    <div class="col-sm-1"></div>
+                            <div class="form-group">
+                                <label for="limit_discount" class="col-sm-4 control-label">条件金额</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" id="limit_discount" name="limit"
+                                           data-toggle="tooltip" data-placement="top" maxlength="30"
+                                           required="required"/>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="menuId" class="col-sm-4 control-label">一级菜单</label>
-                                    <div class="col-sm-7">
-                                        <select id="menuId" name="menuId" class="form-control">
+                                <div class="col-sm-1"></div>
+                            </div>
 
-                                        </select>
-
-                                        <script>
-                                            //展示界面用，正式使用需删除
-                                            function getPrimaryMenu_test(){
-                                                var select = ''
-
-                                                select+='<option value="1"> 热品 </option>';
-                                                select+='<option value="2"> 凉菜 </option>';
-
-                                                return select;
-                                            }
-
-                                            //展示界面时使用
-                                            $("#menuId").html(getPrimaryMenu_test());
-
-                                            //正式使用
-                                            //$("#select_primaryMenu").html(getPrimaryMenu());
-                                        </script>
-
-                                    </div>
-                                    <div class="col-sm-1"></div>
+                            <div class="form-group">
+                                <label for="discount_discount" class="col-sm-4 control-label">折扣</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" id="discount_discount" name="discount"
+                                           data-toggle="tooltip" data-placement="top" maxlength="30"
+                                           required="required"/>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="styles" class="col-sm-4 control-label">风味</label>
-                                    <div class="col-sm-7">
-                                        <select id="styles" name="styles" class="form-control">
+                                <div class="col-sm-1"></div>
+                            </div>
 
-                                        </select>
-
-                                        <script>
-                                            //展示界面用，正式使用需删除
-                                            function getStyles_test(){
-                                                var select = '';
-
-                                                select+='<option value="1"> 特辣 </option>';
-                                                select+='<option value="2"> 中辣 </option>';
-                                                select+='<option value="2"> 微辣 </option>';
-
-                                                return select;
-                                            }
-
-                                            //展示界面时使用
-                                            $("#styles").html(getStyles_test());
-
-                                            //正式使用
-                                            //$("#styles").html(getStyles());
-                                        </script>
-
-                                    </div>
-                                    <div class="col-sm-1"></div>
+                            <div class="form-group">
+                                <label for="startTime_discount" class="col-sm-4 control-label">生效时间</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" id="startTime_discount" name="startTime"
+                                           data-toggle="tooltip" data-placement="top" maxlength="30"
+                                           required="required"/>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="role" class="col-sm-4 control-label">分配厨师</label>
-                                    <div class="col-sm-7">
-                                        <select id="role" name="role" class="form-control">
+                                <div class="col-sm-1"></div>
+                            </div>
 
-                                        </select>
-
-                                        <script>
-                                            //展示界面用，正式使用需删除
-                                            function getPrimaryRole_test(){
-                                                var select = '';
-
-                                                select+='<option value="1"> 甜点师 </option>';
-                                                select+='<option value="2"> 汤料师 </option>';
-                                                select+='<option value="2"> 炒品师 </option>';
-
-                                                return select;
-                                            }
-
-                                            //展示界面时使用，正式使用需删除
-                                            $("#role").html(getPrimaryRole_test());
-
-                                            //正式使用
-                                            //$("#role").html(getRole());
-                                        </script>
-
-                                    </div>
-                                    <div class="col-sm-1"></div>
+                            <div class="form-group">
+                                <label for="endTime_discount" class="col-sm-4 control-label">失效时间</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" id="endTime_discount" name="endTime"
+                                           data-toggle="tooltip" data-placement="top" maxlength="30"
+                                           required="required"/>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="enable" class="col-sm-4 control-label">是否启用</label>
-                                    <div class="col-sm-7">
-                                        <select id="enable" name="enable" class="form-control">
-                                            <option value="true"> 是 </option>
-                                            <option value="true"> 否 </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
+                                <div class="col-sm-1"></div>
                             </div>
                         </div>
 
@@ -409,6 +332,78 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--添加，修改推荐弹出框-->
+    <div id="dialog-recommend-update" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">推荐管理 | <span id="dialog-recommend-update-title"></span></h4>
+                </div>
+
+                <div class="modal-body">
+                    <form role="form" class="form-horizontal add-new form-uploadfiles"
+                          enctype="multipart/form-data"
+                          method="POST">
+                        <input type="text" style="display:none;" id="id_recommend" name="id"/>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-1"></div>
+
+                                <div class="col-sm-10">
+                                    <label for="limit_discount" class="col-sm-5 control-label">展示类型</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control">
+                                            <option value="discount"> 轮播 </option>
+                                            <option value="preference"> 列表 </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+
+                            <div style="width: 100%;">
+                                <div class="col-sm-1"></div>
+
+                                <div class="col-sm-10">
+                                    <div class="table-responsive">
+                                        <table id="_table_recommend_food" class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="id_recommend_food" name="id_recommend_food" type="checkbox" onclick="doAllCheck('id_recommend_food')"></th>
+                                                <th data-field="picUrl" class="W100" data-formatter="_formatte_image">图像</th>
+                                                <th data-field="name" class="W100">名称</th>
+                                                <th data-field="menuId" class="W100">一级菜单</th>
+                                            </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9" style="text-align: right;padding-top: 20px;">
+                                <button type="button" class="btn btn-primary add-new">保存</button>
+                                <button type="button" class="btn btn-default add-new-close" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </form>
+
+
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -449,21 +444,98 @@
         $("#choosedPic").attr("src","/images/default_avatar_male.jpg");
     }
 
-    //打开添加弹出框
-    $(".btn.btn-primary.open-add-dialog").click(function () {
+    //打开添加折扣弹出框
+    $(".btn.btn-primary.open-add-discount-dialog").click(function () {
         window.flag = 'add';
 
         _reset($(".form-horizontal.add-new"));
 
         // $("#choosedPic").attr("src","/images/default_avatar_male.jpg");
 
-        $("#dialog-update-title").html("新增");
+        $("#dialog-discount-update-title").html("新增");
 
-        $("#dialog-update").modal("show");
+        $("#dialog-discount-update").modal("show");
     });
 
-    //打开修改弹出框
-    $(".btn.btn-success.open-update-dialog").click(function () {
+    //打开添加推荐弹出框
+    $(".btn.btn-primary.open-add-recommend-dialog").click(function () {
+        window.flag = 'add';
+
+        _reset($(".form-horizontal.add-new"));
+
+        // $("#choosedPic").attr("src","/images/default_avatar_male.jpg");
+
+        $("#dialog-recommend-update-title").html("新增");
+
+        $("#dialog-recommend-update").modal("show");
+    });
+
+    //打开修改推荐弹出框
+    $(".btn.btn-success.open-update-discount-dialog").click(function () {
+        window.flag = 'update'
+
+        var id = new Array();
+
+        var selectedBox = $("input[name='visitor_id']:checked");
+
+        window.id = id;
+        console.log('clicked update');
+
+        for(var i = 0; i < selectedBox.length; i++){
+            id.push( selectedBox[i].value );
+
+            if(id.length > 2){
+                break;
+            }
+        }
+
+        console.log(id);
+
+        if (id.length != 0) {
+            if(id.length > 1){
+                $("#dialog-return").find(".modal-body").html("请选择一个访客");
+                $("#dialog-return").modal("show");
+
+                return ;
+            }
+
+            _reset($(".form-horizontal.add-new"));
+
+
+            $("#dialog-title").html("修改");
+
+            $("#dialog-update").modal("show");
+
+            // 读取用户选中的用户信息
+            $.get("/console/device_management/get/" + id[0], null, function (r, status) {
+                console.log(r);
+
+                $("#dialog-visitor-management-update-title").html("修改");
+                $("#dialog-visitor-management-update").modal("show");
+
+                $("#dialog-visitor-management-update").find("input[id='deviceId_old']").val(r.mac_id);
+
+                $("#dialog-visitor-management-update").find("input[id='mac_id']").val(r.mac_id);
+                $("#dialog-visitor-management-update").find("input[id='id']").val(r.id);
+                $("#dialog-visitor-management-update").find("input[id='name']").val(r.name);
+                $("#dialog-visitor-management-update").find("input[id='attributionOfDevice']").val(r.attributionOfDevice);
+                $("#dialog-visitor-management-update").find("input[id='organization_name']").val(r.organization_name);
+                $("#dialog-visitor-management-update").find("input[id='addressOfDevice']").val(r.addressOfDevice);
+                $("#dialog-visitor-management-update").find("input[id='type']").val(r.type);
+                $("#dialog-visitor-management-update").find("input[id='level']").val(r.level);
+                $("#dialog-visitor-management-update").find("input[id='createTime']").val(r.create_time);
+                $("#dialog-visitor-management-update").find("input[id='updateTime']").val(r.update_time);
+
+            });
+
+        } else {
+            $(".bs-example-modal-sm").find(".modal-body").html("请选中人员后操作");
+            $(".bs-example-modal-sm").modal("show");
+        }
+    });
+
+    //打开修改推荐弹出框
+    $(".btn.btn-success.open-update-recommend-dialog").click(function () {
         window.flag = 'update'
 
         var id = new Array();
@@ -653,8 +725,18 @@
 
     });
 
+    //当recommendDialog打开时调用
+    $('#dialog-recommend-update').on('show.bs.modal', function () {
+
+    });
+
+    //当discountDialog打开时调用
+    $('#dialog-discount-update').on('show.bs.modal', function () {
+
+    });
+
     function doAllCheck(e){
-        var list = $("input[name='visitor_id']");
+        var list = $('input[name='+e+']');
 
         for(i in list){
             list[i].checked = !list[i].checked;

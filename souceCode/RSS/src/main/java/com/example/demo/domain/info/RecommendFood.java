@@ -8,9 +8,9 @@ import java.sql.Timestamp;
 
 @Entity
 @Component
-@Table(name = "preference_record")
+@Table(name = "recommend_food")
 @Data
-public class RecommendedFood {
+public class RecommendFood {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
