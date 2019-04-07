@@ -22,7 +22,7 @@ public class Waiter {
     private int logInTimes;
 
     @Column(name = "enable")
-    private boolean enable;
+    private int enable;
 
     @Column(name = "login_id")
     private long loginId;

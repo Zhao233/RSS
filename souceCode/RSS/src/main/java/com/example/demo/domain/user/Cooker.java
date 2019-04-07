@@ -44,7 +44,7 @@ public class Cooker {
     private int logInTimes;
 
     @Column(name = "enable")
-    private boolean enable;
+    private int enable;
 
     /**
      * 厨师的身份
