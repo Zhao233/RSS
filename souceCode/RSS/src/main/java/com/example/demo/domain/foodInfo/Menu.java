@@ -18,6 +18,9 @@ public class Menu {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "enable")
+    private int enable;
+
     @Column(name = "create_time")
     private Timestamp createTime;
 
