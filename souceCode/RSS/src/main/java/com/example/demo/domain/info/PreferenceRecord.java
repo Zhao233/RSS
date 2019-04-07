@@ -18,6 +18,12 @@ public class PreferenceRecord {
     @Column(name = "preference")
     private double preference;
 
+    @Column(name = "start_time")
+    private Timestamp startTime;
+
+    @Column(name = "end_time")
+    private Timestamp endTime;
+
     @Column(name = "create_time")
     private Timestamp createTime;
 

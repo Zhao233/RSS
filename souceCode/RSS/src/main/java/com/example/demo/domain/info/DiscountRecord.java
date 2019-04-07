@@ -18,6 +18,12 @@ public class DiscountRecord {
     @Column(name = "discount")
     private double discount;
 
+    @Column(name = "start_time")
+    private Timestamp startTime;
+
+    @Column(name = "end_time")
+    private Timestamp endTime;
+
     @Column(name = "create_time")
     private Timestamp createTime;
 

@@ -30,6 +30,11 @@ public class consoleController {
         return new ModelAndView("console/foodManagement/foodManagement");
     }
 
+    @RequestMapping("/admin/activityManagement")
+    public ModelAndView toActivityManagement(){
+        return new ModelAndView("console/activityManagement/activityManagement");
+    }
+
     /**
      * 菜单管理
      * */
