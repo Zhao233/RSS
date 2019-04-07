@@ -171,10 +171,10 @@
                                         <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="doAllCheckBtn" type="checkbox" onclick="doAllCheck(this)"></th>
                                         <th data-field="picUrl" class="W100" data-formatter="_formatte_image">图像</th>
                                         <th data-field="name" class="W100">名称</th>
-                                        <th data-field="menuId" class="W100" style="border:none;">一级菜单名称</th>
+                                        <th data-field="menuId" class="W100" style="border:none;">一级菜单</th>
                                         <th data-field="styles" class="W100"  data-formatter="_formatte_select">风味</th>
                                         <th data-field="role"  class="W100" style="border:none;">分配厨师</th>
-                                        <th data-field="enable" class="W100" style="border:none;">是否启动</th>
+                                        <th data-field="enable" class="W100" style="border:none;">是否启用</th>
                                         <th data-field="createTime" class="W100" style="border:none;">创建时间</th>
                                         <th data-field="updateTime" class="W100" style="border:none;">修改时间</th>
                                     </tr>
@@ -209,7 +209,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title">服务员管理 | <span id="dialog-update-title"></span></h4>
+                    <h4 class="modal-title">菜品管理 | <span id="dialog-update-title"></span></h4>
                 </div>
 
                 <div class="modal-body">
@@ -219,73 +219,136 @@
                         <input type="text" style="display:none;" id="id" name="id"/>
 
                         <div class="row">
-                            <div class="col-sm-12 ">
-                                <div class="form-group">
-                                    <label for="userID" class="col-sm-4 control-label">微信ID</label>
+                            <div class="col-sm-5 text-center ">
+                                <div class="thumbnail">
+                                    <img id="choosedPic" style="height: 160px" src="/images/default_avatar_male.jpg">
+                                    <div class="caption">
+                                        <p>
+                                            <label class="btn btn-primary choosePic" for="avatar-2">选择文件</label>
+                                            <input id="avatar-2" name="avatar-2"
+                                                   type="file" style="display:none"/>
 
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="userID" name="userID"
-                                               data-toggle="tooltip" data-placement="top" maxlength="30"
-                                               required="required" disabled/>
+                                            <a class="btn btn-default deletePic" role="button"
+                                               style="display: none">删除图片</a>
+                                        </p>
                                     </div>
 
-                                    <div class="col-sm-1"></div>
-                                </div>
+                                    <lable id="show-process" class="control-label" style="color: #f50000;"></lable>
 
-                                <div class="form-group">
-                                    <label for="loginID" class="col-sm-4 control-label">登录码</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="loginID" name="loginID"
-                                               data-toggle="tooltip" data-placement="top" maxlength="30"
-                                               required="required"/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
                                 </div>
+                            </div>
 
+                            <div class="col-sm-7 ">
                                 <div class="form-group">
                                     <label for="name" class="col-sm-4 control-label">名称</label>
                                     <div class="col-sm-7">
                                         <input type="text" class="form-control" id="name" name="name"
-                                               maxlength="30"/>
+                                               data-toggle="tooltip" data-placement="top" maxlength="30"
+                                               required="required"/>
                                     </div>
+
                                     <div class="col-sm-1"></div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="phoneNumber" class="col-sm-4 control-label">电话号码</label>
+                                    <label for="menuId" class="col-sm-4 control-label">一级菜单</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
-                                               maxlength="30"/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
+                                        <select id="menuId" name="menuId" class="form-control">
 
-                                <div class="form-group">
-                                    <label for="loginTimes" class="col-sm-4 control-label">登录次数</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="loginTimes" name="loginTimes"
-                                               maxlength="30" disabled/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="enable" class="col-sm-4 control-label">是否启动</label>
-                                    <div class="col-sm-7">
-                                        <select class="form-control" id="enable" name="enable">
-                                            <option value="true">
-                                                是
-                                            </option>
-
-                                            <option value="false">
-                                                否
-                                            </option>
                                         </select>
 
+                                        <script>
+                                            //展示界面用，正式使用需删除
+                                            function getPrimaryMenu_test(){
+                                                var select = ''
+
+                                                select+='<option value="1"> 热品 </option>';
+                                                select+='<option value="2"> 凉菜 </option>';
+
+                                                return select;
+                                            }
+
+                                            //展示界面时使用
+                                            $("#menuId").html(getPrimaryMenu_test());
+
+                                            //正式使用
+                                            //$("#select_primaryMenu").html(getPrimaryMenu());
+                                        </script>
+
                                     </div>
                                     <div class="col-sm-1"></div>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="styles" class="col-sm-4 control-label">风味</label>
+                                    <div class="col-sm-7">
+                                        <select id="styles" name="styles" class="form-control">
+
+                                        </select>
+
+                                        <script>
+                                            //展示界面用，正式使用需删除
+                                            function getStyles_test(){
+                                                var select = '';
+
+                                                select+='<option value="1"> 特辣 </option>';
+                                                select+='<option value="2"> 中辣 </option>';
+                                                select+='<option value="2"> 微辣 </option>';
+
+                                                return select;
+                                            }
+
+                                            //展示界面时使用
+                                            $("#styles").html(getStyles_test());
+
+                                            //正式使用
+                                            //$("#styles").html(getStyles());
+                                        </script>
+
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="role" class="col-sm-4 control-label">分配厨师</label>
+                                    <div class="col-sm-7">
+                                        <select id="role" name="role" class="form-control">
+
+                                        </select>
+
+                                        <script>
+                                            //展示界面用，正式使用需删除
+                                            function getPrimaryRole_test(){
+                                                var select = '';
+
+                                                select+='<option value="1"> 甜点师 </option>';
+                                                select+='<option value="2"> 汤料师 </option>';
+                                                select+='<option value="2"> 炒品师 </option>';
+
+                                                return select;
+                                            }
+
+                                            //展示界面时使用，正式使用需删除
+                                            $("#role").html(getPrimaryRole_test());
+
+                                            //正式使用
+                                            //$("#role").html(getRole());
+                                        </script>
+
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="enable" class="col-sm-4 control-label">是否启用</label>
+                                    <div class="col-sm-7">
+                                        <select id="enable" name="enable" class="form-control">
+                                            <option value="true"> 是 </option>
+                                            <option value="true"> 否 </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
                             </div>
                         </div>
 
@@ -587,6 +650,67 @@
 
         return select;
     }
+
+    //当新增，修改页面开启时调用，查询一级菜单，风味，厨师身份信息
+    function getFoodInfo(){}
+
+    function getPrimaryMenu(){
+        ajax({
+            url : "",
+            type : 'GET',
+            dataType : 'JSON',
+            async:false,
+
+            success : function(res){
+
+            },
+            fail : function(res){
+
+            },
+            timeout : function(res){
+
+            },
+        })
+    }
+
+    function getStyles(){
+        ajax({
+            url : "",
+            type : 'GET',
+            dataType : 'JSON',
+            async:false,
+
+            success : function(res){
+
+            },
+            fail : function(res){
+
+            },
+            timeout : function(res){
+
+            },
+        })
+    }
+
+    function getRole(){
+        ajax({
+            url : "",
+            type : 'GET',
+            dataType : 'JSON',
+            async:false,
+
+            success : function(res){
+
+            },
+            fail : function(res){
+
+            },
+            timeout : function(res){
+
+            },
+        })
+    }
+
 
     //注销
     $(".btn.btn-danger.btn-logout").click(function () {
