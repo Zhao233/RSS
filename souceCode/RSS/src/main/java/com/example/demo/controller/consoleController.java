@@ -53,11 +53,6 @@ public class consoleController {
         return new ModelAndView("console/peopleManagement/cookerManagement");
     }
 
-    @RequestMapping("/admin/frequentlyUsedMenuManagement")
-    public ModelAndView toFrequentlyUsedMenuManagement(){
-        return new ModelAndView("console/peopleManagement/frequentlyUsedMenuManagement");
-    }
-
     @RequestMapping("/admin/userManagement")
     public ModelAndView toUserManagement(){
         return new ModelAndView("console/peopleManagement/userManagement");
