@@ -30,6 +30,9 @@ public class Food {
     @Column(name = "pic_url")
     private String picUrl;
 
+    @Column(name = "enable")
+    private int enable;
+
     @Column(name = "create_time")
     private Timestamp createTime;
 
