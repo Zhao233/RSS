@@ -344,24 +344,15 @@ function getFormmattedTime(time){
     time = time.split("T");
 
     return time[0]+" "+ ( time[1].split(".")[0] )
-
-
 }
+
+
 
 function getPrimaryMenuNumber(secondaryMenuName){
     switch (secondaryMenuName){
-        case "recommendManagement" :
+        case "activityManagement" :
             return {primaryMenuNumber : 0,
                     secondaryMenu : 0};
-
-        case "preferenceManagement" :
-            return {primaryMenuNumber : 0,
-                    secondaryMenu : 1};
-
-        case "discountManagement" :
-            return {primaryMenuNumber : 0,
-                    secondaryMenu : 2};
-
 
 
 

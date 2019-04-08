@@ -15,20 +15,6 @@ public class consoleController {
      * 活动管理
      * */
 
-    @RequestMapping("/admin/discountManagement")
-    public ModelAndView toDisCountManagement(){
-        return new ModelAndView("console/activityManagement/discountManagement");
-    }
-
-    @RequestMapping("/admin/preferenceManagement")
-    public ModelAndView toPreferenceManagement(){
-        return new ModelAndView("console/activityManagement/preferenceManagement");
-    }
-
-    @RequestMapping("/admin/recommendManagement")
-    public ModelAndView tpRecommendManagement(){
-        return new ModelAndView("console/foodManagement/foodManagement");
-    }
 
     @RequestMapping("/admin/activityManagement")
     public ModelAndView toActivityManagement(){
