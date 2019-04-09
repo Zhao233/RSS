@@ -1,9 +1,17 @@
 package com.example.demo.service.foodInfo;
 
 import com.example.demo.domain.foodInfo.Food;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface FoodService {
-    List<Food> getFoodsByMenuId(long menuId);
+    Page<Food> getFoodsByMenuId(long menuId, String search, Pageable pageable);
+
+    Page<Food> getFoodList(String search, Pageable pageable);
+
+    void addFood(Food food);
+
+    void updateFood(Food food);
+
+    void deleteFood(long id);
 }

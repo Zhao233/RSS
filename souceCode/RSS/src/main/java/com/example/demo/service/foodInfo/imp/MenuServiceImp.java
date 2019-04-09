@@ -4,10 +4,9 @@ import com.example.demo.domain.foodInfo.Menu;
 import com.example.demo.repository.foodInfo.MenuDao;
 import com.example.demo.service.foodInfo.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.LinkedList;
-import java.util.List;
 
 @Service("menuService")
 public class MenuServiceImp implements MenuService {
@@ -16,11 +15,27 @@ public class MenuServiceImp implements MenuService {
 
 
     @Override
-    public List<Menu> getMenuList() {
-        try{
-            return menuDao.findAll();
-        } catch (Exception e){
-            return new LinkedList<>();
-        }
+    public Page<Menu> getMenuList(String search, Pageable pageable) {
+        return  menuDao.getMenuList(search, pageable);
+    }
+
+    @Override
+    public Menu getOne(long id) {
+        return menuDao.getOne(id);
+    }
+
+    @Override
+    public void addMenu(Menu menu) {
+        menuDao.save(menu);
+    }
+
+    @Override
+    public void updateMenu(Menu menu) {
+        menuDao.save(menu);
+    }
+
+    @Override
+    public void deleteMenu(long id) {
+        menuDao.deleteById(id);
     }
 }

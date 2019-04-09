@@ -1,11 +1,13 @@
 package com.example.demo.domain.foodInfo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 @Entity
 @Component
 @Table(name = "menu")
@@ -19,7 +21,7 @@ public class Menu {
     private String name;
 
     @Column(name = "enable")
-    private int enable;
+    private Integer enable = 1;
 
     @Column(name = "create_time")
     private Timestamp createTime;

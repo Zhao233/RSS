@@ -1,10 +1,12 @@
 package com.example.demo.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 
 @Entity
 @Component
@@ -24,7 +26,7 @@ public class CookerRole {
      *       2，为糕点师
      * */
     @Column(name = "role_id")
-    private int roleId;
+    private Integer roleId;
 
     /**
      * 厨师角色的名称

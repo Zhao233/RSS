@@ -338,9 +338,7 @@ function getToDayDateTime_00_00() {
 }
 
 //2018-10-23T13:51:45.000+0000
-function getFormmattedTime(time){
-    var date = new Date();
-
+function getFormattedTime(time){
     time = time.split("T");
 
     return time[0]+" "+ ( time[1].split(".")[0] )
@@ -419,12 +417,11 @@ function loadMenu(){
     var primaryMenu = primaryMenus.get(menuNum.primaryMenuNumber);
 
     //展开一级菜单
-    setTimeout(function () {
-        $(primaryMenu).find("a")[0].click();
-    }, 10);
+    $(primaryMenu).addClass("active");
+    $(primaryMenu).find("ul").removeAttr("style");
+
 
     var secondaryMenus = $(primaryMenu).find('li');
-
     var secondaryMenu = secondaryMenus.get(menuNum.secondaryMenu);
 
     $(secondaryMenu).addClass("active-menu-item");

@@ -1,10 +1,12 @@
 package com.example.demo.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 
 @Entity
 @Component
@@ -19,7 +21,7 @@ public class Admin {
     private String name;
 
     @Column(name = "log_in_times")
-    private int logInTimes;
+    private Integer logInTimes = 0;
 
     @Column(name = "create_time")
     private Timestamp createTime;

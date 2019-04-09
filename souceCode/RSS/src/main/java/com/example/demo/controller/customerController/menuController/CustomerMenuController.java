@@ -24,9 +24,9 @@ public class CustomerMenuController {
         Map<String, Object> map = new HashMap();
         List<Menu> list_menu;
 
-        list_menu = menuService.getMenuList();
+        //list_menu = menuService.getMenuList();
 
-        map.put("menuList", list_menu);
+        //map.put("menuList", list_menu);
         map.put("status", "SUCCESS");
         return map;
     }

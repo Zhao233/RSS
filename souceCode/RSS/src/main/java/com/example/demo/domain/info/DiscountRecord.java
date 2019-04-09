@@ -1,10 +1,12 @@
 package com.example.demo.domain.info;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 
 @Entity
 @Component
@@ -18,8 +20,11 @@ public class DiscountRecord {
     @Column(name = "discount")
     private double discount;
 
+    @Column(name = "money_limit")
+    private double moneyLimit;
+
     @Column(name = "type")
-    private int type;
+    private Integer type = 0;
 
     @Column(name = "start_time")
     private Timestamp startTime;

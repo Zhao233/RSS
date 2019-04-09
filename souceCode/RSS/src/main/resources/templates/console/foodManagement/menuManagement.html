@@ -153,7 +153,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="page-header" style="color: #FFFFFF;">
-                        服务员管理
+                        一级菜单管理
                     </h1>
                 </div>
             </div>
@@ -170,9 +170,9 @@
                                     <tr>
                                         <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="doAllCheckBtn" type="checkbox" onclick="doAllCheck(this)"></th>
                                         <th data-field="name" class="W100">名称</th>
-                                        <th data-field="enable" class="W100" style="border:none;">是否启动</th>
-                                        <th data-field="createTime" class="W100" style="border:none;">创建时间</th>
-                                        <th data-field="updateTime" class="W100" style="border:none;">修改时间</th>
+                                        <th data-field="enable" class="W100" style="border:none;" data-formatter="_formatte_select_show">是否启动</th>
+                                        <th data-field="createTime" class="W100" style="border:none;" data-formatter="_formatte_time_create">创建时间</th>
+                                        <th data-field="updateTime" class="W100" style="border:none;" data-formatter="_formatte_time_update">修改时间</th>
                                     </tr>
                                     </thead>
 
@@ -205,7 +205,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title">服务员管理 | <span id="dialog-update-title"></span></h4>
+                    <h4 class="modal-title">一级菜单管理 | <span id="dialog-update-title"></span></h4>
                 </div>
 
                 <div class="modal-body">
@@ -213,30 +213,10 @@
                           enctype="multipart/form-data"
                           method="POST">
                         <input type="text" style="display:none;" id="id" name="id"/>
+                        <input type="text" style="display:none;" id="createTime" name="createTime"/>
 
                         <div class="row">
                             <div class="col-sm-12 ">
-                                <div class="form-group">
-                                    <label for="userID" class="col-sm-4 control-label">微信ID</label>
-
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="userID" name="userID"
-                                               data-toggle="tooltip" data-placement="top" maxlength="30"
-                                               required="required" disabled/>
-                                    </div>
-
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="loginID" class="col-sm-4 control-label">登录码</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="loginID" name="loginID"
-                                               data-toggle="tooltip" data-placement="top" maxlength="30"
-                                               required="required"/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
 
                                 <div class="form-group">
                                     <label for="name" class="col-sm-4 control-label">名称</label>
@@ -248,32 +228,14 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="phoneNumber" class="col-sm-4 control-label">电话号码</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
-                                               maxlength="30"/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="loginTimes" class="col-sm-4 control-label">登录次数</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="loginTimes" name="loginTimes"
-                                               maxlength="30" disabled/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                                <div class="form-group">
                                     <label for="enable" class="col-sm-4 control-label">是否启动</label>
                                     <div class="col-sm-7">
-                                        <select class="form-control" id="enable" name="enable">
-                                            <option value="true">
+                                        <select class="form-control" id="enable" name="enable" value="1">
+                                            <option value="1" selected = "selected">
                                                 是
                                             </option>
 
-                                            <option value="false">
+                                            <option value="0">
                                                 否
                                             </option>
                                         </select>
@@ -311,9 +273,113 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div id="dialog-delete" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="mySmallModalLabel0">提示</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer modal-footer-delete-confirm">
+                    <button type="button" class="btn btn-danger btn-delete-confirm" data-dismiss="modal">确认</button>
+                    <button type="button" class="btn btn-default btn-delete-cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
 </div>
 
 <script>
+    var contactsNameMap = new Map();
+
+    !function ($) {
+        $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+            $(this).find('em:first').toggleClass("glyphicon-minus");
+        });
+        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+    }(window.jQuery);
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show');
+        else $('#sidebar-collapse').collapse('hide');
+    });
+
+
+    $(document).ready(function() {
+        $('#_table_user_search').bootstrapTable({
+            method: 'get',
+            url: "/admin/menu/getMenuList",
+            striped: true,
+            height:300,
+            dataType: "json",
+            pagination: true,
+            queryParamsType: "limit",
+            singleSelect: true,
+            contentType: "application/x-www-form-urlencoded",
+            pageSize: 10,
+            pageNumber: 1,
+            search: true,
+            showColumns: true,
+            showRefresh: true,
+            sidePagination: "server", //服务端请求
+            queryParams: function (params) {
+
+                return {
+                    limit: params.limit,
+                    offset: params.offset / params.limit,
+                    search: $(".search").find("input").val(),
+                    sort: params.sort,
+                    order: params.order,
+                };
+            },
+            responseHandler: function (res) {
+                $("#doAllCheckBtn").checked != $("#doAllCheckBtn").checked;
+
+                //doallcheck();
+
+                //config = res.config;
+
+                return {
+                    "rows": res.rows,
+                    "total": res.total
+                };
+            },
+            onPostBody : function(){
+                adjustTableHeight($(".fixed-table-body"),20);//custom-script
+            },
+            onSort(name,order){
+                $(".temperature").find(".sortable").empty();
+                $(".humidity").find(".sortable").empty();
+
+                $(".temperature").find(".sortable").append("温度");
+                $(".humidity").find(".sortable").append("湿度");
+
+                if(name == "temperature"){
+
+                    $(".humidity").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if(order == "asc"){
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+
+                } else {//humidity
+                    $(".temperature").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if (order == "asc") {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+                }
+            }
+        });
+    });
+
     //重置input
     function _reset_input(input) {
         input.removeClass("alert-danger");
@@ -351,7 +417,7 @@
 
         var id = new Array();
 
-        var selectedBox = $("input[name='visitor_id']:checked");
+        var selectedBox = $("input[name='table_id']:checked");
 
         window.id = id;
         console.log('clicked update');
@@ -368,7 +434,7 @@
 
         if (id.length != 0) {
             if(id.length > 1){
-                $("#dialog-return").find(".modal-body").html("请选择一个访客");
+                $("#dialog-return").find(".modal-body").html("请选择一个一级菜单");
                 $("#dialog-return").modal("show");
 
                 return ;
@@ -382,30 +448,27 @@
             $("#dialog-update").modal("show");
 
             // 读取用户选中的用户信息
-            $.get("/console/device_management/get/" + id[0], null, function (r, status) {
-                console.log(r);
+            $.get("/admin/menu/get/" + id[0], null, function (res, status) {
+                if(res.status == "FAILED"){
+                    $("#dialog-return").find(".modal-body").html("请求失败");
+                    $("#dialog-return").modal("show");
 
-                $("#dialog-visitor-management-update-title").html("修改");
-                $("#dialog-visitor-management-update").modal("show");
+                    return ;
+                }
 
-                $("#dialog-visitor-management-update").find("input[id='deviceId_old']").val(r.mac_id);
+                $("#dialog-update-title").html("修改");
+                $("#dialog-update").modal("show");
 
-                $("#dialog-visitor-management-update").find("input[id='mac_id']").val(r.mac_id);
-                $("#dialog-visitor-management-update").find("input[id='id']").val(r.id);
-                $("#dialog-visitor-management-update").find("input[id='name']").val(r.name);
-                $("#dialog-visitor-management-update").find("input[id='attributionOfDevice']").val(r.attributionOfDevice);
-                $("#dialog-visitor-management-update").find("input[id='organization_name']").val(r.organization_name);
-                $("#dialog-visitor-management-update").find("input[id='addressOfDevice']").val(r.addressOfDevice);
-                $("#dialog-visitor-management-update").find("input[id='type']").val(r.type);
-                $("#dialog-visitor-management-update").find("input[id='level']").val(r.level);
-                $("#dialog-visitor-management-update").find("input[id='createTime']").val(r.create_time);
-                $("#dialog-visitor-management-update").find("input[id='updateTime']").val(r.update_time);
+                $("#dialog-update").find("input[id='id']").val(res.menu.id);
+                $("#dialog-update").find("input[id='createTime']").val(res.menu.createTime);
 
+                $("#dialog-update").find("input[id='name']").val(res.menu.name);
+                $("#dialog-update").find("input[id='enable']").val(res.menu.enable);
             });
 
         } else {
-            $(".bs-example-modal-sm").find(".modal-body").html("请选中人员后操作");
-            $(".bs-example-modal-sm").modal("show");
+            $("#dialog-return").find(".modal-body").html("请选中一级菜单后操作");
+            $("#dialog-return").modal("show");
         }
     });
 
@@ -418,71 +481,36 @@
 
     //为点击添加弹出框中的确认添加了点击事件
     $(".btn.btn-primary.add-new").click(function () {
-        var startTime;
-        var endTime;
 
         var isComplete = true;
         var isFormatted = true;
 
         //check input
-        if ($("input[id='mac_id']").val() == "") {
-            _set($("input[id='mac_id']"), "设备id");
-            isComplete = false;
-        }
         if ($("input[id='name']").val() == "") {
-            _set($("input[id='name']"), "设备名称");
+            _set($("input[id='name']"), "名称");
             isComplete = false;
         }
-        if ($("input[id='attributionOfDevice']").val() == "") {
-            _set($("input[id='attributionOfDevice']"), "设备归属");
-            isComplete = false;
-        }
-        if ($("input[id='organization_name']").val() == "") {
-            _set($("input[id='organization_name']"), "组织");
-            isComplete = false;
-        }
-        if ($("input[id='addressOfDevice']").val() == "") {
-            _set($("input[id='addressOfDevice']"), "设备安装地址");
-            isComplete = false;
-        }
-        if ($("input[id='type']").val() == "") {
-            _set($("input[id='type']"), "类型");
-            isComplete = false;
-        }
-        if ($("input[id='level']").val() == "") {
-            _set($("input[id='level']"), "等级");
-            isComplete = false;
+
+        if(!isComplete){
+            return ;
         }
 
         var flag_ = window.flag;
         console.log(window.flag);
-
 
         var form = new FormData();
 
         if(flag_ == "update") {
             form.append("id", $("input[id='id']").val());
         } else {
-            form.append("id", 0);
         }
-        form.append("mac_id", $("input[id='mac_id']").val());
+
         form.append("name", $("input[id='name']").val());
-        form.append("attributionOfDevice", $("input[id='attributionOfDevice']").val());
-        form.append("organization_name", $("input[id='organization_name']").val());
-        form.append("addressOfDevice", $("input[id='addressOfDevice']").val());
-        form.append("type", $("input[id='type']").val());
-        form.append("level", $("input[id='level']").val());
-        form.append("deviceId_old", $("input[id='deviceId_old']").val());
-        form.append("updateTime", $("input[id='updateTime']").val());
-
-        getFormmattedTime($("input[id='createTime']").val())
-
-        form.append("createTime", getFormmattedTime( $("input[id='createTime']").val() ) );
-
+        form.append("enable", $("select[id='enable']").val());
+        form.append("createTime", $("input[id='createTime']").val());
 
         $.ajax({
-            url: "/console/device_management/" + flag,
-            timeout : timeout_network,
+            url: "/admin/menu/" + flag,
             type: "post",
             data: form,
             processData: false,
@@ -536,8 +564,90 @@
 
     });
 
+    //点击删除按钮,打开删除确认dialog
+    $(".btn.btn-danger.delete-dialog").click(function (){
+        var selectedBox = $("input[name='table_id']:checked");
+
+        var id = new Array();
+
+        for(var i = 0; i < selectedBox.length; i++){
+            id.push(selectedBox[i].value);
+        }
+
+        if (id.length > 0) {
+            $("#dialog-delete").find(".modal-body").html("是否删除一级菜单?</br>");
+
+            for(var i = 0; i < id.length; i++){
+                $("#dialog-delete").find(".modal-body").append("</br>"+contactsNameMap.get( parseInt(id[i]) ));
+            }
+
+            $("#dialog-delete").modal("show");
+        } else {
+            $("#dialog-return").find(".modal-body").html("请选择一级菜单");
+            $("#dialog-return").modal("show");
+        }
+    })
+
+
+    $(".btn.btn-danger.btn-delete-confirm").click(function () {
+        console.log('clicked the delete');
+
+        var list_id = new Array();
+
+        var selectedBox = $("input[name='table_id']:checked");
+
+        for(var i = 0; i <  selectedBox.length; i++){
+            list_id.push( parseInt(selectedBox[i].value) );
+        }
+
+        console.log(list_id);
+
+        var form = new FormData();
+
+        form.append("list_ID", list_id);
+
+        $.ajax({
+            url: "/admin/menu/delete",
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                switch (r.status) {
+                    case "SUCCEED" :
+                        $("#dialog-return").find(".modal-body").html("删除成功");
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.btn-delete-cancel").click();
+                        $(".panel.panel-default").find("button[name='refresh']").click();
+
+                        break
+
+                    case "FAILED" :
+                        $("#dialog-return").find(".modal-body").html("删除失败");
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        break
+                }
+            },
+            error: function (r) {
+
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
+    })
+
+
     function doAllCheck(e){
-        var list = $("input[name='visitor_id']");
+        var list = $("input[name='table_id']");
 
         for(i in list){
             list[i].checked = !list[i].checked;
@@ -551,7 +661,7 @@
 
         contactsNameMap.set(value,row.name);
 
-        return '<input name="visitor_id" type="checkbox" value="' + value + '" />';
+        return '<input name="table_id" type="checkbox" value="' + value + '" />';
     }
 
     function _formatte_image(value, row, index) {
@@ -582,6 +692,26 @@
         select += '</select>'
 
         return select;
+    }
+
+    function _formatte_select_show(value, row, index) {
+        return $.trim(value) ==$.trim('1') ? "是":"否" ;
+    }
+
+    function _formatte_time_create(value, row, index) {
+        if(value==undefined){
+            return '-'
+        }
+
+        return getFormattedTime(value);
+    }
+
+    function _formatte_time_update(value, row, index) {
+        if(value==undefined){
+            return '-'
+        }
+
+        return getFormattedTime(value);
     }
 
     //注销
