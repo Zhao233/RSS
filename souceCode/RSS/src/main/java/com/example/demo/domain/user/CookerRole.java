@@ -32,7 +32,7 @@ public class CookerRole {
      * 厨师角色的名称
      * */
     @Column(name = "role_name")
-    private String roleName;
+    private String name;
 
     @Column(name = "create_time")
     private Timestamp createTime;

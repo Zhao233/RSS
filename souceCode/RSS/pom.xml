@@ -65,35 +65,50 @@
             <!--<artifactId>spring-boot-starter-security</artifactId>-->
             <!--</dependency>-->
 
-            <dependency>
+        <dependency>
                 <groupId>net.sf.json-lib</groupId>
                 <artifactId>json-lib</artifactId>
                 <version>2.4</version>
                 <classifier>jdk15</classifier>
             </dependency>
 
-            <dependency>
+        <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jdbc</artifactId>
             </dependency>
 
-            <dependency>
+        <dependency>
                 <groupId>net.sourceforge.nekohtml</groupId>
                 <artifactId>nekohtml</artifactId>
                 <version>1.9.22</version>
             </dependency>
-            <dependency>
+        <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>1.18.6</version>
             </dependency>
 
-            <dependency>
+        <!--热启动-->
+        <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-devtools</artifactId>
                 <optional>true</optional>
                 <scope>true</scope>
             </dependency>
+
+        <!--腾讯云cos-->
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>cos_api</artifactId>
+            <version>5.5.1</version>
+        </dependency>
+
+        <!--腾讯云cos javaJdk-->
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>qcloud-java-sdk</artifactId>
+            <version>2.0.1</version>
+        </dependency>
     </dependencies>
 
         <build>

@@ -2,7 +2,15 @@ package com.example.demo.controller.adminController.foodInfoCntroller;
 
 
 import com.example.demo.domain.foodInfo.Food;
+import com.example.demo.domain.foodInfo.Menu;
+import com.example.demo.domain.foodInfo.Style;
+import com.example.demo.domain.user.CookerRole;
+import com.example.demo.repository.foodInfo.MenuDao;
+import com.example.demo.repository.foodInfo.StyleDao;
+import com.example.demo.repository.user.CookerRoleDao;
 import com.example.demo.service.foodInfo.FoodService;
+import com.example.demo.util.COSUtil;
+import com.example.demo.util.DateTranslator;
 import com.example.demo.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,14 +18,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -25,6 +34,15 @@ import java.util.Map;
 public class AdminFoodController {
     @Autowired
     private FoodService foodService;
+
+    @Autowired
+    private MenuDao menuDao;
+
+    @Autowired
+    private StyleDao styleDao;
+
+    @Autowired
+    private CookerRoleDao cookerRoleDao;
 
 
     /**
@@ -47,7 +65,27 @@ public class AdminFoodController {
         map.put("total", page != null ? page.getTotalElements() : 0);
         map.put("rows", page != null ? page.getContent() : "");
 
-        map.put("status", "SUCCESS");
+        map.put("status", "SUCCEED");
+        return map;
+    }
+
+    /**
+     *获取创建菜品时所需的信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getFoodInfo")
+    public Map<String, Object> getFoodInfo(){
+        Map<String, Object> map = new HashMap();
+
+        List<Menu> list_menu = menuDao.findAll();
+        List<Style> list_style = styleDao.findAll();
+        List<CookerRole> list_role = cookerRoleDao.findAll();
+
+        map.put("list_menu", list_menu);
+        map.put("list_style", list_style);
+        map.put("list_role", list_role);
+
+        map.put("status", "SUCCEED");
         return map;
     }
 
@@ -66,7 +104,7 @@ public class AdminFoodController {
         map.put("total", page != null ? page.getTotalElements() : 0);
         map.put("rows", page != null ? page.getContent() : "");
 
-        map.put("status", "SUCCESS");
+        map.put("status", "SUCCEED");
         return map;
     }
 
@@ -75,23 +113,43 @@ public class AdminFoodController {
     public Map<String, Object> addFood(MultipartHttpServletRequest request,
                                        @RequestParam(name = "menuId") long menuId,
                                        @RequestParam(name = "name") String name,
-                                       @RequestParam(name = "role") int role,
+                                       @RequestParam(name = "role") String role,
                                        @RequestParam(name = "styles") String styles,
                                        @RequestParam(name = "enable") int enable){
         Map<String, Object> map = new HashMap();
+        MultipartFile multipartFile = request.getFile("file");
+
+        File file = null;
+        String file_url = "";
+
+        file = new File(multipartFile.getOriginalFilename());
+
+        try {
+            byte[] bytes = multipartFile.getBytes();
+
+            OutputStream outputStream = new FileOutputStream(file);
+
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
+
+            bufferedOutputStream.write(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        file_url = COSUtil.uploadFile(file);
 
         Food food = new Food();
-        food.setPicUrl("");
+        food.setPicUrl(file_url);
         food.setName(name);
         food.setMenuId(menuId);
-        food.setRole(role);
+        food.setRole(Integer.valueOf(role));
         food.setStylesId(styles);
         food.setEnable(enable);
         food.setCreateTime(TimeUtil.getTimeNow());
 
         foodService.addFood(food);
 
-        map.put("status","SUCCESS");
+        map.put("status","SUCCEED");
 
         return map;
     }
@@ -103,6 +161,7 @@ public class AdminFoodController {
                                           @RequestParam(name = "menuId") long menuId,
                                           @RequestParam(name = "name") String name,
                                           @RequestParam(name = "role") int role,
+                                          @RequestParam(name = "createTime") String createTime,
                                           @RequestParam(name = "styles") String styles,
                                           @RequestParam(name = "enable") int enable){
         Map<String, Object> map = new HashMap();
@@ -114,12 +173,14 @@ public class AdminFoodController {
         food.setMenuId(menuId);
         food.setRole(role);
         food.setStylesId(styles);
-        food.setEnable(enable);
+        food.setCreateTime(DateTranslator.StringToTimeStamp(createTime));
         food.setUpdateTime(TimeUtil.getTimeNow());
+        food.setEnable(enable);
+
 
         foodService.updateFood(food);
 
-        map.put("status","SUCCESS");
+        map.put("status","SUCCEED");
 
         return map;
     }
@@ -131,7 +192,7 @@ public class AdminFoodController {
 
         foodService.deleteFood(foodId);
 
-        map.put("status","SUCCESS");
+        map.put("status","SUCCEED");
 
         return map;
     }
