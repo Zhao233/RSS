@@ -29,6 +29,11 @@ public class FoodServiceImp implements FoodService {
     }
 
     @Override
+    public Food getOne(long id) {
+        return foodDao.getOne(id);
+    }
+
+    @Override
     public void addFood(Food food) {
         foodDao.save(food);
     }

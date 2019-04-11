@@ -372,6 +372,89 @@
 </div>
 
 <script>
+    var contactsNameMap = new Map();
+
+    !function ($) {
+        $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+            $(this).find('em:first').toggleClass("glyphicon-minus");
+        });
+        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+    }(window.jQuery);
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show');
+        else $('#sidebar-collapse').collapse('hide');
+    });
+
+
+    $(document).ready(function() {
+        $('#_table_user_search').bootstrapTable({
+            method: 'get',
+            url: "/admin/food/getFoodList",
+            striped: true,
+            height:300,
+            dataType: "json",
+            pagination: true,
+            queryParamsType: "limit",
+            singleSelect: true,
+            contentType: "application/x-www-form-urlencoded",
+            pageSize: 10,
+            pageNumber: 1,
+            search: true,
+            showColumns: true,
+            showRefresh: true,
+            sidePagination: "server", //服务端请求
+            queryParams: function (params) {
+
+                return {
+                    limit: params.limit,
+                    offset: params.offset / params.limit,
+                    search: $(".search").find("input").val(),
+                    sort: params.sort,
+                    order: params.order,
+                };
+            },
+            responseHandler: function (res) {
+                $("#doAllCheckBtn").checked != $("#doAllCheckBtn").checked;
+
+                return {
+                    "rows": res.rows,
+                    "total": res.total
+                };
+            },
+            onPostBody : function(){
+                adjustTableHeight($(".fixed-table-body"),20);//custom-script
+            },
+            onSort(name,order){
+                $(".temperature").find(".sortable").empty();
+                $(".humidity").find(".sortable").empty();
+
+                $(".temperature").find(".sortable").append("温度");
+                $(".humidity").find(".sortable").append("湿度");
+
+                if(name == "temperature"){
+
+                    $(".humidity").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if(order == "asc"){
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+
+                } else {//humidity
+                    $(".temperature").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if (order == "asc") {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+                }
+            }
+        });
+    });
+
     //重置input
     function _reset_input(input) {
         input.removeClass("alert-danger");
@@ -430,7 +513,7 @@
 
         if (id.length != 0) {
             if(id.length > 1){
-                $("#dialog-return").find(".modal-body").html("请选择一个访客");
+                $("#dialog-return").find(".modal-body").html("请选择一个菜品");
                 $("#dialog-return").modal("show");
 
                 return ;
@@ -444,25 +527,28 @@
             $("#dialog-update").modal("show");
 
             // 读取用户选中的信息
-            $.get("/console/device_management/get/" + id[0], null, function (r, status) {
-                console.log(r);
+            $.get("/console/device_management/get/" + id[0], null, function (res, status) {
+                if(res.status == "FAILED"){
+                    $("#dialog-return").find(".modal-body").html("请求失败");
+                    $("#dialog-return").modal("show");
 
-                $("#dialog-visitor-management-update-title").html("修改");
-                $("#dialog-visitor-management-update").modal("show");
+                    return ;
+                }
 
-                $("#dialog-visitor-management-update").find("input[id='deviceId_old']").val(r.mac_id);
+                $("#dialog-update-title").html("修改");
+                $("#dialog-update").modal("show");
 
-                $("#dialog-visitor-management-update").find("input[id='mac_id']").val(r.mac_id);
-                $("#dialog-visitor-management-update").find("input[id='id']").val(r.id);
-                $("#dialog-visitor-management-update").find("input[id='name']").val(r.name);
-                $("#dialog-visitor-management-update").find("input[id='attributionOfDevice']").val(r.attributionOfDevice);
-                $("#dialog-visitor-management-update").find("input[id='organization_name']").val(r.organization_name);
-                $("#dialog-visitor-management-update").find("input[id='addressOfDevice']").val(r.addressOfDevice);
-                $("#dialog-visitor-management-update").find("input[id='type']").val(r.type);
-                $("#dialog-visitor-management-update").find("input[id='level']").val(r.level);
-                $("#dialog-visitor-management-update").find("input[id='createTime']").val(r.create_time);
-                $("#dialog-visitor-management-update").find("input[id='updateTime']").val(r.update_time);
+                $("#dialog-update").find("input[id='id']").val(res.menu.id);
+                $("#dialog-update").find("input[id='createTime']").val(res.menu.createTime);
 
+                $("#dialog-update").find("input[id='name']").val(res.menu.name);
+
+                $("#dialog-update").find("input[id='menuId']").val(res.menuId);
+                $("#dialog-update").find("input[id='role']").val(res.role);
+                $("#dialog-update").find("input[id='styles']").val(res.styles);
+                $("#dialog-update").find("input[id='enable']").val(res.enable);
+
+                $("#choosedPic").attr('src', res.picUrl);
             });
 
         } else {

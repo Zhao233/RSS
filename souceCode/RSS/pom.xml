@@ -102,13 +102,6 @@
             <artifactId>cos_api</artifactId>
             <version>5.5.1</version>
         </dependency>
-
-        <!--腾讯云cos javaJdk-->
-        <dependency>
-            <groupId>com.qcloud</groupId>
-            <artifactId>qcloud-java-sdk</artifactId>
-            <version>2.0.1</version>
-        </dependency>
     </dependencies>
 
         <build>

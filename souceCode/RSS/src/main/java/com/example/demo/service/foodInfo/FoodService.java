@@ -9,6 +9,8 @@ public interface FoodService {
 
     Page<Food> getFoodList(String search, Pageable pageable);
 
+    Food getOne(long id);
+
     void addFood(Food food);
 
     void updateFood(Food food);

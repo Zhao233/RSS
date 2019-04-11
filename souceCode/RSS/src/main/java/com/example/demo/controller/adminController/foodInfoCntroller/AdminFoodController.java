@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -85,6 +86,18 @@ public class AdminFoodController {
         map.put("list_style", list_style);
         map.put("list_role", list_role);
 
+        map.put("status", "SUCCEED");
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/get/{id}")
+    public Map<String, Object> getOneById(@PathVariable String id)  {
+        HashMap<String, Object> map = new HashMap<>();
+
+        Food food = foodService.getOne(Long.parseLong(id));
+
+        map.put("menu",food);
         map.put("status", "SUCCEED");
         return map;
     }
@@ -161,7 +174,7 @@ public class AdminFoodController {
                                           @RequestParam(name = "menuId") long menuId,
                                           @RequestParam(name = "name") String name,
                                           @RequestParam(name = "role") int role,
-                                          @RequestParam(name = "createTime") String createTime,
+                                          @RequestParam(name = "createTim e") String createTime,
                                           @RequestParam(name = "styles") String styles,
                                           @RequestParam(name = "enable") int enable){
         Map<String, Object> map = new HashMap();
