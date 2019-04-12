@@ -18,16 +18,16 @@ public class Waiter {
     private long id;
 
     @Column(name = "user_id")
-    private String userid;
+    private String userID;
 
     @Column(name = "log_in_times")
-    private Integer logInTimes = 0;
+    private Integer loginTimes = 0;
 
     @Column(name = "enable")
     private Integer enable = 1;
 
     @Column(name = "login_id")
-    private String loginId;
+    private String loginID;
 
     @Column(name = "name")
     private String name;

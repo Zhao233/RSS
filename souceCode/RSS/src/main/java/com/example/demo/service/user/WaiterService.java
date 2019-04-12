@@ -6,14 +6,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface WaiterService {
-    Page<Waiter> getWaiterList(String search, Pageable pageable);
+    Page<Waiter> getAll(String search, Pageable pageable);
 
-    void addWaiter(Waiter waiter);
+    Waiter getOneByID(long id);
 
-    void updateWaiter(Waiter waiter);
+    void addOne(Waiter waiter);
 
-    void deleteWaiter(long id);
+    void updateOne(Waiter waiter);
 
-    boolean isLoginIDExist(String loginID);
+    void deleteOne(long id);
+
 
 }

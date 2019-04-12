@@ -12,12 +12,6 @@ import java.util.List;
 @Repository
 public interface WaiterDao extends JpaRepository<Waiter,Long> {
     @Query(value = "SELECT waiter FROM Waiter waiter where waiter.name like %?1%")
-    Page<Waiter> getMenuList(String search, Pageable pageable);
-
-    @Query(value = "UPDATE Waiter waiter SET waiter.enable = 1 WHERE waiter.id = ?1")
-    void deleteWaiter(long id);
-
-    @Query(value = "SELECT waiter.loginId FROM Waiter waiter where waiter.loginId = ?1")
-    List<Long> getLoginID(String LoginID);
+    Page<Waiter> getAll(String search, Pageable pageable);
 }
 
