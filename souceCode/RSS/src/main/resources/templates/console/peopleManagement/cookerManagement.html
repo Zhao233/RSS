@@ -169,18 +169,17 @@
                                     <thead>
                                     <tr>
                                         <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="doAllCheckBtn" type="checkbox" onclick="doAllCheck(this)"></th>
-                                        <th data-field="userId"  class="W100" style="border:none;">微信ID</th>
-                                        <th data-field="loginId" class="W100" style="border:none;">登陆码</th>
+                                        <th data-field="userID"  class="W100" style="border:none;">微信ID</th>
+                                        <th data-field="loginID" class="W100" style="border:none;">登陆码</th>
                                         <th data-field="name"  class="W100" style="border:none;">名称</th>
                                         <th data-field="phoneNumber"  class="W100" style="border:none;">电话号码</th>
-                                        <th data-field="role"  class="W100" style="border:none;">身份</th>
+                                        <th data-field="roleName"  class="W100" style="border:none;" >身份</th>
                                         <th data-field="loginTimes" class="W100" style="border:none;">登录次数</th>
-                                        <th data-field="enable" class="W100" style="border:none;">是否启动</th>
-                                        <th data-field="createTime"  class="W100" style="border:none;">创建时间</th>
-                                        <th data-field="updateTime"  class="W100" style="border:none;">修改时间</th>
+                                        <th data-field="enable" class="W100" style="border:none;" data-formatter="_formatte_select_role">是否启动</th>
+                                        <th data-field="createTime"  class="W100" style="border:none;" data-formatter="_formatte_time">创建时间</th>
+                                        <th data-field="updateTime"  class="W100" style="border:none;" data-formatter="_formatte_time">修改时间</th>
                                     </tr>
                                     </thead>
-
                                 </table>
 
                                 <div id="toolbar">
@@ -218,14 +217,16 @@
                           enctype="multipart/form-data"
                           method="POST">
                         <input type="text" style="display:none;" id="id" name="id"/>
+                        <input type="text" style="display:none;" id="createTime" name="createTime"/>
+                        <input type="text" style="display:none;" id="loginTimes" name="loginTimes"/>
 
                         <div class="row">
                             <div class="col-sm-12 ">
                                 <div class="form-group">
-                                    <label for="user_id" class="col-sm-4 control-label">微信ID</label>
+                                    <label for="userId" class="col-sm-4 control-label">微信ID</label>
 
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="user_id" name="user_id"
+                                        <input type="text" class="form-control" id="userId" name="userId"
                                                data-toggle="tooltip" data-placement="top" maxlength="30"
                                                required="required" disabled/>
                                     </div>
@@ -234,9 +235,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="login_ID" class="col-sm-4 control-label">登陆码</label>
+                                    <label for="loginID" class="col-sm-4 control-label">登陆码</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="login_ID" name="login_ID"
+                                        <input type="text" class="form-control" id="loginID" name="loginID"
                                                data-toggle="tooltip" data-placement="top" maxlength="30"
                                                required="required"/>
                                     </div>
@@ -265,23 +266,52 @@
                                     <label for="role" class="col-sm-4 control-label">身份</label>
                                     <div class="col-sm-7">
                                         <select class="form-control" id="role" name="role">
-                                            <option value="true">
-                                                甜点
-                                            </option>
 
-                                            <option value="false">
-                                                汤料
-                                            </option>
                                         </select>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="loginTimes" class="col-sm-4 control-label">登录次数</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="loginTimes" name="loginTimes"
-                                               maxlength="30" disabled/>
+                                        <script>
+                                            function getOptions(list){
+                                                var select = ''
+
+                                                for(x in list){
+                                                    select+='<option value="'+list[x].id+'"> '+list[x].name+' </option>';
+                                                }
+
+                                                return select;
+                                            }
+
+                                            function getFoodInfo(){
+                                                $.ajax({
+                                                    url : "/admin/cooker/getCookerRole",
+                                                    type : 'GET',
+                                                    dataType : 'JSON',
+                                                    async:false,
+
+                                                    success : function(res){
+                                                        switch (res.status){
+                                                            case "SUCCEED":
+
+                                                                $("#role").html(getOptions(res.cookerRoleList));
+
+                                                                break;
+                                                            case "ERROR":
+
+                                                                break;
+                                                        }
+                                                    },
+                                                    fail : function(res){
+
+                                                    },
+                                                    timeout : function(res){
+
+                                                    },
+                                                })
+                                            }
+
+                                            //获取厨师，风味，厨师角色等信息
+                                            getFoodInfo();
+
+                                        </script>
                                     </div>
                                     <div class="col-sm-1"></div>
                                 </div>
@@ -290,36 +320,17 @@
                                     <label for="enable" class="col-sm-4 control-label">是否启动</label>
                                     <div class="col-sm-7">
                                         <select class="form-control" id="enable" name="enable">
-                                            <option value="true">
+                                            <option value="1">
                                                 是
                                             </option>
 
-                                            <option value="false">
+                                            <option value="0">
                                                 否
                                             </option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1"></div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="createTime" class="col-sm-4 control-label">创建时间</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="createTime" name="createTime"
-                                               maxlength="30" disabled/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="updateTime" class="col-sm-4 control-label">修改时间</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="updateTime" name="updateTime"
-                                               maxlength="30" disabled/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
-
                             </div>
                         </div>
 
@@ -349,9 +360,113 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <!--删除确认框-->
+    <div id="dialog-delete" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="mySmallModalLabel0">提示</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer modal-footer-delete-confirm">
+                    <button type="button" class="btn btn-danger btn-delete-confirm" data-dismiss="modal">确认</button>
+                    <button type="button" class="btn btn-default btn-delete-cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 </div>
 
 <script>
+    var contactsNameMap = new Map();
+
+    !function ($) {
+        $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+            $(this).find('em:first').toggleClass("glyphicon-minus");
+        });
+        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+    }(window.jQuery);
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show');
+        else $('#sidebar-collapse').collapse('hide');
+    });
+
+
+    $(document).ready(function() {
+        $('#_table_user_search').bootstrapTable({
+            method: 'get',
+            url: "/admin/cooker/getAll",
+            striped: true,
+            height:300,
+            dataType: "json",
+            pagination: true,
+            queryParamsType: "limit",
+            singleSelect: true,
+            contentType: "application/x-www-form-urlencoded",
+            pageSize: 10,
+            pageNumber: 1,
+            search: true,
+            showColumns: true,
+            showRefresh: true,
+            sidePagination: "server", //服务端请求
+            queryParams: function (params) {
+
+                return {
+                    limit: params.limit,
+                    offset: params.offset / params.limit,
+                    search: $(".search").find("input").val(),
+                    sort: params.sort,
+                    order: params.order,
+                };
+            },
+            responseHandler: function (res) {
+                $("#doAllCheckBtn").checked != $("#doAllCheckBtn").checked;
+
+                //doallcheck();
+
+                //config = res.config;
+
+                return {
+                    "rows": res.rows,
+                    "total": res.total
+                };
+            },
+            onPostBody : function(){
+                adjustTableHeight($(".fixed-table-body"),20);//custom-script
+            },
+            onSort(name,order){
+                $(".temperature").find(".sortable").empty();
+                $(".humidity").find(".sortable").empty();
+
+                $(".temperature").find(".sortable").append("温度");
+                $(".humidity").find(".sortable").append("湿度");
+
+                if(name == "temperature"){
+
+                    $(".humidity").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if(order == "asc"){
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+
+                } else {//humidity
+                    $(".temperature").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if (order == "asc") {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+                }
+            }
+        });
+    });
+
     //重置input
     function _reset_input(input) {
         input.removeClass("alert-danger");
@@ -376,8 +491,6 @@
 
         _reset($(".form-horizontal.add-new-user"));
 
-        $("#choosedPic").attr("src","/images/default_avatar_male.jpg");
-
         $("#dialog-update-title").html("新增");
 
         $("#dialog-update").modal("show");
@@ -389,7 +502,7 @@
 
         var id = new Array();
 
-        var selectedBox = $("input[name='visitor_id']:checked");
+        var selectedBox = $("input[name='table_id']:checked");
 
         window.id = id;
         console.log('clicked update');
@@ -406,7 +519,7 @@
 
         if (id.length != 0) {
             if(id.length > 1){
-                $("#dialog-return").find(".modal-body").html("请选择一个访客");
+                $("#dialog-return").find(".modal-body").html("请选择一个厨师");
                 $("#dialog-return").modal("show");
 
                 return ;
@@ -415,35 +528,30 @@
             _reset($(".form-horizontal.add-new-user"));
 
 
-            $("#dialog-visitor-management-update-title").html("修改");
+            $("#dialog-update-title").html("修改");
 
-            $("#dialog-visitor-management-update").modal("show");
+            $("#dialog-update").modal("show");
 
             // 读取用户选中的用户信息
-            $.get("/console/device_management/get/" + id[0], null, function (r, status) {
-                console.log(r);
+            $.get("/admin/cooker/get/" + id[0], null, function (res, status) {
+                $("#dialog-update").find("input[id='id']").val(res.cooker.id);
 
-                $("#dialog-visitor-management-update-title").html("修改");
-                $("#dialog-visitor-management-update").modal("show");
+                $("#dialog-update").find("input[id='userID']").val(res.cooker.userId);
+                $("#dialog-update").find("input[id='name']").val(res.cooker.name);
+                $("#dialog-update").find("input[id='loginID']").val(res.cooker.loginID);
+                $("#dialog-update").find("input[id='phoneNumber']").val(res.cooker.phoneNumber);
+                $("#dialog-update").find("input[id='createTime']").val(res.cooker.createTime);
+                $("#dialog-update").find("input[id='loginTimes']").val(res.cooker.loginTimes);
 
-                $("#dialog-visitor-management-update").find("input[id='deviceId_old']").val(r.mac_id);
+                $("#dialog-update").find("select[id='role']").find("option[value = '"+res.cooker.role+"']").attr("selected", "selected");
 
-                $("#dialog-visitor-management-update").find("input[id='mac_id']").val(r.mac_id);
-                $("#dialog-visitor-management-update").find("input[id='id']").val(r.id);
-                $("#dialog-visitor-management-update").find("input[id='name']").val(r.name);
-                $("#dialog-visitor-management-update").find("input[id='attributionOfDevice']").val(r.attributionOfDevice);
-                $("#dialog-visitor-management-update").find("input[id='organization_name']").val(r.organization_name);
-                $("#dialog-visitor-management-update").find("input[id='addressOfDevice']").val(r.addressOfDevice);
-                $("#dialog-visitor-management-update").find("input[id='type']").val(r.type);
-                $("#dialog-visitor-management-update").find("input[id='level']").val(r.level);
-                $("#dialog-visitor-management-update").find("input[id='createTime']").val(r.create_time);
-                $("#dialog-visitor-management-update").find("input[id='updateTime']").val(r.update_time);
+                $("#dialog-update").find("select[id='enable']").find("option[value = '"+res.cooker.enable+"']").attr("selected", "selected");
 
             });
 
         } else {
-            $(".bs-example-modal-sm").find(".modal-body").html("请选中设备后操作");
-            $(".bs-example-modal-sm").modal("show");
+            $("#dialog-return").find(".modal-body").html("请选中厨师后操作");
+            $("#dialog-return").modal("show");
         }
     });
 
@@ -456,71 +564,52 @@
 
     //为点击添加弹出框中的确认添加了点击事件
     $(".btn.btn-primary.add-new").click(function () {
-        var startTime;
-        var endTime;
-
         var isComplete = true;
         var isFormatted = true;
 
         //check input
-        if ($("input[id='mac_id']").val() == "") {
-            _set($("input[id='mac_id']"), "设备id");
+        if ($("input[id='login_ID']").val() == "") {
+            _set($("input[id='login_ID']"), "设备id");
             isComplete = false;
         }
         if ($("input[id='name']").val() == "") {
-            _set($("input[id='name']"), "设备名称");
+            _set($("input[id='name']"), "名称");
             isComplete = false;
         }
-        if ($("input[id='attributionOfDevice']").val() == "") {
-            _set($("input[id='attributionOfDevice']"), "设备归属");
+        if ($("input[id='phoneNumber']").val() == "") {
+            _set($("input[id='phoneNumber']"), "设备归属");
             isComplete = false;
         }
-        if ($("input[id='organization_name']").val() == "") {
-            _set($("input[id='organization_name']"), "组织");
+        if ($("input[id='role']").val() == "") {
+            _set($("input[id='role']"), "电话号码");
             isComplete = false;
         }
-        if ($("input[id='addressOfDevice']").val() == "") {
-            _set($("input[id='addressOfDevice']"), "设备安装地址");
-            isComplete = false;
-        }
-        if ($("input[id='type']").val() == "") {
-            _set($("input[id='type']"), "类型");
-            isComplete = false;
-        }
-        if ($("input[id='level']").val() == "") {
-            _set($("input[id='level']"), "等级");
+        if ($("input[id='enable']").val() == "") {
+            _set($("input[id='enable']"), "是否启动");
             isComplete = false;
         }
 
         var flag_ = window.flag;
         console.log(window.flag);
 
-
         var form = new FormData();
 
         if(flag_ == "update") {
             form.append("id", $("input[id='id']").val());
+            form.append("createTime", getFormattedTime( $("input[id='createTime']").val() ) );
         } else {
             form.append("id", 0);
         }
-        form.append("mac_id", $("input[id='mac_id']").val());
+        form.append("loginID", $("input[id='loginID']").val());
         form.append("name", $("input[id='name']").val());
-        form.append("attributionOfDevice", $("input[id='attributionOfDevice']").val());
-        form.append("organization_name", $("input[id='organization_name']").val());
-        form.append("addressOfDevice", $("input[id='addressOfDevice']").val());
-        form.append("type", $("input[id='type']").val());
-        form.append("level", $("input[id='level']").val());
-        form.append("deviceId_old", $("input[id='deviceId_old']").val());
-        form.append("updateTime", $("input[id='updateTime']").val());
-
-        getFormmattedTime($("input[id='createTime']").val())
-
-        form.append("createTime", getFormmattedTime( $("input[id='createTime']").val() ) );
+        form.append("phoneNumber", $("input[id='phoneNumber']").val());
+        form.append("role", $("select[id='role']").val());
+        form.append("loginTimes", $("input[id='loginTimes']").val());
+        form.append("enable", $("select[id='enable']").val());
 
 
         $.ajax({
-            url: "/console/device_management/" + flag,
-            timeout : timeout_network,
+            url: "/admin/cooker/" + flag,
             type: "post",
             data: form,
             processData: false,
@@ -574,6 +663,87 @@
 
     });
 
+    //点击删除按钮,打开删除确认dialog
+    $(".btn.btn-danger.delete-dialog").click(function (){
+        var selectedBox = $("input[name='table_id']:checked");
+
+        var id = new Array();
+
+        for(var i = 0; i < selectedBox.length; i++){
+            id.push(selectedBox[i].value);
+        }
+
+        if (id.length > 0) {
+            $("#dialog-delete").find(".modal-body").html("是否删除一级菜单?</br>");
+
+            for(var i = 0; i < id.length; i++){
+                $("#dialog-delete").find(".modal-body").append("</br>"+contactsNameMap.get( parseInt(id[i]) ));
+            }
+
+            $("#dialog-delete").modal("show");
+        } else {
+            $("#dialog-return").find(".modal-body").html("请选择厨师");
+            $("#dialog-return").modal("show");
+        }
+    })
+
+    //删除确认按钮
+    $(".btn.btn-danger.btn-delete-confirm").click(function () {
+        console.log('clicked the delete');
+
+        var list_id = new Array();
+
+        var selectedBox = $("input[name='table_id']:checked");
+
+        for(var i = 0; i <  selectedBox.length; i++){
+            list_id.push( parseInt(selectedBox[i].value) );
+        }
+
+        console.log(list_id);
+
+        var form = new FormData();
+
+        form.append("list_ID", list_id);
+
+        $.ajax({
+            url: "/admin/cooker/delete",
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                switch (r.status) {
+                    case "SUCCEED" :
+                        $("#dialog-return").find(".modal-body").html("删除成功");
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.btn-delete-cancel").click();
+                        $(".panel.panel-default").find("button[name='refresh']").click();
+
+                        break
+
+                    case "FAILED" :
+                        $("#dialog-return").find(".modal-body").html("删除失败");
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        break
+                }
+            },
+            error: function (r) {
+
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
+    })
+
     function doAllCheck(e){
         var list = $("input[name='visitor_id']");
 
@@ -589,7 +759,23 @@
 
         contactsNameMap.set(value,row.name);
 
-        return '<input name="visitor_id" type="checkbox" value="' + value + '" />';
+        return '<input name="table_id" type="checkbox" value="' + value + '" />';
+    }
+
+    function _formatte_select_enable(value, row, index) {
+        return $.trim(value) ==$.trim('1') ? "是":"否" ;
+    }
+
+    function _formatte_select_role(value, row, index) {
+        return $.trim(value) ==$.trim('1') ? "是":"否" ;
+    }
+
+    function _formatte_time(value, row, index) {
+        if(value==undefined){
+            return '-'
+        }
+
+        return getFormattedTime(value);
     }
 
     //注销

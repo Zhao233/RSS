@@ -24,7 +24,7 @@ public class Cooker {
      * 微信id
      * */
     @Column(name = "user_id")
-    private String userid;
+    private String userID;
 
     /**
      * 微信名
@@ -43,7 +43,7 @@ public class Cooker {
     private String phoneNumber;
 
     @Column(name = "log_in_times")
-    private Integer logInTimes = 0;
+    private Integer loginTimes = 0;
 
     @Column(name = "enable")
     private Integer enable = 1;
@@ -55,11 +55,17 @@ public class Cooker {
      * 2：糕点
      * */
     @Column(name = "role")
-    private int role;
+    private long role;
 
     @Column(name = "create_time")
     private Timestamp createTime;
 
     @Column(name = "update_time")
     private Timestamp updateTime;
+
+    /**
+     *在数据库中不起作用，用处仅在于向前端传输值时，省去另加的空间
+     */
+    @Column(name = "role_name")
+    private String roleName;
 }

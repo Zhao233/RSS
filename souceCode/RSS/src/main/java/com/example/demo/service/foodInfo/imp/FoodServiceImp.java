@@ -45,6 +45,6 @@ public class FoodServiceImp implements FoodService {
 
     @Override
     public void deleteFood(long id) {
-        foodDao.deleteFoodById(id);
+        foodDao.deleteById(id);
     }
 }

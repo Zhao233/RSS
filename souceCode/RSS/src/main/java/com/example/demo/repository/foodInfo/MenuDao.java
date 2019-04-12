@@ -11,4 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface MenuDao extends JpaRepository<Menu,Long> {
     @Query(value = "SELECT menu FROM Menu menu where menu.name like %?1%")
     Page<Menu> getMenuList(String search, Pageable pageable);
+
+    @Query(value = "SELECT menu.name FROM Menu menu where menu.id = ?1")
+    String getMenuNameById(long id);
 }

@@ -171,12 +171,12 @@
                                         <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="doAllCheckBtn" type="checkbox" onclick="doAllCheck(this)"></th>
                                         <th data-field="picUrl" class="W100" data-formatter="_formatte_image">图像</th>
                                         <th data-field="name" class="W100">名称</th>
-                                        <th data-field="menuId" class="W100" style="border:none;">一级菜单</th>
-                                        <th data-field="styles" class="W100"  data-formatter="_formatte_select">风味</th>
+                                        <th data-field="menuName" class="W100" style="border:none;" >一级菜单</th>
+                                        <th data-field="styles" class="W100" data-formatter="_formatte_style">风味</th>
                                         <th data-field="role"  class="W100" style="border:none;">分配厨师</th>
-                                        <th data-field="enable" class="W100" style="border:none;">是否启用</th>
-                                        <th data-field="createTime" class="W100" style="border:none;">创建时间</th>
-                                        <th data-field="updateTime" class="W100" style="border:none;">修改时间</th>
+                                        <th data-field="enable" class="W100" style="border:none;" data-formatter="_formatte_select_show">是否启用</th>
+                                        <th data-field="createTime" class="W100" style="border:none;" data-formatter="_formatte_time_create">创建时间</th>
+                                        <th data-field="updateTime" class="W100" style="border:none;" data-formatter="_formatte_time_update">修改时间</th>
                                     </tr>
                                     </thead>
 
@@ -355,6 +355,23 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <!-- 弹出删除框 -->
+    <div id="dialog-delete" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="mySmallModalLabel0">提示</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer modal-footer-delete-confirm">
+                    <button type="button" class="btn btn-danger btn-delete-confirm" data-dismiss="modal">确认</button>
+                    <button type="button" class="btn btn-default btn-delete-cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <!--提示弹出框-->
     <div id="dialog-return" class="modal fade" style="z-index:99999" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
@@ -423,10 +440,10 @@
                 };
             },
             onPostBody : function(){
-                adjustTableHeight($(".fixed-table-body"),20);//custom-script
+                //adjustTableHeight($(".fixed-table-body"),20);//custom-script
             },
             onSort(name,order){
-                $(".temperature").find(".sortable").empty();
+                /*$(".temperature").find(".sortable").empty();
                 $(".humidity").find(".sortable").empty();
 
                 $(".temperature").find(".sortable").append("温度");
@@ -450,7 +467,7 @@
                     } else {
                         $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
                     }
-                }
+                }*/
             }
         });
     });
@@ -522,12 +539,12 @@
             _reset($(".form-horizontal.add-new"));
 
 
-            $("#dialog-title").html("修改");
+            $("#dialog-update-title").html("修改");
 
             $("#dialog-update").modal("show");
 
             // 读取用户选中的信息
-            $.get("/console/device_management/get/" + id[0], null, function (res, status) {
+            $.get("/admin/food/get/" + id[0], null, function (res, status) {
                 if(res.status == "FAILED"){
                     $("#dialog-return").find(".modal-body").html("请求失败");
                     $("#dialog-return").modal("show");
@@ -538,17 +555,21 @@
                 $("#dialog-update-title").html("修改");
                 $("#dialog-update").modal("show");
 
-                $("#dialog-update").find("input[id='id']").val(res.menu.id);
-                $("#dialog-update").find("input[id='createTime']").val(res.menu.createTime);
+                $("#dialog-update").find("input[id='id']").val(res.food.id);
+                $("#dialog-update").find("input[id='createTime']").val(res.food.createTime);
 
-                $("#dialog-update").find("input[id='name']").val(res.menu.name);
+                $("#dialog-update").find("input[id='name']").val(res.food.name);
 
-                $("#dialog-update").find("input[id='menuId']").val(res.menuId);
-                $("#dialog-update").find("input[id='role']").val(res.role);
-                $("#dialog-update").find("input[id='styles']").val(res.styles);
-                $("#dialog-update").find("input[id='enable']").val(res.enable);
+                $("#dialog-update").find("select[id='enable']").find("option[value = '"+res.food.enable+"']").attr("selected", "selected");
+                $("#dialog-update").find("select[id='menuId']").find("option[value = '"+res.food.menuId+"']").attr("selected", "selected");
+                $("#dialog-update").find("select[id='role']").find("option[value = '"+res.food.role+"']").attr("selected", "selected");
+                $("#dialog-update").find("select[id='styles']").find("option[value = '"+res.food.styles+"']").attr("selected", "selected");
 
-                $("#choosedPic").attr('src', res.picUrl);
+                $("#choosedPic").attr('src', res.menu.picUrl);
+
+                var picNames = res.menu.picUrl.split("/");
+
+                window.picName = "image/"+picNames[picNames.length-1];
             });
 
         } else {
@@ -577,18 +598,6 @@
             _set($("input[id='name']"), "设备名称");
             isComplete = false;
         }
-        if ($("input[id='menuId']").val() == "") {
-            _set($("input[id='attributionOfDevice']"), "设备归属");
-            isComplete = false;
-        }
-        if ($("input[id='role']").val() == "") {
-            _set($("input[id='addressOfDevice']"), "设备安装地址");
-            isComplete = false;
-        }
-        if ($("input[id='enable']").val() == "") {
-            _set($("input[id='type']"), "类型");
-            isComplete = false;
-        }
 
         var flag_ = window.flag;
         console.log(window.flag);
@@ -609,10 +618,12 @@
             form.append("id", 0);
         }
         form.append("name", $("input[id='name']").val());
+        form.append("createTime", $("input[id='createTime']").val());
         form.append("menuId", $("select[id='menuId']").val());
         form.append("role", $("select[id='role']").val());
         form.append("styles", $("select[id='styles']").val());
         form.append("enable", $("select[id='enable']").val());
+        form.append("picName", window.picName);
 
         $.ajax({
             url: "/admin/food/" + flag,
@@ -669,6 +680,30 @@
 
     });
 
+    //点击删除按钮,打开删除确认dialog
+    $(".btn.btn-danger.delete-dialog").click(function (){
+        var selectedBox = $("input[name='table_id']:checked");
+
+        var id = new Array();
+
+        for(var i = 0; i < selectedBox.length; i++){
+            id.push(selectedBox[i].value);
+        }
+
+        if (id.length > 0) {
+            $("#dialog-delete").find(".modal-body").html("是否删除一级菜单?</br>");
+
+            for(var i = 0; i < id.length; i++){
+                $("#dialog-delete").find(".modal-body").append("</br>"+contactsNameMap.get( parseInt(id[i]) ));
+            }
+
+            $("#dialog-delete").modal("show");
+        } else {
+            $("#dialog-return").find(".modal-body").html("请选择一级菜单");
+            $("#dialog-return").modal("show");
+        }
+    })
+
     //删除图片
     $(".btn.btn-default.deletePic").click(function () {
         var file_select = $("#avatar-2");
@@ -678,6 +713,62 @@
         file_select.remove();
 
         $("#choosedPic").attr('src', src = "/images/default_avatar_male.jpg");
+    })
+
+    $(".btn.btn-danger.btn-delete-confirm").click(function () {
+        console.log('clicked the delete');
+
+        var list_id = new Array();
+
+        var selectedBox = $("input[name='table_id']:checked");
+
+        for(var i = 0; i <  selectedBox.length; i++){
+            list_id.push( parseInt(selectedBox[i].value) );
+        }
+
+        console.log(list_id);
+
+        var form = new FormData();
+
+        form.append("list_ID", list_id);
+
+        $.ajax({
+            url: "/admin/food/delete",
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                switch (r.status) {
+                    case "SUCCEED" :
+                        $("#dialog-return").find(".modal-body").html("删除成功");
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.btn-delete-cancel").click();
+                        $(".panel.panel-default").find("button[name='refresh']").click();
+
+                        break
+
+                    case "FAILED" :
+                        $("#dialog-return").find(".modal-body").html("删除失败");
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        break
+                }
+            },
+            error: function (r) {
+
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
     })
 
     //当选择图片时调用
@@ -850,10 +941,10 @@
         if(value == ""){
             imgSrc = "/images/default_avatar_male.jpg";
 
-            return s = '<a class = "view"  href="javascript:void(0)"><img style="height:60px;border-radius:20%"  src=' + imgSrc+' /></a>';
+            return s = '<a class = "view"  href="javascript:void(0)"><img style="height:120px;border-radius:20%"  src=' + imgSrc+' /></a>';
         }
 
-        var s = '<a class = "view"  href="javascript:void(0)"><img style="height:60px;border-radius:20%"  src="' + imgSrc+"&t="+Math.random() +'" /></a>';
+        var s = '<a class = "view"  href="javascript:void(0)"><img style="height:120px;border-radius:20%"  src="' + imgSrc+'" /></a>';
 
         return s;
     }
@@ -870,6 +961,36 @@
         select += '</select>'
 
         return select;
+    }
+
+    function _formatte_time_create(value, row, index) {
+        if(value==undefined){
+            return '-'
+        }
+
+        return getFormattedTime(value);
+    }
+
+    function _formatte_time_update(value, row, index) {
+        if(value==undefined){
+            return '-'
+        }
+
+        return getFormattedTime(value);
+    }
+
+    function _formatte_select_show(value, row, index) {
+        return $.trim(value) ==$.trim('1') ? "是":"否" ;
+    }
+
+    function _formatte_style(value, row, index) {
+        var styles = "";
+
+        for(x in value){
+            styles += value[x]+"  ";
+        }
+
+        return styles;
     }
 
     //当新增，修改页面开启时调用，查询一级菜单，风味，厨师身份信息

@@ -27,7 +27,7 @@ public class Food {
     private String stylesId;
 
     @Column(name = "role")
-    private Integer role;
+    private long role;
 
     @Column(name = "pic_url")
     private String picUrl;

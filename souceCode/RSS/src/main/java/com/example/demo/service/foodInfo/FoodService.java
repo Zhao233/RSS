@@ -1,6 +1,7 @@
 package com.example.demo.service.foodInfo;
 
 import com.example.demo.domain.foodInfo.Food;
+import com.example.demo.model.Food_All;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +90,7 @@ public class AdminMenuController {
         menu.setId(id);
         menu.setName(name);
         menu.setUpdateTime(TimeUtil.getTimeNow());
-        menu.setCreateTime(DateTranslator.StringToTimeStamp(createTime));
+        menu.setCreateTime(TimeUtil.StringToTimeStamp(createTime));
         menu.setEnable(enable);
 
         menuService.updateMenu(menu);

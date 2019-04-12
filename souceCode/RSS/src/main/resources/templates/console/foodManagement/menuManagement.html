@@ -273,6 +273,7 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <!--删除确认框-->
     <div id="dialog-delete" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
@@ -463,7 +464,8 @@
                 $("#dialog-update").find("input[id='createTime']").val(res.menu.createTime);
 
                 $("#dialog-update").find("input[id='name']").val(res.menu.name);
-                $("#dialog-update").find("input[id='enable']").val(res.menu.enable);
+
+                $("#dialog-update").find("select[id='enable']").find("option[value = '"+res.menu.enable+"']").attr("selected", "selected");
             });
 
         } else {
@@ -588,7 +590,7 @@
         }
     })
 
-
+    //删除确认按钮
     $(".btn.btn-danger.btn-delete-confirm").click(function () {
         console.log('clicked the delete');
 

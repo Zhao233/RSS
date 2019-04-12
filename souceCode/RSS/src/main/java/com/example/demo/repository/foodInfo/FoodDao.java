@@ -27,6 +27,4 @@ public interface FoodDao extends JpaRepository<Food,Long> {
     @Query(value = "SELECT food.stylesId FROM Food food WHERE food.id = ?1")
     String getStylesByFoodId(long foodId);
 
-    @Query(value = "update Food food set enable = 1 where food.id = ?1")
-    String deleteFoodById(long id);
 }

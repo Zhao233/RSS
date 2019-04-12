@@ -5,6 +5,7 @@ import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.domain.foodInfo.Menu;
 import com.example.demo.domain.foodInfo.Style;
 import com.example.demo.domain.user.CookerRole;
+import com.example.demo.model.Food_All;
 import com.example.demo.repository.foodInfo.MenuDao;
 import com.example.demo.repository.foodInfo.StyleDao;
 import com.example.demo.repository.user.CookerRoleDao;
@@ -26,7 +27,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.*;
+import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -97,7 +100,7 @@ public class AdminFoodController {
 
         Food food = foodService.getOne(Long.parseLong(id));
 
-        map.put("menu",food);
+        map.put("food",food);
         map.put("status", "SUCCEED");
         return map;
     }
@@ -111,11 +114,35 @@ public class AdminFoodController {
         Pageable pageable = new PageRequest(offset, limit, new Sort(Sort.Direction.DESC, "id"));
 
         Page<Food> page;
+        List<Food_All> page_all = new LinkedList<>();//界面所需要展示
 
         page = foodService.getFoodList(search, pageable);
 
-        map.put("total", page != null ? page.getTotalElements() : 0);
-        map.put("rows", page != null ? page.getContent() : "");
+        for(Food food : page.getContent()){
+            long id = food.getId();
+            String picUrl = food.getPicUrl();
+            String foodName = food.getName();
+            String menuName = menuDao.getMenuNameById(food.getMenuId());
+
+            //获取style的名字合集
+            List<String> styles = new LinkedList<>();
+            String[] styleIDs = food.getStylesId().split("_");
+            for(String styleID : styleIDs){
+                styles.add(styleDao.getStyleNameByStyleID(Long.parseLong(styleID)));
+            }
+
+            //获取厨师身份名字
+            String roleName = cookerRoleDao.getRoleNameByID(food.getRole());
+            int enable = food.getEnable();
+            Timestamp createTime = food.getCreateTime();
+            Timestamp updateTime = food.getCreateTime();
+
+
+            page_all.add(new Food_All(id, picUrl, foodName, menuName, styles, roleName, enable, createTime, updateTime));
+        }
+
+        map.put("total", page != null ? page_all.size() : 0);
+        map.put("rows", page != null ? page_all : "");
 
         map.put("status", "SUCCEED");
         return map;
@@ -174,22 +201,46 @@ public class AdminFoodController {
                                           @RequestParam(name = "menuId") long menuId,
                                           @RequestParam(name = "name") String name,
                                           @RequestParam(name = "role") int role,
-                                          @RequestParam(name = "createTim e") String createTime,
+                                          @RequestParam(name = "createTime") String createTime,
                                           @RequestParam(name = "styles") String styles,
+                                          @RequestParam(name = "picName") String picName,
                                           @RequestParam(name = "enable") int enable){
         Map<String, Object> map = new HashMap();
 
+        MultipartFile multipartFile = request.getFile("file");
+
+        File file = null;
+        String file_url = "";
+
+        file = new File(multipartFile.getOriginalFilename());
+
+        try {
+            byte[] bytes = multipartFile.getBytes();
+
+            OutputStream outputStream = new FileOutputStream(file);
+
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
+
+            bufferedOutputStream.write(bytes);
+
+            file_url = COSUtil.uploadFile(file);//上传更新的照片
+
+            COSUtil.deleteFile(picName);//删除原有图片
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         Food food = new Food();
         food.setId(id);
-        food.setPicUrl("");
+        food.setPicUrl(file_url);
         food.setName(name);
         food.setMenuId(menuId);
         food.setRole(role);
         food.setStylesId(styles);
-        food.setCreateTime(DateTranslator.StringToTimeStamp(createTime));
+        food.setCreateTime(TimeUtil.StringToTimeStamp(createTime));
         food.setUpdateTime(TimeUtil.getTimeNow());
         food.setEnable(enable);
-
 
         foodService.updateFood(food);
 
@@ -200,10 +251,12 @@ public class AdminFoodController {
 
     @ResponseBody
     @RequestMapping(value = "/delete")
-    public Map<String, Object> deleteFood(@RequestParam(name = "foodId") Long foodId){
+    public Map<String, Object> deleteFood(@RequestParam(name = "list_ID") List<Long> list_ID){
         Map<String, Object> map = new HashMap();
 
-        foodService.deleteFood(foodId);
+        for(Long id : list_ID){
+            foodService.deleteFood(id);
+        }
 
         map.put("status","SUCCEED");
 

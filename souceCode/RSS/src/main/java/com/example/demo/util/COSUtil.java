@@ -35,6 +35,14 @@ public class COSUtil{
         return file_url;
     }
 
+    public static boolean deleteFile(String fileName) throws Exception{
+        String key = fileName;
+
+        cosClient.deleteObject(bucketName, key);
+
+        return true;
+    }
+
 
     public static void getFileUrl(){
 
