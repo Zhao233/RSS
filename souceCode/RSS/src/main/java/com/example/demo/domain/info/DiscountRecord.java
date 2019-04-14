@@ -20,9 +20,16 @@ public class DiscountRecord {
     @Column(name = "discount")
     private double discount;
 
+    /**
+     * 生效金额，当结算金额大于生效金额时，满减起效，当type为折扣时，此字段不生效
+     * */
     @Column(name = "money_limit")
     private double moneyLimit;
 
+    /**
+     * 0: 折扣
+     * 1: 满减
+     * */
     @Column(name = "type")
     private Integer type = 0;
 
@@ -37,4 +44,12 @@ public class DiscountRecord {
 
     @Column(name = "update_time")
     private Timestamp updateTime;
+
+    /**
+     * 1: 生效
+     * 0: 不生效
+     * 默认生效
+     * */
+    @Column(name = "enable")
+    private Integer enable;
 }

@@ -20,8 +20,20 @@ public class RecommendFood {
     @Column(name = "food_id")
     private long foodID;
 
+    /**
+     * 0: 轮播
+     * 1: 列表
+     * */
     @Column(name = "type")
     private Integer type = 0;
+
+    /**
+     * 1: 生效
+     * 0: 不生效
+     * 默认生效
+     * */
+    @Column(name = "enable")
+    private Integer enable = 1;
 
     @Column(name = "create_time")
     private Timestamp createTime;

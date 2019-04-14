@@ -21,10 +21,10 @@ public class Food {
     private String name;
 
     @Column(name = "menu_id")
-    private long menuId;
+    private long menuID;
 
     @Column(name = "styles_id")
-    private String stylesId;
+    private String stylesID;
 
     @Column(name = "role")
     private long role;

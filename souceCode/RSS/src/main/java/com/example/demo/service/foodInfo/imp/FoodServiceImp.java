@@ -1,6 +1,7 @@
 package com.example.demo.service.foodInfo.imp;
 
 import com.example.demo.domain.foodInfo.Food;
+import com.example.demo.model.Activity_Recommend_All;
 import com.example.demo.repository.foodInfo.FoodDao;
 import com.example.demo.service.foodInfo.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,10 @@ public class FoodServiceImp implements FoodService {
     @Override
     public void deleteFood(long id) {
         foodDao.deleteById(id);
+    }
+
+    @Override
+    public Page<Activity_Recommend_All> getFoodListForRecommend(String search, Pageable pageable) {
+        return foodDao.getFoodListForRecommend(search, pageable);
     }
 }

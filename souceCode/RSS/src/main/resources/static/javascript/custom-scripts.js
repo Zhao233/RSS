@@ -339,6 +339,10 @@ function getToDayDateTime_00_00() {
 
 //2018-10-23T13:51:45.000+0000
 function getFormattedTime(time){
+    if(time == undefined){
+        return "-";
+    }
+    
     time = time.split("T");
 
     return time[0]+" "+ ( time[1].split(".")[0] )

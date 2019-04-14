@@ -122,11 +122,11 @@ public class AdminFoodController {
             long id = food.getId();
             String picUrl = food.getPicUrl();
             String foodName = food.getName();
-            String menuName = menuDao.getMenuNameById(food.getMenuId());
+            String menuName = menuDao.getMenuNameById(food.getMenuID());
 
             //获取style的名字合集
             List<String> styles = new LinkedList<>();
-            String[] styleIDs = food.getStylesId().split("_");
+            String[] styleIDs = food.getStylesID().split("_");
             for(String styleID : styleIDs){
                 styles.add(styleDao.getStyleNameByStyleID(Long.parseLong(styleID)));
             }
@@ -181,9 +181,9 @@ public class AdminFoodController {
         Food food = new Food();
         food.setPicUrl(file_url);
         food.setName(name);
-        food.setMenuId(menuId);
+        food.setMenuID(menuId);
         food.setRole(Integer.valueOf(role));
-        food.setStylesId(styles);
+        food.setStylesID(styles);
         food.setEnable(enable);
         food.setCreateTime(TimeUtil.getTimeNow());
 
@@ -235,9 +235,9 @@ public class AdminFoodController {
         food.setId(id);
         food.setPicUrl(file_url);
         food.setName(name);
-        food.setMenuId(menuId);
+        food.setMenuID(menuId);
         food.setRole(role);
-        food.setStylesId(styles);
+        food.setStylesID(styles);
         food.setCreateTime(TimeUtil.StringToTimeStamp(createTime));
         food.setUpdateTime(TimeUtil.getTimeNow());
         food.setEnable(enable);

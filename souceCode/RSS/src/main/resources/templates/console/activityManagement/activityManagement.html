@@ -156,97 +156,101 @@
     <div id="page-wrapper">
         <div id="page-inner">
 
-            <!--折扣管理标题-->
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="page-header" style="color: #FFFFFF;">
-                        折扣管理
-                    </h1>
+            <div class="col-md-12">
+                <!--折扣管理标题-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header" style="color: #FFFFFF;">
+                            折扣管理
+                        </h1>
+                    </div>
+                </div>
+
+                <!--折扣管理-->
+                <div class="row">
+                    <div class="col-md-12">
+                    <!-- Advanced Tables -->
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table id="_table_discount_" class="table table-striped table-bordered table-hover" data-toolbar="#toolbar_discount">
+                                        <thead>
+                                            <tr>
+                                                <th data-field="id" class="W30" data-formatter="_formatte_id_discount"><input id="id_discount_" type="checkbox" name="id_discount_" onclick="doAllCheck('id_discount_')"></th>
+                                                <th data-field="type" class="W100" data-formatter="_formatte_discount_type">类型</th>
+                                                <th data-field="discount" class="W100" data-formatter="_formatte_discount">折扣</th>
+                                                <th data-field="moneyLimit" class="W100" style="border:none;">条件金额</th>
+                                                <th data-field="startTime"  class="W100" style="border:none;" data-formatter="_formatte_time">有效时间</th>
+                                                <th data-field="endTime" class="W100" style="border:none;" data-formatter="_formatte_time">失效时间</th>
+                                                <th data-field="enable" class="W100" style="border:none;" data-formatter="_formatte_select_enable">是否启动</th>
+                                                <th data-field="createTime" class="W100" style="border:none;" data-formatter="_formatte_time">创建时间</th>
+                                                <th data-field="updateTime" class="W100" style="border:none;" data-formatter="_formatte_time">修改时间</th>
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+
+                                    <div id="toolbar_discount">
+                                        <button class="btn btn-primary open-add-discount-dialog" data-toggle="modal">新增
+                                        </button>
+                                        <button class="btn btn-success open-update-discount-dialog" data-toggle="modal">修改
+                                        </button>
+                                        <button class="btn btn-danger delete-discount-dialog">删除</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!--End Advanced Tables -->
+                    </div>
                 </div>
             </div>
-            <!-- /. ROW  -->
 
-            <!--折扣管理-->
-            <div class="row">
-                <div class="col-md-12">
-                <!-- Advanced Tables -->
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table id="_table_discount_" class="table table-striped table-bordered table-hover" data-toolbar="#toolbar">
-                                    <thead>
+            <div class="col-md-12">
+                <!--推荐管理标题-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header" style="color: #FFFFFF;">
+                            推荐管理
+                        </h1>
+                    </div>
+                </div>
+
+                <!--推荐管理-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table id="_table_recommend_" class="table table-striped table-bordered table-hover" data-toolbar="#toolbar_recommend">
+                                        <thead>
                                         <tr>
-                                            <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="id_discount_" type="checkbox" name="id_discount_" onclick="doAllCheck('id_discount_')"></th>
-                                            <th data-field="type" class="W100">类型</th>
-                                            <th data-field="discount" class="W100">折扣</th>
-                                            <th data-field="money_limit" class="W100" style="border:none;">条件金额</th>
-                                            <th data-field="startTime"  class="W100" style="border:none;">有效时间</th>
-                                            <th data-field="endTime" class="W100" style="border:none;">失效时间</th>
+                                            <th data-field="id" class="W30" data-formatter="_formatte_id_recommend"><input id="id_recommend_" name="id_recommend_" type="checkbox" onclick="doAllCheck('id_recommend_')"></th>
+                                            <th data-field="picUrl" class="W100" data-formatter="_formatte_image">图像</th>
+                                            <th data-field="name" class="W100">名称</th>
+                                            <th data-field="menuId" class="W100" style="border:none;">一级菜单</th>
+                                            <th data-field="styles" class="W100"  data-formatter="_formatte_select">风味</th>
+                                            <th data-field="role"  class="W100" style="border:none;">分配厨师</th>
+                                            <th data-field="enable" class="W100" style="border:none;">是否启用</th>
                                             <th data-field="createTime" class="W100" style="border:none;">创建时间</th>
                                             <th data-field="updateTime" class="W100" style="border:none;">修改时间</th>
                                         </tr>
-                                    </thead>
+                                        </thead>
 
-                                </table>
+                                    </table>
 
-                                <div id="toolbar">
-                                    <button class="btn btn-primary open-add-discount-dialog" data-toggle="modal">新增
-                                    </button>
-                                    <button class="btn btn-success open-update-discount-dialog" data-toggle="modal">修改
-                                    </button>
-                                    <button class="btn btn-danger delete-discount-dialog">删除</button>
+                                    <div id="toolbar_recommend">
+                                        <button class="btn btn-primary open-add-recommend-dialog" data-toggle="modal">新增
+                                        </button>
+                                        <button class="btn btn-success open-update-recommend-dialog" data-toggle="modal">修改
+                                        </button>
+                                        <button class="btn btn-danger delete-recommend-dialog">删除</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <!--End Advanced Tables -->
                     </div>
-                <!--End Advanced Tables -->
-                </div>
-            </div>
-
-            <!--推荐管理标题-->
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="page-header" style="color: #FFFFFF;">
-                        推荐管理
-                    </h1>
-                </div>
-            </div>
-
-            <!--推荐管理-->
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Advanced Tables -->
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table id="_table_recommend_" class="table table-striped table-bordered table-hover" data-toolbar="#toolbar">
-                                    <thead>
-                                    <tr>
-                                        <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="id_recommend_" name="id_recommend_" type="checkbox" onclick="doAllCheck('id_recommend_')"></th>
-                                        <th data-field="picUrl" class="W100" data-formatter="_formatte_image">图像</th>
-                                        <th data-field="name" class="W100">名称</th>
-                                        <th data-field="menuId" class="W100" style="border:none;">一级菜单</th>
-                                        <th data-field="styles" class="W100"  data-formatter="_formatte_select">风味</th>
-                                        <th data-field="role"  class="W100" style="border:none;">分配厨师</th>
-                                        <th data-field="enable" class="W100" style="border:none;">是否启用</th>
-                                        <th data-field="createTime" class="W100" style="border:none;">创建时间</th>
-                                        <th data-field="updateTime" class="W100" style="border:none;">修改时间</th>
-                                    </tr>
-                                    </thead>
-
-                                </table>
-
-                                <div id="toolbar_discount">
-                                    <button class="btn btn-primary open-add-recommend-dialog" data-toggle="modal">新增
-                                    </button>
-                                    <button class="btn btn-success open-update-recommend-dialog" data-toggle="modal">修改
-                                    </button>
-                                    <button class="btn btn-danger delete-recommend-dialog">删除</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--End Advanced Tables -->
                 </div>
             </div>
             <!-- /. ROW  -->
@@ -270,15 +274,16 @@
                     <form role="form" class="form-horizontal add-new form-uploadfiles"
                           enctype="multipart/form-data"
                           method="POST">
-                        <input type="text" style="display:none;" id="id_discount" name="id"/>
+                        <input type="text" style="display:none;" id="id_discount" name="id_discount"/>
+                        <input type="text" style="display:none;" id="createTime_discount" name="id"/>
 
                         <div class="row">
                             <div class="form-group">
-                                <label for="limit_discount" class="col-sm-4 control-label">折扣类型</label>
+                                <label for="type_discount" class="col-sm-4 control-label">折扣类型</label>
                                 <div class="col-sm-7">
-                                    <select class="form-control">
-                                        <option value="discount"> 折扣 </option>
-                                        <option value="preference"> 满减 </option>
+                                    <select class="form-control" id="type_discount" name="type_discount">
+                                        <option class="discount_option" value="0"> 折扣 </option>
+                                        <option class="discount_option" value="1"> 满减 </option>
                                     </select>
                                 </div>
 
@@ -286,20 +291,20 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="limit_discount" class="col-sm-4 control-label">条件金额</label>
+                                <label for="moneyLimit_discount" class="col-sm-4 control-label">条件金额</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="limit_discount" name="limit"
+                                    <input type="text" class="form-control" id="moneyLimit_discount" name="moneyLimit_discount"
                                            data-toggle="tooltip" data-placement="top" maxlength="30"
-                                           required="required"/>
+                                           required="required" readonly/>
                                 </div>
 
                                 <div class="col-sm-1"></div>
                             </div>
 
                             <div class="form-group">
-                                <label for="discount_discount" class="col-sm-4 control-label">折扣</label>
+                                <label for="discount" class="col-sm-4 control-label">折扣</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="discount_discount" name="discount"
+                                    <input type="text" class="form-control" id="discount" name="discount"
                                            data-toggle="tooltip" data-placement="top" maxlength="30"
                                            required="required"/>
                                 </div>
@@ -328,11 +333,23 @@
 
                                 <div class="col-sm-1"></div>
                             </div>
+
+                            <div class="form-group">
+                                <label for="enable_discount" class="col-sm-4 control-label">是否启用</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" id="enable_discount" name="enable_discount">
+                                        <option value="1"> 是 </option>
+                                        <option value="0"> 否 </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9" style="text-align: right;padding-top: 20px;">
-                                <button type="button" class="btn btn-primary add-new">保存</button>
+                                <button type="button" class="btn btn-primary add-new-discount">保存</button>
                                 <button type="button" class="btn btn-default add-new-close" data-dismiss="modal">取消</button>
                             </div>
                         </div>
@@ -363,9 +380,9 @@
                                 <div class="col-sm-1"></div>
 
                                 <div class="col-sm-10">
-                                    <label for="limit_discount" class="col-sm-5 control-label">展示类型</label>
+                                    <label for="type_recommend" class="col-sm-5 control-label">展示类型</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control">
+                                        <select class="form-control" id="type_recommend" name="type_recommend">
                                             <option value="discount"> 轮播 </option>
                                             <option value="preference"> 列表 </option>
                                         </select>
@@ -402,7 +419,7 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9" style="text-align: right;padding-top: 20px;">
-                                <button type="button" class="btn btn-primary add-new">保存</button>
+                                <button type="button" class="btn btn-primary add-new-recommend">保存</button>
                                 <button type="button" class="btn btn-default add-new-close" data-dismiss="modal">取消</button>
                             </div>
                         </div>
@@ -428,9 +445,201 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <!--折扣删除确认框-->
+    <div id="dialog-discount-delete" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="mySmallModalLabel0_discount">提示</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer modal-footer-delete-confirm">
+                    <button type="button" class="btn btn-danger btn-discount-delete-confirm" data-dismiss="modal">确认</button>
+                    <button type="button" class="btn btn-default btn-delete-cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--推荐删除确认框-->
+    <div id="dialog-recommend-delete" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="mySmallModalLabel0_recommend">提示</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer modal-footer-delete-confirm">
+                    <button type="button" class="btn btn-danger btn-recommend-delete-confirm" data-dismiss="modal">确认</button>
+                    <button type="button" class="btn btn-default btn-delete-cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
 </div>
 
 <script>
+    var contactsNameMap = new Map();
+
+    !function ($) {
+        $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+            $(this).find('em:first').toggleClass("glyphicon-minus");
+        });
+        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+    }(window.jQuery);
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show');
+        else $('#sidebar-collapse').collapse('hide');
+    });
+
+
+    $(document).ready(function() {
+        $('#_table_discount_').bootstrapTable({
+            method: 'get',
+            url: "/admin/activity/getAll_Discount",
+            striped: true,
+            height:300,
+            dataType: "json",
+            pagination: true,
+            queryParamsType: "limit",
+            singleSelect: true,
+            contentType: "application/x-www-form-urlencoded",
+            pageSize: 10,
+            pageNumber: 1,
+            search: true,
+            showColumns: true,
+            showRefresh: true,
+            sidePagination: "server", //服务端请求
+            queryParams: function (params) {
+
+                return {
+                    limit: params.limit,
+                    offset: params.offset / params.limit,
+                    search: $(".search").find("input").val(),
+                    sort: params.sort,
+                    order: params.order,
+                };
+            },
+            responseHandler: function (res) {
+                $("#doAllCheckBtn").checked != $("#doAllCheckBtn").checked;
+
+                //doallcheck();
+
+                //config = res.config;
+
+                return {
+                    "rows": res.rows,
+                    "total": res.total
+                };
+            },
+            onPostBody : function(){
+                adjustTableHeight($(".fixed-table-body"),20);//custom-script
+            },
+            onSort(name,order){
+                $(".temperature").find(".sortable").empty();
+                $(".humidity").find(".sortable").empty();
+
+                $(".temperature").find(".sortable").append("温度");
+                $(".humidity").find(".sortable").append("湿度");
+
+                if(name == "temperature"){
+
+                    $(".humidity").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if(order == "asc"){
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+
+                } else {//humidity
+                    $(".temperature").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if (order == "asc") {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+                }
+            }
+        });
+
+        $('#_table_recommend_').bootstrapTable({
+            method: 'get',
+            url: "/admin/activity/getAll_Recommend",
+            striped: true,
+            height:300,
+            dataType: "json",
+            pagination: true,
+            queryParamsType: "limit",
+            singleSelect: true,
+            contentType: "application/x-www-form-urlencoded",
+            pageSize: 10,
+            pageNumber: 1,
+            search: true,
+            showColumns: true,
+            showRefresh: true,
+            sidePagination: "server", //服务端请求
+            queryParams: function (params) {
+
+                return {
+                    limit: params.limit,
+                    offset: params.offset / params.limit,
+                    search: $(".search").find("input").val(),
+                    sort: params.sort,
+                    order: params.order,
+                };
+            },
+            responseHandler: function (res) {
+                $("#doAllCheckBtn").checked != $("#doAllCheckBtn").checked;
+
+                //doallcheck();
+
+                //config = res.config;
+
+                return {
+                    "rows": res.rows,
+                    "total": res.total
+                };
+            },
+            onPostBody : function(){
+                adjustTableHeight($(".fixed-table-body"),20);//custom-script
+            },
+            onSort(name,order){
+                $(".temperature").find(".sortable").empty();
+                $(".humidity").find(".sortable").empty();
+
+                $(".temperature").find(".sortable").append("温度");
+                $(".humidity").find(".sortable").append("湿度");
+
+                if(name == "temperature"){
+
+                    $(".humidity").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if(order == "asc"){
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+
+                } else {//humidity
+                    $(".temperature").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if (order == "asc") {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+                }
+            }
+        });
+    });
+
     //重置input
     function _reset_input(input) {
         input.removeClass("alert-danger");
@@ -475,7 +684,7 @@
         $("#dialog-recommend-update").modal("show");
     });
 
-    //打开修改推荐弹出框
+    //打开修改折扣弹出框
     $(".btn.btn-success.open-update-discount-dialog").click(function () {
         window.flag = 'update'
 
@@ -511,31 +720,40 @@
 
             $("#dialog-update").modal("show");
 
-            // 读取用户选中的用户信息
-            $.get("/console/device_management/get/" + id[0], null, function (r, status) {
-                console.log(r);
+            // 读取用户选中的折扣信息
+            $.get("/admin/activity/getDiscount/" + id[0], null, function (res, status) {
+                $("#dialog-discount-update-title").html("修改");
+                $("#dialog-discount-update").modal("show");
 
-                $("#dialog-visitor-management-update-title").html("修改");
-                $("#dialog-visitor-management-update").modal("show");
+                $("#dialog-discount-update").find("input[id='id_discount']").val( res.discount.id );
+                $("#dialog-discount-update").find("input[id='createTime_discount']").val( res.discount.discount );
 
-                $("#dialog-visitor-management-update").find("input[id='deviceId_old']").val(r.mac_id);
 
-                $("#dialog-visitor-management-update").find("input[id='mac_id']").val(r.mac_id);
-                $("#dialog-visitor-management-update").find("input[id='id']").val(r.id);
-                $("#dialog-visitor-management-update").find("input[id='name']").val(r.name);
-                $("#dialog-visitor-management-update").find("input[id='attributionOfDevice']").val(r.attributionOfDevice);
-                $("#dialog-visitor-management-update").find("input[id='organization_name']").val(r.organization_name);
-                $("#dialog-visitor-management-update").find("input[id='addressOfDevice']").val(r.addressOfDevice);
-                $("#dialog-visitor-management-update").find("input[id='type']").val(r.type);
-                $("#dialog-visitor-management-update").find("input[id='level']").val(r.level);
-                $("#dialog-visitor-management-update").find("input[id='createTime']").val(r.create_time);
-                $("#dialog-visitor-management-update").find("input[id='updateTime']").val(r.update_time);
+                $("#dialog-discount-update").find("select[id='type_discount']").find("option[value="+res.discount.type+"]").attr("selected","selected");
+
+                type_discount_change(res.discount.type);
+
+                switch(res.discount.type){
+                    case 1: // 满减
+                        $("#dialog-discount-update").find("input[id='moneyLimit_discount']").val(res.discount.moneyLimit);
+
+                        break;
+                    case 0: // 折扣
+                        $("#dialog-discount-update").find("input[id='discount']").val(res.discount.discount);
+
+                        break;
+                }
+
+                $("#dialog-discount-update").find("input[id='startTime_discount']").val( getFormattedTime(res.discount.startTime) );
+                $("#dialog-discount-update").find("input[id='endTime_discount']").val( getFormattedTime(res.discount.endTime) );
+                $("#dialog-discount-update").find("input[id='createTime_discount']").val( getFormattedTime(res.discount.createTime) );
+
+                $("#dialog-discount-update").find("input[id='enable_discount']").val(res.discount.enable == 1 ? "是" : "否");
 
             });
-
         } else {
-            $(".bs-example-modal-sm").find(".modal-body").html("请选中人员后操作");
-            $(".bs-example-modal-sm").modal("show");
+            $("#dialog-return").find(".modal-body").html("请选中折扣后操作");
+            $("#dialog-return").modal("show");
         }
     });
 
@@ -610,8 +828,36 @@
         el.tooltip('show');
     }
 
-    //为点击添加弹出框中的确认添加了点击事件
-    $(".btn.btn-primary.add-new").click(function () {
+    //折扣和满减的状态切换
+    function type_discount_change(type){//1: 满减, 0: 折扣
+        switch ( type ){
+            case 1 : // 满减
+                $("#discount").attr("readonly","readonly");
+                $("#moneyLimit_discount").removeAttr("readonly");
+
+                break;
+
+            case 0 : // 折扣
+                $("#moneyLimit_discount").attr("readonly","readonly");
+                $("#discount").removeAttr("readonly");
+
+                break;
+
+            default :
+
+                break;
+        }
+    }
+
+    //折扣和满减的类型切换时，对输入框进行无效化操作
+    $("#type_discount").change(function (e) {
+        var type = parseInt( e.currentTarget.value );
+
+        type_discount_change(type);
+    });
+
+    //添加推荐弹出框的确认按钮
+    $(".btn.btn-primary.add-new-recommend").click(function () {
         var startTime;
         var endTime;
 
@@ -650,7 +896,6 @@
 
         var flag_ = window.flag;
         console.log(window.flag);
-
 
         var form = new FormData();
 
@@ -730,15 +975,286 @@
 
     });
 
-    //当recommendDialog打开时调用
-    $('#dialog-recommend-update').on('show.bs.modal', function () {
+    //添加折扣弹出框的确认按钮
+    $(".btn.btn-primary.add-new-discount").click(function () {
+        var startTime;
+        var endTime;
+
+        var isComplete = true;
+        var isFormatted = true;
+
+        //check input
+        if ($("input[id='mac_id']").val() == "") {
+            _set($("input[id='mac_id']"), "设备id");
+            isComplete = false;
+        }
+        if ($("input[id='name']").val() == "") {
+            _set($("input[id='name']"), "设备名称");
+            isComplete = false;
+        }
+        if ($("input[id='attributionOfDevice']").val() == "") {
+            _set($("input[id='attributionOfDevice']"), "设备归属");
+            isComplete = false;
+        }
+        if ($("input[id='organization_name']").val() == "") {
+            _set($("input[id='organization_name']"), "组织");
+            isComplete = false;
+        }
+        if ($("input[id='addressOfDevice']").val() == "") {
+            _set($("input[id='addressOfDevice']"), "设备安装地址");
+            isComplete = false;
+        }
+        if ($("input[id='type']").val() == "") {
+            _set($("input[id='type']"), "类型");
+            isComplete = false;
+        }
+        if ($("input[id='level']").val() == "") {
+            _set($("input[id='level']"), "等级");
+            isComplete = false;
+        }
+
+        var flag_ = window.flag;
+        console.log(window.flag);
+
+        var form = new FormData();
+
+        if(flag_ == "update") {
+            form.append("id", $("input[id='id_discount']").val());
+            form.append("createTime", $("input[id='createTime_discount']").val());
+        } else {
+            form.append("id", 0);
+        }
+        form.append("type", $("select[id='type_discount']").val());
+        form.append("startTime", $("input[id='startTime_discount']").val());
+        form.append("endTime", $("input[id='endTime_discount']").val());
+        form.append("enable", $("select[id='enable_discount']").val());
+
+        if(form.get("type") == "1"){ // 满减
+            form.append("moneyLimit", $("input[id='moneyLimit_discount']").val() );
+            form.append("discount", 0 );
+        } else { // 折扣
+            form.append("moneyLimit", 0 );
+            form.append("discount", $("input[id='discount']").val() );
+        }
+
+        $.ajax({
+            url: "/admin/activity/discount/" + flag,
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                switch (r.status) {
+                    case "SUCCEED" :
+                        var message;
+                        if (flag_ == 'add') {
+                            message = "新增成功";
+                        } else {
+                            message = "修改成功";
+                        }
+
+                        $("#dialog-return").find(".modal-body").html(message);
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.add-new-close").click();
+                        $(".panel.panel-default").find("button[name='refresh']").click();
+
+                        break
+
+                    case "FAILED" :
+                        if (flag_ == 'add') {
+                            message = "新增失败";
+                        } else {
+                            message = "修改失败";
+                        }
+
+                        $("#dialog-return").find(".modal-body").html(message);
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.add-new-close").click();
+
+                        break
+                }
+            },
+            error: function (r) {
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
+
+        form = '';//避免重复点击
 
     });
 
-    //当discountDialog打开时调用
-    $('#dialog-discount-update').on('show.bs.modal', function () {
+    //点击删除按钮,打开折扣删除确认dialog
+    $(".btn.btn-danger.delete-discount-dialog").click(function (){
+        var selectedBox = $("input[name='table_id_discount']:checked");
 
-    });
+        var id = new Array();
+
+        for(var i = 0; i < selectedBox.length; i++){
+            id.push(selectedBox[i].value);
+        }
+
+        if (id.length > 0) {
+            $("#dialog-discount-delete").find(".modal-body").html("是否删除选中折扣菜单?</br>");
+
+            // for(var i = 0; i < id.length; i++){
+            //     $("#dialog-discount-delete").find(".modal-body").append("</br>"+contactsNameMap.get( parseInt(id[i]) ));
+            // }
+
+            $("#dialog-discount-delete").modal("show");
+        } else {
+            $("#dialog-return").find(".modal-body").html("请选择折扣");
+            $("#dialog-return").modal("show");
+        }
+    })
+
+    //点击删除按钮,打开推荐删除确认dialog
+    $(".btn.btn-danger.delete-recommend-dialog").click(function (){
+        var selectedBox = $("input[name='table_id_recommend']:checked");
+
+        var id = new Array();
+
+        for(var i = 0; i < selectedBox.length; i++){
+            id.push(selectedBox[i].value);
+        }
+
+        if (id.length > 0) {
+            $("#dialog-recommend-delete").find(".modal-body").html("是否删除选中的推荐?</br>");
+
+            // for(var i = 0; i < id.length; i++){
+            //     $("#dialog-recommend-delete").find(".modal-body").append("</br>"+contactsNameMap.get( parseInt(id[i]) ));
+            // }
+
+            $("#dialog-recommend-delete").modal("show");
+        } else {
+            $("#dialog-return").find(".modal-body").html("请选择厨师");
+            $("#dialog-return").modal("show");
+        }
+    })
+
+
+    //删除折扣确认按钮
+    $(".btn.btn-danger.btn-discount-delete-confirm").click(function () {
+        console.log('clicked the delete');
+
+        var list_id = new Array();
+
+        var selectedBox = $("input[name='table_id_discount']:checked");
+
+        for(var i = 0; i <  selectedBox.length; i++){
+            list_id.push( parseInt(selectedBox[i].value) );
+        }
+
+        console.log(list_id);
+
+        var form = new FormData();
+
+        form.append("list_ID", list_id);
+
+        $.ajax({
+            url: "/admin/activity/discount/delete",
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                switch (r.status) {
+                    case "SUCCEED" :
+                        $("#dialog-return").find(".modal-body").html("删除成功");
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.btn-delete-cancel").click();
+                        $(".panel.panel-default").find("button[name='refresh']").click();
+
+                        break
+
+                    case "FAILED" :
+                        $("#dialog-return").find(".modal-body").html("删除失败");
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        break
+                }
+            },
+            error: function (r) {
+
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
+    })
+
+    //删除推荐确认按钮
+    $(".btn.btn-danger.btn-recommend-delete-confirm").click(function () {
+        console.log('clicked the delete');
+
+        var list_id = new Array();
+
+        var selectedBox = $("input[name='table_id_recommend']:checked");
+
+        for(var i = 0; i <  selectedBox.length; i++){
+            list_id.push( parseInt(selectedBox[i].value) );
+        }
+
+        console.log(list_id);
+
+        var form = new FormData();
+
+        form.append("list_ID", list_id);
+
+        $.ajax({
+            url: "/admin/activity/recommend/delete",
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                switch (r.status) {
+                    case "SUCCEED" :
+                        $("#dialog-return").find(".modal-body").html("删除成功");
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.btn-delete-cancel").click();
+                        $(".panel.panel-default").find("button[name='refresh']").click();
+
+                        break
+
+                    case "FAILED" :
+                        $("#dialog-return").find(".modal-body").html("删除失败");
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        break
+                }
+            },
+            error: function (r) {
+
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
+    })
+
 
     function doAllCheck(e){
         var list = $('input[name='+e+']');
@@ -748,14 +1264,24 @@
         }
     }
 
-    function _formatte_id(value, row, index) {
+    function _formatte_id_discount(value, row, index) {
         if(index == 0){
             contactsNameMap = new Map();
         }
 
         contactsNameMap.set(value,row.name);
 
-        return '<input name="visitor_id" type="checkbox" value="' + value + '" />';
+        return '<input name="table_id_discount" type="checkbox" value="' + value + '" />';
+    }
+
+    function _formatte_id_recommend(value, row, index) {
+        if(index == 0){
+            contactsNameMap = new Map();
+        }
+
+        contactsNameMap.set(value,row.name);
+
+        return '<input name="table_id_recommend" type="checkbox" value="' + value + '" />';
     }
 
     function _formatte_image(value, row, index) {
@@ -788,66 +1314,35 @@
         return select;
     }
 
-    //当新增，修改页面开启时调用，查询一级菜单，风味，厨师身份信息
-    function getFoodInfo(){}
-
-    function getPrimaryMenu(){
-        ajax({
-            url : "",
-            type : 'GET',
-            dataType : 'JSON',
-            async:false,
-
-            success : function(res){
-
-            },
-            fail : function(res){
-
-            },
-            timeout : function(res){
-
-            },
-        })
+    function _formatte_select_enable(value, row, index) {
+        return $.trim(value) ==$.trim('1') ? "是":"否" ;
     }
 
-    function getStyles(){
-        ajax({
-            url : "",
-            type : 'GET',
-            dataType : 'JSON',
-            async:false,
+    function _formatte_time(value, row, index) {
+        if(value==undefined){
+            return '-'
+        }
 
-            success : function(res){
-
-            },
-            fail : function(res){
-
-            },
-            timeout : function(res){
-
-            },
-        })
+        return getFormattedTime(value);
     }
 
-    function getRole(){
-        ajax({
-            url : "",
-            type : 'GET',
-            dataType : 'JSON',
-            async:false,
+    function _formatte_discount(value,row,index){
+        if(value == undefined || value==0){
+            return "-";
+        }
 
-            success : function(res){
-
-            },
-            fail : function(res){
-
-            },
-            timeout : function(res){
-
-            },
-        })
+        return value*100+"折"
     }
 
+    function _formatte_discount_type(value, row, index){
+        switch (value){
+            case 1 :
+                return "满减";
+            case 0 :
+                return "折扣";
+
+        }
+    }
 
     //注销
     $(".btn.btn-danger.btn-logout").click(function () {
