@@ -240,7 +240,7 @@ var timeout = 3000;
 }(jQuery));
 
 function adjustTableHeight(Object, adjustment){
-    var windowHeight = $(window).height();
+   /* var windowHeight = $(window).height();
     var topNavbarHeight = $(".top-navbar").height();
     var wrapperHeight = $("#wrapper").height();
 
@@ -255,7 +255,7 @@ function adjustTableHeight(Object, adjustment){
 
     Object.height( Object.height() - (wrapperHeight - windowHeight) - topNavbarHeight - adjustment);
 
-    console.log("after: " + Object.height());
+    console.log("after: " + Object.height());*/
 };
 
 function adjustHeight(Object, adjustment){

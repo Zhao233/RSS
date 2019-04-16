@@ -28,7 +28,7 @@ public interface FoodDao extends JpaRepository<Food,Long> {
     String getStylesByFoodId(long foodId);
 
     @Query(value = "SELECT new com.example.demo.model.Activity_Recommend_All(" +
-            "food.id, food.name, food.picUrl, menu.name) " +
+            "food.id, food.picUrl, food.name, menu.name) " +
             " FROM Food food " +
             " INNER JOIN Menu menu " +
             " ON food.menuID = menu.id" +
