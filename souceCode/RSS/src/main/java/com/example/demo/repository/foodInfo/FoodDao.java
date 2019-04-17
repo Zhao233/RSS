@@ -2,7 +2,7 @@ package com.example.demo.repository.foodInfo;
 
 import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.domain.foodInfo.Menu;
-import com.example.demo.model.Activity_Recommend_All;
+import com.example.demo.model.FoodForRecommendModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,12 +27,13 @@ public interface FoodDao extends JpaRepository<Food,Long> {
     @Query(value = "SELECT food.stylesID FROM Food food WHERE food.id = ?1")
     String getStylesByFoodId(long foodId);
 
-    @Query(value = "SELECT new com.example.demo.model.Activity_Recommend_All(" +
+    //只搜索已经启用的food
+    @Query(value = "SELECT new com.example.demo.model.FoodForRecommendModel(" +
             "food.id, food.picUrl, food.name, menu.name) " +
             " FROM Food food " +
             " INNER JOIN Menu menu " +
             " ON food.menuID = menu.id" +
-            " WHERE food.name like %?1% OR menu.name like %?1%")
-    Page<Activity_Recommend_All> getFoodListForRecommend(String search, Pageable pageable);
+            " WHERE ( food.name like %?1% OR menu.name like %?1% ) And food.enable = 1")
+    Page<FoodForRecommendModel> getFoodListForRecommend(String search, Pageable pageable);
 
 }

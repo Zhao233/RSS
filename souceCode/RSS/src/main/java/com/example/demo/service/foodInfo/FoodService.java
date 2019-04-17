@@ -1,7 +1,7 @@
 package com.example.demo.service.foodInfo;
 
 import com.example.demo.domain.foodInfo.Food;
-import com.example.demo.model.Activity_Recommend_All;
+import com.example.demo.model.FoodForRecommendModel;
 import com.example.demo.model.Food_All;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,5 +19,5 @@ public interface FoodService {
 
     void deleteFood(long id);
 
-    Page<Activity_Recommend_All> getFoodListForRecommend(String search, Pageable pageable);
+    Page<FoodForRecommendModel> getFoodListForRecommend(String search, Pageable pageable);
 }

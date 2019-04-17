@@ -2,11 +2,12 @@ package com.example.demo.model;
 
 import lombok.Data;
 
-import java.io.Serializable;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 @Data
-public class Activity_Recommend_All{
-    public Activity_Recommend_All(long id, String picUrl, String name, String menuName) {
+public class FoodForRecommendModel{
+    public FoodForRecommendModel(long id, String picUrl, String name, String menuName) {
         this.id = id;
         this.picUrl = picUrl;
         this.name = name;
