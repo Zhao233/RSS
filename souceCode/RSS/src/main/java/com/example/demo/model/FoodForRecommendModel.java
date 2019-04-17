@@ -2,8 +2,6 @@ package com.example.demo.model;
 
 import lombok.Data;
 
-import java.sql.Time;
-import java.sql.Timestamp;
 
 @Data
 public class FoodForRecommendModel{

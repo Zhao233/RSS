@@ -2,6 +2,7 @@ package com.example.demo.service.info.imp;
 
 import com.example.demo.domain.info.DiscountRecord;
 import com.example.demo.domain.info.RecommendFood;
+import com.example.demo.model.RecommendForActivityModel;
 import com.example.demo.repository.info.DiscountRecordDao;
 import com.example.demo.repository.info.RecommendFoodDao;
 import com.example.demo.service.info.ActivityService;
@@ -20,7 +21,7 @@ public class ActivityServiceImp implements ActivityService {
 
 
     @Override
-    public Page<RecommendFood> getAll_Recommend(String search, Pageable pageable) {
+    public Page<RecommendForActivityModel> getAll_Recommend(String search, Pageable pageable) {
         return recommendFoodDao.getAll(search, pageable);
     }
 

@@ -4,6 +4,7 @@ import com.example.demo.domain.info.DiscountRecord;
 import com.example.demo.domain.info.RecommendFood;
 import com.example.demo.domain.user.Cooker;
 import com.example.demo.model.FoodForRecommendModel;
+import com.example.demo.model.RecommendForActivityModel;
 import com.example.demo.repository.user.CookerRoleDao;
 import com.example.demo.service.foodInfo.FoodService;
 import com.example.demo.service.info.ActivityService;
@@ -44,7 +45,7 @@ public class ActivityController {
 
         Pageable pageable = new PageRequest(offset, limit, new Sort(Sort.Direction.DESC, "id"));
 
-        Page<RecommendFood> page;
+        Page<RecommendForActivityModel> page;
 
         page = activityService.getAll_Recommend(search, pageable);
 

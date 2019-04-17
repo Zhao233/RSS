@@ -228,10 +228,11 @@
                                             <th data-field="id" class="W30" data-formatter="_formatte_id_recommend"><input id="id_recommend_" name="id_recommend_" type="checkbox" onclick="doAllCheck('id_recommend_')"></th>
                                             <th data-field="picUrl" class="W100" data-formatter="_formatte_image">图像</th>
                                             <th data-field="name" class="W100">名称</th>
-                                            <th data-field="menuId" class="W100" style="border:none;">一级菜单</th>
-                                            <th data-field="enable" class="W100" style="border:none;">是否启用</th>
-                                            <th data-field="createTime" class="W100" style="border:none;">创建时间</th>
-                                            <th data-field="updateTime" class="W100" style="border:none;">修改时间</th>
+                                            <th data-field="menuName" class="W100" style="border:none;">一级菜单</th>
+                                            <th data-field="type" class="W100" style="border:none;" data-formatter="_formatte_recommend_type">类型</th>
+                                            <th data-field="enable" class="W100" style="border:none;" data-formatter="_formatte_select_enable">是否启用</th>
+                                            <th data-field="createTime" class="W100" style="border:none;" data-formatter="_formatte_time">创建时间</th>
+                                            <th data-field="updateTime" class="W100" style="border:none;" data-formatter="_formatte_time">修改时间</th>
                                         </tr>
                                         </thead>
 
@@ -480,6 +481,7 @@
 
 <script>
     var contactsNameMap = new Map();
+    var IDMapForRecommendAdd = new Map();
 
     !function ($) {
         $(document).on("click","ul.nav li.parent > a > span.icon", function(){
@@ -860,34 +862,12 @@
         var isComplete = true;
         var isFormatted = true;
 
-        //check input
-        if ($("input[id='mac_id']").val() == "") {
-            _set($("input[id='mac_id']"), "设备id");
-            isComplete = false;
-        }
-        if ($("input[id='name']").val() == "") {
-            _set($("input[id='name']"), "设备名称");
-            isComplete = false;
-        }
-        if ($("input[id='attributionOfDevice']").val() == "") {
-            _set($("input[id='attributionOfDevice']"), "设备归属");
-            isComplete = false;
-        }
-        if ($("input[id='organization_name']").val() == "") {
-            _set($("input[id='organization_name']"), "组织");
-            isComplete = false;
-        }
-        if ($("input[id='addressOfDevice']").val() == "") {
-            _set($("input[id='addressOfDevice']"), "设备安装地址");
-            isComplete = false;
-        }
-        if ($("input[id='type']").val() == "") {
-            _set($("input[id='type']"), "类型");
-            isComplete = false;
-        }
-        if ($("input[id='level']").val() == "") {
-            _set($("input[id='level']"), "等级");
-            isComplete = false;
+
+        if ($("input[name='table_id_recommend_dialog']").length == 0) {
+            $("#dialog-return").find(".modal-body").html("请选择菜品");
+            $("#dialog-return").modal("show");
+
+            return
         }
 
         var flag_ = window.flag;
@@ -895,29 +875,11 @@
 
         var form = new FormData();
 
-        if(flag_ == "update") {
-            form.append("id", $("input[id='id']").val());
-        } else {
-            form.append("id", 0);
-        }
-        form.append("mac_id", $("input[id='mac_id']").val());
-        form.append("name", $("input[id='name']").val());
-        form.append("attributionOfDevice", $("input[id='attributionOfDevice']").val());
-        form.append("organization_name", $("input[id='organization_name']").val());
-        form.append("addressOfDevice", $("input[id='addressOfDevice']").val());
-        form.append("type", $("input[id='type']").val());
-        form.append("level", $("input[id='level']").val());
-        form.append("deviceId_old", $("input[id='deviceId_old']").val());
-        form.append("updateTime", $("input[id='updateTime']").val());
-
-        getFormmattedTime($("input[id='createTime']").val())
-
-        form.append("createTime", getFormmattedTime( $("input[id='createTime']").val() ) );
-
+        form.append("foodID", $("input[id='foodID']").val());
+        form.append("type", $("select[id='type_recommend']").val());
 
         $.ajax({
-            url: "/console/device_management/" + flag,
-            timeout : timeout_network,
+            url: "/admin/activity/recommend/add",
             type: "post",
             data: form,
             processData: false,
@@ -1292,10 +1254,31 @@
                 };
             },
             onPostBody : function(){
-                //adjustTableHeight($(".fixed-table-body"),20);//custom-script
+                $("input[name='table_id_recommend_dialog']").each(function () {
+                    if( IDMapForRecommendAdd.get( $(this).val() ) != undefined ){
+                        $(this).attr("checked","checked");
+                    }
+                })
+                // adjustTableHeight($(".fixed-table-body"),20);//custom-script
+                // console.log("shit")
+            },
+            onPageChange : function (number, size) {
+                var IDList = $("input[name='table_id_recommend_dialog']")
+
+                for(x in IDList){
+                    if( $(IDList[x]).prop("checked") ){
+                        if(IDMapForRecommendAdd.get( $(IDList[x]).val() ) == undefined ){//新加入的id
+                           IDMapForRecommendAdd.set( $(IDList[x]).val(), 0 );
+                        }
+                    } else {
+                        if(IDMapForRecommendAdd.get( $(IDList[x]).val() ) != undefined ){//从已选择中剔除
+                            IDMapForRecommendAdd.remove( $(IDList[x]).val() );
+                        }
+                    }
+                }
             },
             onSort(name,order){
-                $(".temperature").find(".sortable").empty();
+                /*$(".temperature").find(".sortable").empty();
                 $(".humidity").find(".sortable").empty();
 
                 $(".temperature").find(".sortable").append("温度");
@@ -1319,10 +1302,11 @@
                     } else {
                         $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
                     }
-                }
+                }*/
             }
         });
     })
+
 
     function doAllCheck(e){
         var list = $('input[name='+e+']');
@@ -1418,6 +1402,17 @@
                 return "满减";
             case 0 :
                 return "折扣";
+
+        }
+    }
+
+
+    function _formatte_recommend_type(value, row, index){
+        switch (value){
+            case 1 :
+                return "列表";
+            case 0 :
+                return "轮播";
 
         }
     }
