@@ -1272,7 +1272,7 @@
                         }
                     } else {
                         if(IDMapForRecommendAdd.get( $(IDList[x]).val() ) != undefined ){//从已选择中剔除
-                            IDMapForRecommendAdd.remove( $(IDList[x]).val() );
+                            IDMapForRecommendAdd.set( $(IDList[x]).val(), undefined );
                         }
                     }
                 }
