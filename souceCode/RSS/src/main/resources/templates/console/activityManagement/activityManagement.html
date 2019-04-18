@@ -882,11 +882,12 @@
         console.log(window.flag);
 
         var form = new FormData();
+        var IDList = new Array();
 
 
-        $("input[name='table_id_recommend_dialog']").each(function () {
-            IDMapForRecommendAdd.add( $(this).val() );
-        })
+        IDMapForRecommendAdd.forEach(function (value,key,map) {
+            IDList.push(key);
+        });
 
         form.append("type", $("select[id='type_recommend']").val());
         form.append("foodID", IDList);
@@ -1311,9 +1312,9 @@
     })
 
     //当添加推荐modal关闭时，将map清空
-    // $('#dialog-recommend-update').on('hidden.bs.modal', function (e) {
-    //     IDMapForRecommendAdd = new Map();
-    // })
+    $('#dialog-recommend-update').on('hidden.bs.modal', function (e) {
+        IDMapForRecommendAdd = new Map();
+    })
 
 
     function doAllCheck(e){
