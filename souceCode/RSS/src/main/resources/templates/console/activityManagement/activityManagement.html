@@ -382,8 +382,8 @@
                                     <label for="type_recommend" class="col-sm-5 control-label">展示类型</label>
                                     <div class="col-sm-6">
                                         <select class="form-control" id="type_recommend" name="type_recommend">
-                                            <option value="discount"> 轮播 </option>
-                                            <option value="preference"> 列表 </option>
+                                            <option value="0"> 轮播 </option>
+                                            <option value="1"> 列表 </option>
                                         </select>
                                     </div>
                                 </div>
@@ -854,6 +854,14 @@
         type_discount_change(type);
     });
 
+    function checkBoxClick(e){
+        if(IDMapForRecommendAdd.get( e.value ) == undefined){//之前未选中
+            IDMapForRecommendAdd.set(e.value,1);
+        } else {//之前已选中
+            IDMapForRecommendAdd.set(e.value, undefined);
+        }
+    }
+
     //添加推荐弹出框的确认按钮
     $(".btn.btn-primary.add-new-recommend").click(function () {
         var startTime;
@@ -875,8 +883,14 @@
 
         var form = new FormData();
 
-        form.append("foodID", $("input[id='foodID']").val());
+
+        $("input[name='table_id_recommend_dialog']").each(function () {
+            IDMapForRecommendAdd.add( $(this).val() );
+        })
+
         form.append("type", $("select[id='type_recommend']").val());
+        form.append("foodID", IDList);
+        form.append("enable", 1);//默认启用
 
         $.ajax({
             url: "/admin/activity/recommend/add",
@@ -887,6 +901,10 @@
             success: function (r) {
                 switch (r.status) {
                     case "SUCCEED" :
+                        //清空选项
+                        $("input[name='table_id_recommend_dialog']").removeAttr("checked");
+                        IDMapForRecommendAdd = new Map();
+
                         var message;
                         if (flag_ == 'add') {
                             message = "新增成功";
@@ -1213,7 +1231,7 @@
         });
     })
 
-
+    //当添加推荐modal打开时，初始化Table
     $('#dialog-recommend-update').on('show.bs.modal', function (e) {
         $('#_table_recommend_food').bootstrapTable({
             method: 'get',
@@ -1262,21 +1280,6 @@
                 // adjustTableHeight($(".fixed-table-body"),20);//custom-script
                 // console.log("shit")
             },
-            onPageChange : function (number, size) {
-                var IDList = $("input[name='table_id_recommend_dialog']")
-
-                for(x in IDList){
-                    if( $(IDList[x]).prop("checked") ){
-                        if(IDMapForRecommendAdd.get( $(IDList[x]).val() ) == undefined ){//新加入的id
-                           IDMapForRecommendAdd.set( $(IDList[x]).val(), 0 );
-                        }
-                    } else {
-                        if(IDMapForRecommendAdd.get( $(IDList[x]).val() ) != undefined ){//从已选择中剔除
-                            IDMapForRecommendAdd.set( $(IDList[x]).val(), undefined );
-                        }
-                    }
-                }
-            },
             onSort(name,order){
                 /*$(".temperature").find(".sortable").empty();
                 $(".humidity").find(".sortable").empty();
@@ -1306,6 +1309,11 @@
             }
         });
     })
+
+    //当添加推荐modal关闭时，将map清空
+    // $('#dialog-recommend-update').on('hidden.bs.modal', function (e) {
+    //     IDMapForRecommendAdd = new Map();
+    // })
 
 
     function doAllCheck(e){
@@ -1343,7 +1351,7 @@
 
         contactsNameMap.set(value,row.name);
 
-        return '<input name="table_id_recommend_dialog" type="checkbox" value="' + value + '" />';
+        return '<input name="table_id_recommend_dialog" type="checkbox" onclick="checkBoxClick(this)" value="' + value + '" />';
     }
 
     function _formatte_image(value, row, index) {

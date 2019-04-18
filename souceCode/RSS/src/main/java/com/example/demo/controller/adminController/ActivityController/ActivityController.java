@@ -1,5 +1,6 @@
 package com.example.demo.controller.adminController.ActivityController;
 
+import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.domain.info.DiscountRecord;
 import com.example.demo.domain.info.RecommendFood;
 import com.example.demo.domain.user.Cooker;
@@ -122,17 +123,22 @@ public class ActivityController {
 
     @ResponseBody
     @RequestMapping(value = "/recommend/add")
-    public Map<String, Object> addOne_Recommend(@RequestParam(name = "foodID") Long foodID,
-                                                @RequestParam(name = "type") Integer type, @RequestParam(name = "enable") Integer enable)  {
+    public Map<String, Object> addOne_Recommend(@RequestParam(name = "foodID") List<Long> foodID,
+                                                @RequestParam(name = "type") Integer type,
+                                                @RequestParam(name = "enable") Integer enable)  {
         Map<String, Object> map = new HashMap();
 
-        RecommendFood recommendFood = new RecommendFood();
-        recommendFood.setFoodID(foodID);
-        recommendFood.setEnable(enable);
-        recommendFood.setType(type);
-        recommendFood.setCreateTime(TimeUtil.getTimeNow());
+        for(Long id : foodID){
+            RecommendFood recommendFood = new RecommendFood();
 
-        activityService.addOne_Recommend(recommendFood);
+            recommendFood.setFoodID(id);
+            recommendFood.setType(type);
+            recommendFood.setEnable(enable);
+            recommendFood.setCreateTime(TimeUtil.getTimeNow());
+
+            activityService.addOne_Recommend(recommendFood);
+        }
+
 
         map.put("status","SUCCEED");
 
