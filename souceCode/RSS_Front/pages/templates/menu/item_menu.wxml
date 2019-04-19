@@ -1,6 +1,6 @@
 <template name="item-menu">
   <view class="box_menu">
-    <image src="{{item.pic_url}}" class="picture_menu" mode="aspectFill"></image>
+    <image src="{{item.picUrl}}" class="picture_menu" mode="aspectFill"></image>
 
      <text>{{item.name}}</text>
     

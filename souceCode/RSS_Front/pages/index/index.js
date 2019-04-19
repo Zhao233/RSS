@@ -18,92 +18,12 @@ Page({
     ],
 
     recommend_circly:[//轮播展示的推荐菜的列表
-      { 
-        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_1",
-        price: 20
-      },
-      {
-        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_2",
-        price: 20
-      },
-      {
-        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_3",
-        price: 20
-      }
     ],
 
     recommend_list: [//列表视图的推荐菜列表
-      {
-        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_1",
-        price: 20
-      },
-      {
-        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_2",
-        price: 20
-      },
-      {
-        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_3",
-        price: 20
-      },
-      {
-        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_4",
-        price: 20
-      },
-      {
-        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_5",
-        price: 20
-      },
-      {
-        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_6",
-        price: 20
-      }
     ],
 
     food_list : [
-      {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_1",
-        price: 20
-      },
-
-      {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_1",
-        price: 20
-      },
-
-      {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_1",
-        price: 20
-      },
-
-      {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_1",
-        price: 20
-      },
-
-      {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_1",
-        price: 20
-      },
-
-      {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
-        name: "test_1",
-        price: 20
-      },
     ]
   },
 
@@ -129,7 +49,7 @@ Page({
 
         var temp_classfiyList = new Array;
 
-        temp_classfiyList.push({ id: 1, name: "推荐" });
+        temp_classfiyList.push({ id: "", name: "推荐" });
 
         for (var x in res.data.menuList) {
           var rawData = res.data.menuList[x];
@@ -219,11 +139,56 @@ Page({
     
   },
 
-  /* 点击左侧一级菜单，调整选中状态 */
+  /* 点击左侧一级菜单，调整选中状态，并获取对应的菜品列表 */
   chooseMenuItem : function(e){
+    var that = this;
+
     this.setData({
       choose_status: e.currentTarget.dataset.num
+    });
+
+    if(e.currentTarget.dataset.id == ""){//点击的是推荐
+      return ;
+    }
+
+    wx.request({
+      url: "http://" + app.info.hostname + ":" + app.info.port + "/customer/index/getFoodListByMenuID",
+      data:{
+        menuID:e.currentTarget.dataset.id
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+
+      success(res) {
+        if (res.data.status == "SUCCEED") {
+        } else {
+          app.showToast("网络请求失败");
+          return;
+        }
+
+        console.log(res);
+
+        var temp_food_list = new Array;
+
+        for (var x in res.data.foodList) {
+          var rawData = res.data.foodList[x];
+
+          var item = { id: rawData.foodID, name: rawData.name, picUrl: rawData.picUrl, price: rawData.price }
+
+          temp_food_list.push(item);
+        }
+
+        that.setData({
+          food_list: temp_food_list
+        })
+      },
+      fail(res) {
+        app.showToast("网络请求失败")
+      }
     })
+
+
   },
 
 

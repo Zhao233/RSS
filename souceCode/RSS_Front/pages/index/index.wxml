@@ -5,8 +5,8 @@
   <!--分类栏-->
     <scroll-view scroll-y="true" class="scroll_left">
       <block wx:for="{{classfiyList}}">
-        <view data-num="{{index}}" bindtap='chooseMenuItem' class="nav_left_items {{choose_status==index ? 'item_choosed' : ' '}}" bindtap='chooseMenuItem'>
-          <text class="item_text" bindtap="getList">{{item.name}}</text>
+        <view data-id="{{item.id}}" data-num="{{index}}" bindtap='chooseMenuItem' class="nav_left_items {{choose_status==index ? 'item_choosed' : ' '}}" bindtap='chooseMenuItem'>
+          <text class="item_text">{{item.name}}</text>
         </view>
       </block>
     </scroll-view>
