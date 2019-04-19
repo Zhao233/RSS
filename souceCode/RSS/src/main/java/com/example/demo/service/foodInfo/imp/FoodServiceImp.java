@@ -62,6 +62,6 @@ public class FoodServiceImp implements FoodService {
 
     @Override
     public List<Food> getFoodsByMenuId(long menuId) {
-        return foodDao.findAll();
+        return foodDao.getFoodsByMenuId(menuId);
     }
 }
