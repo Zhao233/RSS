@@ -358,14 +358,14 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    <!--添加，修改推荐弹出框-->
-    <div id="dialog-recommend-update" class="modal fade" tabindex="-1" role="dialog">
+    <!--添加推荐弹出框-->
+    <div id="dialog-recommend-add" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title">推荐管理 | <span id="dialog-recommend-update-title"></span></h4>
+                    <h4 class="modal-title">推荐管理 | <span id="dialog-recommend-add-title"></span></h4>
                 </div>
 
                 <div class="modal-body">
@@ -428,6 +428,88 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <!--修改推荐弹出框-->
+    <div id="dialog-recommend-update" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">推荐管理 | <span >修改</span></h4>
+                </div>
+
+                <div class="modal-body">
+                    <form role="form" class="form-horizontal add-new form-uploadfiles"
+                          enctype="multipart/form-data"
+                          method="POST">
+                        <input type="text" style="display:none;" id="id_recommend_upate" name="id"/>
+                        <input type="text" style="display:none;" id="createTime_recommend"/>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-1"></div>
+
+                                <div class="col-sm-5">
+                                    <label for="type_recommend" class="col-sm-5 control-label">展示类型</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="type_recommend_update" name="type_recommend">
+                                            <option value="0"> 轮播 </option>
+                                            <option value="1"> 列表 </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-5">
+                                    <label for="type_recommend" class="col-sm-5 control-label">是否启用</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="enable_recommend_update" name="type_recommend">
+                                            <option value="0"> 否 </option>
+                                            <option value="1"> 是 </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+
+                            <div style="width: 100%;">
+                                <div class="col-sm-1"></div>
+
+                                <div class="col-sm-10">
+                                    <div class="table-responsive">
+                                        <table id="_table_recommend_food_update" class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th data-field="id" class="W30" data-formatter="_formatte_id_recommend_dialog_update"><input id="id_recommend_food_update" type="checkbox" ></th>
+                                                <th data-field="picUrl" class="W100" data-formatter="_formatte_image">图像</th>
+                                                <th data-field="name" class="W100">名称</th>
+                                                <th data-field="menuName" class="W100">一级菜单</th>
+                                            </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9" style="text-align: right;padding-top: 20px;">
+                                <button type="button" class="btn btn-primary update-new-recommend">保存</button>
+                                <button type="button" class="btn btn-default update-new-close" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
     <!--提示弹出框-->
     <div id="dialog-return" class="modal fade" style="z-index:99999" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
@@ -482,6 +564,7 @@
 <script>
     var contactsNameMap = new Map();
     var IDMapForRecommendAdd = new Map();
+    var foodID_recommend_update;
 
     !function ($) {
         $(document).on("click","ul.nav li.parent > a > span.icon", function(){
@@ -677,9 +760,9 @@
 
         // $("#choosedPic").attr("src","/images/default_avatar_male.jpg");
 
-        $("#dialog-recommend-update-title").html("新增");
+        $("#dialog-recommend-add-title").html("新增");
 
-        $("#dialog-recommend-update").modal("show");
+        $("#dialog-recommend-add").modal("show");
     });
 
     //打开修改折扣弹出框
@@ -761,7 +844,7 @@
 
         var id = new Array();
 
-        var selectedBox = $("input[name='visitor_id']:checked");
+        var selectedBox = $("input[name='table_id_recommend']:checked");
 
         window.id = id;
         console.log('clicked update');
@@ -778,7 +861,7 @@
 
         if (id.length != 0) {
             if(id.length > 1){
-                $("#dialog-return").find(".modal-body").html("请选择一个访客");
+                $("#dialog-return").find(".modal-body").html("请选择一个推荐条目");
                 $("#dialog-return").modal("show");
 
                 return ;
@@ -786,36 +869,21 @@
 
             _reset($(".form-horizontal.add-new"));
 
+            $("#dialog-recommend-update").modal("show")
 
-            $("#dialog-title").html("修改");
+            $.get("/admin/activity/getRecommend/" + id[0], null, function (res, status) {
+                $("#type_recommend_update").find("option[value="+res.recommend.type+"]").attr("selected" , "selected");
+                $("#enable_recommend_update").find("option[value="+res.recommend.enable+"]").attr("selected", "selected");
 
-            $("#dialog-update").modal("show");
+                foodID_recommend_update = res.recommend.foodID;
 
-            // 读取用户选中的用户信息
-            $.get("/console/device_management/get/" + id[0], null, function (r, status) {
-                console.log(r);
-
-                $("#dialog-visitor-management-update-title").html("修改");
-                $("#dialog-visitor-management-update").modal("show");
-
-                $("#dialog-visitor-management-update").find("input[id='deviceId_old']").val(r.mac_id);
-
-                $("#dialog-visitor-management-update").find("input[id='mac_id']").val(r.mac_id);
-                $("#dialog-visitor-management-update").find("input[id='id']").val(r.id);
-                $("#dialog-visitor-management-update").find("input[id='name']").val(r.name);
-                $("#dialog-visitor-management-update").find("input[id='attributionOfDevice']").val(r.attributionOfDevice);
-                $("#dialog-visitor-management-update").find("input[id='organization_name']").val(r.organization_name);
-                $("#dialog-visitor-management-update").find("input[id='addressOfDevice']").val(r.addressOfDevice);
-                $("#dialog-visitor-management-update").find("input[id='type']").val(r.type);
-                $("#dialog-visitor-management-update").find("input[id='level']").val(r.level);
-                $("#dialog-visitor-management-update").find("input[id='createTime']").val(r.create_time);
-                $("#dialog-visitor-management-update").find("input[id='updateTime']").val(r.update_time);
-
+                $("#createTime_recommend").val(getFormattedTime(res.recommend.createTime));
+                $("#id_recommend_upate").val(res.recommend.id);
             });
 
         } else {
-            $(".bs-example-modal-sm").find(".modal-body").html("请选中人员后操作");
-            $(".bs-example-modal-sm").modal("show");
+            $("#dialog-return").find(".modal-body").html("请选中推荐条目");
+            $("#dialog-return").modal("show");
         }
     });
 
@@ -1118,6 +1186,71 @@
     })
 
 
+    //修改推荐时，保存
+    $(".update-new-recommend").click(function (e) {
+        if ($("input[name='table_id_recommend_dialog']").length == 0) {
+            $("#dialog-return").find(".modal-body").html("请选择菜品");
+            $("#dialog-return").modal("show");
+        }
+
+        var form = new FormData();
+
+        form.append("id", $("input[id='id_recommend_upate']").val());
+        form.append("createTime", $("input[id='createTime_recommend']").val());
+        form.append("type", $("select[id='type_recommend']").val());
+        form.append("foodID", $("input[name='table_id_recommend_dialog']").val());
+        form.append("enable", $("select[id='enable_recommend_update']").val());//默认启用
+
+        $.ajax({
+            url: "/admin/activity/recommend/update",
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                switch (r.status) {
+                    case "SUCCEED" :
+                        //清空选项
+                        $("input[name='table_id_recommend_dialog']").removeAttr("checked");
+                        IDMapForRecommendAdd = new Map();
+
+                        $("#dialog-return").find(".modal-body").html("修改成功");
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.update-new-close").click();
+                        $(".panel.panel-default").find("button[name='refresh']").click();
+
+                        break
+
+                    case "FAILED" :
+                        if (flag_ == 'add') {
+                            message = "新增失败";
+                        } else {
+                            message = "修改失败";
+                        }
+
+                        $("#dialog-return").find(".modal-body").html(message);
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.add-new-close").click();
+
+                        break
+                }
+            },
+            error: function (r) {
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
+    })
+
+
     //删除折扣确认按钮
     $(".btn.btn-danger.btn-discount-delete-confirm").click(function () {
         console.log('clicked the delete');
@@ -1233,7 +1366,7 @@
     })
 
     //当添加推荐modal打开时，初始化Table
-    $('#dialog-recommend-update').on('show.bs.modal', function (e) {
+    $('#dialog-recommend-add').on('show.bs.modal', function (e) {
         $('#_table_recommend_food').bootstrapTable({
             method: 'get',
             url: "/admin/activity/getAllFood",
@@ -1310,12 +1443,87 @@
             }
         });
     })
-
     //当添加推荐modal关闭时，将map清空
-    $('#dialog-recommend-update').on('hidden.bs.modal', function (e) {
+    $('#dialog-recommend-add').on('hidden.bs.modal', function (e) {
         IDMapForRecommendAdd = new Map();
     })
 
+    $("#dialog-recommend-update").on('show.bs.modal', function (e) {
+        $('#_table_recommend_food_update').bootstrapTable({
+            method: 'get',
+            url: "/admin/activity/getAllFood",
+            striped: true,
+            height:300,
+            dataType: "json",
+            pagination: true,
+            queryParamsType: "limit",
+            singleSelect: true,
+            contentType: "application/x-www-form-urlencoded",
+            pageSize: 10,
+            pageNumber: 1,
+            search: true,
+            showColumns: true,
+            showRefresh: true,
+            sidePagination: "server", //服务端请求
+            queryParams: function (params) {
+
+                return {
+                    limit: params.limit,
+                    offset: params.offset / params.limit,
+                    search: $(".search").find("input").val(),
+                    sort: params.sort,
+                    order: params.order,
+                };
+            },
+            responseHandler: function (res) {
+                $("#doAllCheckBtn").checked != $("#doAllCheckBtn").checked;
+
+                //doallcheck();
+
+                //config = res.config;
+
+                return {
+                    "rows": res.rows,
+                    "total": res.total
+                };
+            },
+            onPostBody : function(){
+
+            },
+            onSort(name,order){
+                /*$(".temperature").find(".sortable").empty();
+                $(".humidity").find(".sortable").empty();
+
+                $(".temperature").find(".sortable").append("温度");
+                $(".humidity").find(".sortable").append("湿度");
+
+                if(name == "temperature"){
+
+                    $(".humidity").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if(order == "asc"){
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+
+                } else {//humidity
+                    $(".temperature").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if (order == "asc") {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+                }*/
+            }
+        });
+    })
+
+    function single_select(e){
+        $("input[name='table_id_recommend_dialog']").removeAttr("checked");
+        $(e).prop("checked",true);
+    }
 
     function doAllCheck(e){
         var list = $('input[name='+e+']');
@@ -1346,13 +1554,11 @@
     }
 
     function _formatte_id_recommend_dialog(value, row, index) {
-        if(index == 0){
-            contactsNameMap = new Map();
-        }
-
-        contactsNameMap.set(value,row.name);
-
         return '<input name="table_id_recommend_dialog" type="checkbox" onclick="checkBoxClick(this)" value="' + value + '" />';
+    }
+
+    function _formatte_id_recommend_dialog_update(value, row, index) {
+        return '<input name="table_id_recommend_dialog" type="checkbox" onclick="single_select(this)" value="' + value + '" />';
     }
 
     function _formatte_image(value, row, index) {
@@ -1414,7 +1620,6 @@
 
         }
     }
-
 
     function _formatte_recommend_type(value, row, index){
         switch (value){
