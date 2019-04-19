@@ -1,4 +1,4 @@
-package com.example.demo.controller.customerController.foodController;
+package com.example.demo.controller.customerController.indexController;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
