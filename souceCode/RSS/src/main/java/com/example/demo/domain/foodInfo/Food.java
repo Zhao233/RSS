@@ -3,6 +3,7 @@ package com.example.demo.domain.foodInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -31,6 +32,9 @@ public class Food {
 
     @Column(name = "pic_url")
     private String picUrl;
+
+    @Column(name = "price")
+    private Double price;
 
     @Column(name = "enable")
     private Integer enable = 1;

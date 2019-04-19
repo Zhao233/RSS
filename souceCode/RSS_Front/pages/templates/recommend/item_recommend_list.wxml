@@ -1,6 +1,6 @@
 <template name="item">
   <view class="box_recommend">
-    <image src="{{item.pic_url}}" class="item_recommend" mode="aspectFill"></image>
+    <image src="{{item.picUrl}}" class="item_recommend" mode="aspectFill"></image>
 
      <text>{{item.name}}</text>
     

@@ -1,8 +1,7 @@
-package com.example.demo.controller.adminController.foodInfoCntroller;
+package com.example.demo.controller.adminController.foodInfoController;
 
 import com.example.demo.domain.foodInfo.Menu;
 import com.example.demo.service.foodInfo.MenuService;
-import com.example.demo.util.DateTranslator;
 import com.example.demo.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

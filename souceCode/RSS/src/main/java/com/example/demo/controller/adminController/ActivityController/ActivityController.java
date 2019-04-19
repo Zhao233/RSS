@@ -1,17 +1,12 @@
 package com.example.demo.controller.adminController.ActivityController;
 
-import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.domain.info.DiscountRecord;
 import com.example.demo.domain.info.RecommendFood;
-import com.example.demo.domain.user.Cooker;
-import com.example.demo.model.FoodForRecommendModel;
-import com.example.demo.model.RecommendForActivityModel;
-import com.example.demo.repository.user.CookerRoleDao;
+import com.example.demo.model.admin.FoodForRecommendModel;
+import com.example.demo.model.admin.RecommendForActivityModel;
 import com.example.demo.service.foodInfo.FoodService;
 import com.example.demo.service.info.ActivityService;
-import com.example.demo.service.user.CookerService;
 import com.example.demo.util.TimeUtil;
-import com.sun.deploy.net.proxy.RemoveCommentReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

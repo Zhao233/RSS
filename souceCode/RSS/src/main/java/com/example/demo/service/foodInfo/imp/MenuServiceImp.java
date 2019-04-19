@@ -8,15 +8,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("menuService")
 public class MenuServiceImp implements MenuService {
     @Autowired
     private MenuDao menuDao;
 
 
+
     @Override
     public Page<Menu> getMenuList(String search, Pageable pageable) {
         return  menuDao.getMenuList(search, pageable);
+    }
+
+    @Override
+    public List<Menu> getAll() {
+        return menuDao.getMenuList();
     }
 
     @Override

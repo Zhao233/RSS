@@ -2,7 +2,7 @@ package com.example.demo.service.info.imp;
 
 import com.example.demo.domain.info.DiscountRecord;
 import com.example.demo.domain.info.RecommendFood;
-import com.example.demo.model.RecommendForActivityModel;
+import com.example.demo.model.admin.RecommendForActivityModel;
 import com.example.demo.repository.info.DiscountRecordDao;
 import com.example.demo.repository.info.RecommendFoodDao;
 import com.example.demo.service.info.ActivityService;

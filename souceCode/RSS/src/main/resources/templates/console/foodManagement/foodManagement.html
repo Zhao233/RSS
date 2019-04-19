@@ -565,9 +565,9 @@
                 $("#dialog-update").find("select[id='role']").find("option[value = '"+res.food.role+"']").attr("selected", "selected");
                 $("#dialog-update").find("select[id='styles']").find("option[value = '"+res.food.styles+"']").attr("selected", "selected");
 
-                $("#choosedPic").attr('src', res.menu.picUrl);
+                $("#choosedPic").attr('src', res.food.picUrl);
 
-                var picNames = res.menu.picUrl.split("/");
+                var picNames = res.food.picUrl.split("/");
 
                 window.picName = "image/"+picNames[picNames.length-1];
             });

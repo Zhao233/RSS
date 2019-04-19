@@ -1,5 +1,10 @@
 //app.js
 App({
+  info:{
+    hostname:"localhost",
+    port:8881
+  },
+
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
@@ -35,5 +40,14 @@ App({
   },
   globalData: {
     userInfo: null
+  },
+
+  //全局方法
+  showToast : function (message) {
+    wx.showToast({
+      title: message,
+      icon: 'none',
+      duration: 1000
+    })
   }
 })

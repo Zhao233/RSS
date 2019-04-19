@@ -1,8 +1,8 @@
 //index.js
 //获取应用实例
-const app = getApp()
-
 var url1 = "https://baike.baidu.com/pic/%E6%B6%AE%E7%BE%8A%E8%82%89/476036/0/3801213fb80e7bec3d233a53252eb9389a506b82?fr=lemma&ct=single#aid=0&pic=3801213fb80e7bec3d233a53252eb9389a506b82";
+
+const app = getApp();
 
 Page({
   data: {
@@ -15,30 +15,21 @@ Page({
     choose_status : 0,
 
     classfiyList: [//一级菜单
-      { id: 1, name: "推荐", idenity_name: "recommend" },
-      { id: 2, name: "精品凉菜", idenity_name: "food_cool" },
-      { id: 3, name: "下酒菜", idenity_name: "food_auxiliary" },
-      { id: 4, name: "特色菜", idenity_name: "food_feature" },
-      { id: 5, name: "汤", idenity_name: "food_soup" },
-      { id: 6, name: "火锅", idenity_name: "food_hotPot" },
-      { id: 7, name: "点心", idenity_name: "food_dessert" },
-      { id: 8, name: "果汁", idenity_name: "food_juice" },
-      { id: 9, name: "山珍海味", idenity_name: "food_treasure" },
     ],
 
     recommend_circly:[//轮播展示的推荐菜的列表
       { 
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
         name: "test_1",
         price: 20
       },
       {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
         name: "test_2",
         price: 20
       },
       {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
         name: "test_3",
         price: 20
       }
@@ -46,32 +37,32 @@ Page({
 
     recommend_list: [//列表视图的推荐菜列表
       {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
         name: "test_1",
         price: 20
       },
       {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
         name: "test_2",
         price: 20
       },
       {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
         name: "test_3",
         price: 20
       },
       {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
         name: "test_4",
         price: 20
       },
       {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
         name: "test_5",
         price: 20
       },
       {
-        pic_url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
+        picUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2903730956,4222895621&fm=27&gp=0.jpg',
         name: "test_6",
         price: 20
       }
@@ -116,6 +107,102 @@ Page({
     ]
   },
 
+  /* 获取一级菜单 */
+  getMenuList: function () {
+    var that = this;
+
+    wx.request({
+      url: "http://"+app.info.hostname+":"+app.info.port+"/customer/index/getMenuList",
+
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+
+      success(res) {
+        if(res.data.status == "SUCCEED"){
+        } else {
+          app.showToast("网络请求失败");
+          return ;
+        }
+
+        console.log(res);
+
+        var temp_classfiyList = new Array;
+
+        temp_classfiyList.push({ id: 1, name: "推荐" });
+
+        for (var x in res.data.menuList) {
+          var rawData = res.data.menuList[x];
+
+          var item = { id: rawData.id, name: rawData.name }
+
+          temp_classfiyList.push(item);
+        }
+
+        that.setData({
+          classfiyList: temp_classfiyList
+        })
+
+        console.log(res.data)
+      },
+      fail(res) {
+        app.showToast("网络请求失败")
+      }
+    })
+  },
+
+  /* 获取推荐菜品 */
+  getRecommendFood : function() {
+    var that = this;
+
+    wx.request({
+      url: "http://" + app.info.hostname + ":" + app.info.port + "/customer/index/getRecommendFoodList",
+
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+
+      success(res) {
+        if (res.data.status == "SUCCEED") {
+        } else {
+          app.showToast("网络请求失败");
+          return;
+        }
+
+        console.log(res);
+
+        var temp_recommend_circly = new Array;
+        var temp_recommend_list = new Array;
+
+        for (var x in res.data.recommendFoodList) {
+          var rawData = res.data.recommendFoodList[x];
+
+          var item = { id: rawData.foodID, name: rawData.name, picUrl: rawData.picUrl, price: rawData.price }
+          
+          switch(rawData.type){
+            case 1 ://列表
+              temp_recommend_list.push(item);
+
+              break;
+            case 0 ://轮播
+              temp_recommend_circly.push(item);
+              break;
+          }
+        }
+
+        that.setData({
+          recommend_circly : temp_recommend_circly,
+          recommend_list : temp_recommend_list,
+        })
+
+        console.log(res.data)
+      },
+      fail(res) {
+        app.showToast("网络请求失败")
+      }
+    })
+  },
+
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
@@ -124,41 +211,12 @@ Page({
   },
 
   onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
+    this.getMenuList();
+    this.getRecommendFood();
   },
 
   getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
+    
   },
 
   /* 点击左侧一级菜单，调整选中状态 */
@@ -166,6 +224,7 @@ Page({
     this.setData({
       choose_status: e.currentTarget.dataset.num
     })
-  }
-  
+  },
+
+
 })

@@ -1,17 +1,16 @@
-package com.example.demo.controller.adminController.foodInfoCntroller;
+package com.example.demo.controller.adminController.foodInfoController;
 
 
 import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.domain.foodInfo.Menu;
 import com.example.demo.domain.foodInfo.Style;
 import com.example.demo.domain.user.CookerRole;
-import com.example.demo.model.Food_All;
+import com.example.demo.model.admin.Food_All;
 import com.example.demo.repository.foodInfo.MenuDao;
 import com.example.demo.repository.foodInfo.StyleDao;
 import com.example.demo.repository.user.CookerRoleDao;
 import com.example.demo.service.foodInfo.FoodService;
 import com.example.demo.util.COSUtil;
-import com.example.demo.util.DateTranslator;
 import com.example.demo.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
