@@ -1174,13 +1174,9 @@
         if (id.length > 0) {
             $("#dialog-recommend-delete").find(".modal-body").html("是否删除选中的推荐?</br>");
 
-            // for(var i = 0; i < id.length; i++){
-            //     $("#dialog-recommend-delete").find(".modal-body").append("</br>"+contactsNameMap.get( parseInt(id[i]) ));
-            // }
-
             $("#dialog-recommend-delete").modal("show");
         } else {
-            $("#dialog-return").find(".modal-body").html("请选择厨师");
+            $("#dialog-return").find(".modal-body").html("请选择推荐");
             $("#dialog-return").modal("show");
         }
     })
