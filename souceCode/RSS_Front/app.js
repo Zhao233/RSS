@@ -2,8 +2,10 @@
 App({
   info:{
     hostname:"localhost",
-    port:8881
+    port:8881,
+
   },
+
 
   onLaunch: function () {
     // 展示本地存储能力
@@ -39,14 +41,16 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+
+    cartListRecord: new Map,//购物车中的菜品
   },
 
   //全局方法
   showToast : function (message) {
     wx.showToast({
       title: message,
-      icon: 'none',
+      icon: 'none',   
       duration: 1000
     })
   }

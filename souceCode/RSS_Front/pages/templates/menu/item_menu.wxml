@@ -1,11 +1,21 @@
 <template name="item-menu">
-  <view class="box_menu">
+  <view class="box_menu" >
     <image src="{{item.picUrl}}" class="picture_menu" mode="aspectFill"></image>
 
-     <text>{{item.name}}</text>
-    
-    <view class="box_info_menu">
-      <text>{{item.price}}￥/每份</text>
-    </view>  
+    <view class="box_vertical">
+      <view class="box_horizontal" style='margin-left:30rpx'>
+
+        <view>
+          <text>{{item.name}}</text>
+        </view>
+
+        <view>
+          <text>{{item.price}}￥/每份</text>
+        </view>
+
+        </view>
+        <van-button data-foodID="{{item.id}}" round type="danger" bindtap="addFoodToCart" style='margin-left : 20rpx;'>+</van-button>
+      </view>
+
   </view>
 </template>

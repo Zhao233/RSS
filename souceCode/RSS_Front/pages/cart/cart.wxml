@@ -9,7 +9,7 @@
           price="{{item.price}}"
           desc="{{item.desc}}"
           title="{{item.name}}"
-          thumb="{{ item.pic_url }}"
+          thumb="{{ item.picUrl }}"
           >
             <view slot="footer" style='padding:10rpx'>
               <van-button size="mini" round="true" style='margin-right:5rpx;'>-</van-button>

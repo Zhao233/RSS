@@ -26,3 +26,15 @@
   display:flex;
   justify-content: space-between;
 }
+
+.box_horizontal{
+  display: flex;
+  flex-direction: column;
+}
+
+.box_vertical{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20rpx;
+}

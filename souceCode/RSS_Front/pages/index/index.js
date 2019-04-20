@@ -135,10 +135,6 @@ Page({
     this.getRecommendFood();
   },
 
-  getUserInfo: function(e) {
-    
-  },
-
   /* 点击左侧一级菜单，调整选中状态，并获取对应的菜品列表 */
   chooseMenuItem : function(e){
     var that = this;
@@ -174,7 +170,7 @@ Page({
         for (var x in res.data.foodList) {
           var rawData = res.data.foodList[x];
 
-          var item = { id: rawData.foodID, name: rawData.name, picUrl: rawData.picUrl, price: rawData.price }
+          var item = { id: rawData.id, name: rawData.name, picUrl: rawData.picUrl, price: rawData.price }
 
           temp_food_list.push(item);
         }
@@ -191,5 +187,41 @@ Page({
 
   },
 
+  /* 添加菜品到购物车 */
+  addFoodToCart : function(e){
+    var id = e.currentTarget.dataset.foodid;
+  
+    var item={};
+
+    for(var x in this.data.food_list){
+      item = app.globalData.cartListRecord.get(id);
+
+      if (item != undefined){
+        break;
+      }
+
+      if (id == this.data.food_list[x].id){
+        var temp_food = this.data.food_list[x];
+
+        item = {"picUrl" : temp_food.picUrl,
+                "name" : temp_food.name,
+                "price" : temp_food.price,
+                "num" : 1};
+
+        break;
+      }
+    }
+
+    if (app.globalData.cartListRecord.get(id) == undefined){
+      app.globalData.cartListRecord.set(id, item);
+    } else {
+      var temp_item = app.globalData.cartListRecord.get(id);
+
+      temp_item.num++;
+
+      app.globalData.cartListRecord.set(id, temp_item);
+    }
+
+  }
 
 })
