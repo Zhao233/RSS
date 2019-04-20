@@ -22,7 +22,7 @@
   </scroll-view>
 
   <van-submit-bar
-    price="{{ 3050 }}"
+    price="{{ food_accounts }}"
     button-text="提交订单"
     bind:submit="onSubmit"
   />
