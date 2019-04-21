@@ -203,7 +203,8 @@ Page({
       if (id == this.data.food_list[x].id){
         var temp_food = this.data.food_list[x];
 
-        item = {"picUrl" : temp_food.picUrl,
+        item = {"id" : temp_food.id,
+                "picUrl" : temp_food.picUrl,
                 "name" : temp_food.name,
                 "price" : temp_food.price,
                 "num" : 1};

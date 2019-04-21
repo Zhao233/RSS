@@ -46,7 +46,43 @@ Page({
     this.setData({
       food_accounts : account
     })
-  },
+  }, 
+
+  addOne : function(e) {
+    var id = e.currentTarget.dataset.foodid;
+
+    var temp_item = null;
+
+    var index = null;
+
+    for (var x in this.data.food_cart){
+      var temp = this.data.food_cart[x]
+
+      if(temp.id == id){
+        index = x;
+
+        temp_item = temp;
+
+        temp_item.num+=1;
+
+        app.globalData.cartListRecord.set(id, temp_item);//将全局的数据也一并更新
+
+        break;
+      }
+    }
+
+    this.setData({
+      ["food_cart[" + index + "]"]: temp_item
+    });
+
+    this.getAccounts();
+  }, 
+
+  removeOne : function(e) {
+    var id = e.currentTarget.dataset;
+
+    console.log(id);
+  }, 
 
   //事件处理函数
   bindViewTap: function() {
