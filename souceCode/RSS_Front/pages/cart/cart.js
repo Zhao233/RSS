@@ -48,12 +48,25 @@ Page({
     })
   }, 
 
-  updateCartData : function(id, index, data){
-    app.globalData.cartListRecord.set(id, data);//将全局的数据也一并更新
+  updateCartData : function(id, index, data, type){//type: 0 : 修改，1 : 删除
+    switch(type){
+      case 0 : // 修改
+        app.globalData.cartListRecord.set(id, data);//将全局的数据也一并更新
 
-    this.setData({
-      ["food_cart[" + index + "]"]: data
-    });
+        this.setData({
+          ["food_cart[" + index + "]"]: data
+        });
+
+        break; 
+      case 1 : // 删除
+        app.globalData.cartListRecord.delete(id);//将全局的数据也一并更新
+
+        this.getCartList();
+
+        break;
+    }
+
+    
   },
 
   getOneFromFoodCartList(id){
@@ -78,25 +91,27 @@ Page({
 
     item_cart.num++;
 
-    this.updateCartData(id, index, item_cart);
+    this.updateCartData(id, index, item_cart,0);
     this.getAccounts();
   }, 
 
   removeOne : function(e) {
     var id = e.currentTarget.dataset.foodid;
-    var item_cart = null;
-    var index;
+    var temp = this.getOneFromFoodCartList(id);
 
-    for(var x in this.data.food_cart){
-      var temp = this.data.food_cart[x];
+    var index = temp.index;
+    var item_cart = temp.data;
 
-      if (temp.id == id){
-        
+    if(item_cart.num == 1){//将减少至0，则清除这条记录
+      this.updateCartData(id, index, item_cart, 1);
+    } else {
+      item_cart.num--;
 
-      }
+      this.updateCartData(id, index, item_cart, 0);
     }
 
-    console.log(id);
+    
+    this.getAccounts();
   }, 
 
   //事件处理函数
