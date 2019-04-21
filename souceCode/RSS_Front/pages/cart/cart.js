@@ -48,38 +48,53 @@ Page({
     })
   }, 
 
-  addOne : function(e) {
-    var id = e.currentTarget.dataset.foodid;
-
-    var temp_item = null;
-
-    var index = null;
-
-    for (var x in this.data.food_cart){
-      var temp = this.data.food_cart[x]
-
-      if(temp.id == id){
-        index = x;
-
-        temp_item = temp;
-
-        temp_item.num+=1;
-
-        app.globalData.cartListRecord.set(id, temp_item);//将全局的数据也一并更新
-
-        break;
-      }
-    }
+  updateCartData : function(id, index, data){
+    app.globalData.cartListRecord.set(id, data);//将全局的数据也一并更新
 
     this.setData({
-      ["food_cart[" + index + "]"]: temp_item
+      ["food_cart[" + index + "]"]: data
     });
+  },
 
+  getOneFromFoodCartList(id){
+    for (var x in this.data.food_cart) {
+      var temp = this.data.food_cart[x];
+
+      if (temp.id == id){
+        return {
+          "index" : x,
+          "data" : temp
+        };
+      }
+    }
+  },
+
+  addOne : function(e) {
+    var id = e.currentTarget.dataset.foodid;
+    var temp = this.getOneFromFoodCartList(id);
+
+    var index = temp.index;
+    var item_cart = temp.data;
+
+    item_cart.num++;
+
+    this.updateCartData(id, index, item_cart);
     this.getAccounts();
   }, 
 
   removeOne : function(e) {
-    var id = e.currentTarget.dataset;
+    var id = e.currentTarget.dataset.foodid;
+    var item_cart = null;
+    var index;
+
+    for(var x in this.data.food_cart){
+      var temp = this.data.food_cart[x];
+
+      if (temp.id == id){
+        
+
+      }
+    }
 
     console.log(id);
   }, 
@@ -97,8 +112,6 @@ Page({
   onShow : function () {
     this.getCartList();
     this.getAccounts();
-
-
   },
 
   onChange(event) {
