@@ -6,9 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Component
-public class StringTranslater<T> {//T:目标数据类型
+public class StringTranslator<T> {//T:目标数据类型
 
-    public List<Long> getListFromString(String string, int type){//type:0 转换为long
+    public static List<Long> getListFromString(String string, int type){//type:0 转换为long
         List<Long> list = new LinkedList<Long>();
 
         String[] strings = string.split("_");

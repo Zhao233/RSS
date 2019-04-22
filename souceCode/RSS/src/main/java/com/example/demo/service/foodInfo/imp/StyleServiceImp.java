@@ -4,7 +4,7 @@ import com.example.demo.domain.foodInfo.Style;
 import com.example.demo.repository.foodInfo.FoodDao;
 import com.example.demo.repository.foodInfo.StyleDao;
 import com.example.demo.service.foodInfo.StyleService;
-import com.example.demo.util.StringTranslater;
+import com.example.demo.util.StringTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +19,6 @@ public class StyleServiceImp implements StyleService {
     @Autowired
     private FoodDao foodDao;
 
-    @Autowired
-    private StringTranslater<Long> stringTranslater;
-
     @Override
     public List<Style> getStylesByFoodId(long foodId) {
         try {
@@ -29,7 +26,7 @@ public class StyleServiceImp implements StyleService {
             List<Style> styleList = new LinkedList<>();
             String stylesString = foodDao.getStylesByFoodId(foodId);
 
-            styleIdList = stringTranslater.getListFromString(stylesString,0);
+            styleIdList = StringTranslator.getListFromString(stylesString,0);
 
             for(Long styleId : styleIdList){
                 Style style = styleDao.getOne(styleId);
