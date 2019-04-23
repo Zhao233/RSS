@@ -6,5 +6,5 @@ import com.example.demo.model.customer.FoodForCustomerFrequentlyModel;
 import java.util.List;
 
 public interface FrequentlyUsedFoodService {
-    FoodForCustomerFrequentlyModel getFrequentlyUsedFoodByUserID(Long userID);
+    FoodForCustomerFrequentlyModel getFrequentlyUsedFoodByUserID(String openID);
 }

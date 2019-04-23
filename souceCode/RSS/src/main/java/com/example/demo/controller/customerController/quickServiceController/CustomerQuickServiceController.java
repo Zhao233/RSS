@@ -20,10 +20,10 @@ public class CustomerQuickServiceController {
 
     @ResponseBody
     @RequestMapping("/getFrequentlyUsedFoodList")
-    public Map<String, Object> getFrequentlyUsedFoodList(@RequestParam(value = "userID") Long userID){
+    public Map<String, Object> getFrequentlyUsedFoodList(@RequestParam(value = "userID") String openID){
         Map<String, Object> map = new HashMap();
 
-        FoodForCustomerFrequentlyModel foodForCustomerFrequentlyModel = frequentlyUsedFoodService.getFrequentlyUsedFoodByUserID(userID);
+        FoodForCustomerFrequentlyModel foodForCustomerFrequentlyModel = frequentlyUsedFoodService.getFrequentlyUsedFoodByUserID(openID);
 
         map.put("FrequentlyUsedFood",foodForCustomerFrequentlyModel);
         map.put("status", "SUCCEED");

@@ -21,9 +21,10 @@ public class CustomerLoginController {
     public Map<String ,Object> customerLogin(@RequestParam("code") String loginCode){
         Map<String, Object> map = new HashMap();
 
-        customerLoginService.getLoginSession(loginCode);
+        Map<String, Object> map_result = customerLoginService.getLoginSession(loginCode);
 
 
+        map.put("userInfo", map_result);
         map.put("status", "SUCCEED");
         return map;
     }

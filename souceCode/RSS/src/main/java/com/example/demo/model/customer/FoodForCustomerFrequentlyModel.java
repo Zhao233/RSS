@@ -9,15 +9,17 @@ import java.util.List;
 
 @Data
 public class FoodForCustomerFrequentlyModel {
-    public FoodForCustomerFrequentlyModel(Long id, Long userID, List<Food> foodList, List<Style> styleList) {
+    public FoodForCustomerFrequentlyModel(Long id, Long userID, List<Food> foodList, List<Style> styleList, List<Integer> numList) {
         this.id = id;
         this.userID = userID;
         this.foodList = foodList;
         this.styleList = styleList;
+        this.numList = numList;
     }
 
     private Long id;
     private Long userID;
     private List<Food> foodList;
     private List<Style> styleList;
+    private List<Integer> numList;
 }

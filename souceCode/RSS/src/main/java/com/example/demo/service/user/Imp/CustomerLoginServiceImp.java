@@ -3,6 +3,8 @@ package com.example.demo.service.user.Imp;
 import com.example.demo.domain.info.AppInfo;
 import com.example.demo.service.info.imp.AppInfoService;
 import com.example.demo.service.user.CustomerLoginService;
+import net.sf.json.JSON;
+import net.sf.json.JSONObject;
 import org.hibernate.sql.OracleJoinFragment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -26,7 +28,6 @@ public class CustomerLoginServiceImp implements CustomerLoginService {
         AppInfo appInfo = appInfoService.getAppInfo();
 
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+appInfo.getAppID()+"&secret="+appInfo.getSecret()+"&js_code="+code+"&grant_type=authorization_code";
-        //String filePath = "D:\\人脸识别\\4b90f603738da977215057e4bb51f8198718e386.jpg";
 
         RestTemplate rest = new RestTemplate();
         //FileSystemResource resource = new FileSystemResource(new File(filePath));
@@ -36,6 +37,8 @@ public class CustomerLoginServiceImp implements CustomerLoginService {
 
         String string = rest.postForObject(url, param, String.class);
 
-        return null;
+        JSONObject object = JSONObject.fromObject(string);
+
+        return object;
     }
 }

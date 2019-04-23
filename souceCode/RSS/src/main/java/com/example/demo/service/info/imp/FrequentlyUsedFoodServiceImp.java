@@ -7,6 +7,7 @@ import com.example.demo.model.customer.FoodForCustomerFrequentlyModel;
 import com.example.demo.repository.foodInfo.FoodDao;
 import com.example.demo.repository.foodInfo.StyleDao;
 import com.example.demo.repository.info.FrequentlyUsedFoodDao;
+import com.example.demo.repository.user.CustomerDao;
 import com.example.demo.service.info.FrequentlyUsedFoodService;
 import com.example.demo.util.StringTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,25 +28,28 @@ public class FrequentlyUsedFoodServiceImp implements FrequentlyUsedFoodService {
     private StyleDao styleDao;
 
     @Override
-    public FoodForCustomerFrequentlyModel getFrequentlyUsedFoodByUserID(Long userID) {
-        FrequentlyUsedFood frequentlyUsedFoodList =  frequentlyUsedFoodDao.getFrequentlyUsedFoodById(userID);
+    public FoodForCustomerFrequentlyModel getFrequentlyUsedFoodByUserID(String openID) {
+        FrequentlyUsedFood frequentlyUsedFoodList = frequentlyUsedFoodDao.getFrequentlyUsedFoodById(openID);
         List<FoodForCustomerFrequentlyModel> modelList = new LinkedList<>();
 
 
-            List<Long> foodIDList = StringTranslator.getListFromString(frequentlyUsedFoodList.getFoodsId(),0);
-            List<Long> styleIDList = StringTranslator.getListFromString(frequentlyUsedFoodList.getStylesId(), 0);
+        List<Long> foodIDList = StringTranslator.getListFromString(frequentlyUsedFoodList.getFoodsId(), 0);
+        List<Long> styleIDList = StringTranslator.getListFromString(frequentlyUsedFoodList.getStylesId(), 0);
+        List<Integer> nums = StringTranslator.getListFromString(frequentlyUsedFoodList.getNums(),1);
 
-            List<Food> foodList = new LinkedList<>();
-            List<Style> styleList = new LinkedList<>();
+        List<Food> foodList = new LinkedList<>();
+        List<Style> styleList = new LinkedList<>();
 
-            for(int i = 0; i < foodIDList.size(); i++){
-                foodList.add( foodDao.getOne( foodIDList.get(i) ) );
-                styleList.add( styleDao.getOne( styleIDList.get(i) ) );
-            }
-
-            FoodForCustomerFrequentlyModel temp_foodModel = new FoodForCustomerFrequentlyModel(frequentlyUsedFoodList.getId(), userID, foodList, styleList);
-
-            return temp_foodModel;
+        for (int i = 0; i < foodIDList.size(); i++) {
+            foodList.add(foodDao.getOne(foodIDList.get(i)));
+            styleList.add(styleDao.getOne(styleIDList.get(i)));
         }
+
+        FoodForCustomerFrequentlyModel temp_foodModel = new FoodForCustomerFrequentlyModel(frequentlyUsedFoodList.getId(), frequentlyUsedFoodList.getUserID(), foodList, styleList, nums);
+
+        return temp_foodModel;
+        }
+
+
 
 }

@@ -9,12 +9,55 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
+  toCartPage : () => {
+    wx.request({
+      url: "http://" + app.info.hostname + ":" + app.info.port + "/customer/quickService/getFrequentlyUsedFoodList",
+
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+
+      data : {
+        "userID": app.globalData.userInfo.openid
+      },
+
+      success(res) {
+        if (res.data.status == "SUCCEED") {
+        } else {
+          app.showToast("网络请求失败");
+          return;
+        }
+        
+        var frequentlyUsedModel = res.data.FrequentlyUsedFood;
+
+        var foodList = frequentlyUsedModel.foodList;
+        var styleList = frequentlyUsedModel.styleList;
+        var numList = frequentlyUsedModel.numList;
+
+        for( var x in foodList ){
+        
+          var item = {
+            "id": foodList[x].id,
+            "picUrl": foodList[x].picUrl,
+            "name": foodList[x].name,
+            "price": foodList[x].price,
+            "num": numList[x]
+          };
+
+          app.globalData.cartListRecord.set(foodList[x].id, item);
+        }
+
+        wx.switchTab({
+          url: '/pages/cart/cart'
+        })
+  
+      },
+      fail(res) {
+        app.showToast("网络请求失败")
+      }
     })
   },
+
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({

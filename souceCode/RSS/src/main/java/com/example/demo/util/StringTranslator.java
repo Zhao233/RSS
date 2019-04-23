@@ -8,13 +8,27 @@ import java.util.List;
 @Component
 public class StringTranslator<T> {//T:目标数据类型
 
-    public static List<Long> getListFromString(String string, int type){//type:0 转换为long
-        List<Long> list = new LinkedList<Long>();
-
+    public static List getListFromString(String string, int type){//type:0 转换为long  1:转换为int
+        List list = null;
         String[] strings = string.split("_");
 
-        for(String index : strings){
-            list.add(Long.parseLong(index));
+        switch ( type ){
+            case 0 :
+                list = new LinkedList<Long>();
+
+                for(String index : strings){
+                    list.add(Long.parseLong(index));
+                }
+
+                break;
+            case 1 :
+                list = new LinkedList<Integer>();
+
+                for(String index : strings){
+                    list.add(Integer.parseInt(index));
+                }
+
+                break;
         }
 
         return list;
