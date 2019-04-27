@@ -84,5 +84,22 @@ App({
 
   clearCartList : function(e){
     this.globalData.cartListRecord = new Map;
+  },
+
+  internetResponseHandler : function (res, succeed, error, failed) {
+    switch(res.data.status){
+      case "SUCCEED" :
+        succeed == undefined ? succeed() : ''
+
+        break;
+      case "ERROR" : 
+        var message = "服务器错误";
+
+        if(res.data.message != undefined){
+          this.showToast(message + "  " + res.data.message)
+        }
+
+        break;
+    }
   }
 })
