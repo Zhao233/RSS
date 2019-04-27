@@ -1,0 +1,40 @@
+.item_menu{
+  width: 50%;
+  height: 50%;
+}
+
+.picture_menu{
+  width: 100%;
+}
+
+.box_menu{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  padding-top: 20rpx;
+
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
+}
+
+.box_info_menu{
+  height: 20rpx;
+  width: 100%;
+
+  display:flex;
+  justify-content: space-between;
+}
+
+.box_horizontal{
+  display: flex;
+  flex-direction: column;
+}
+
+.box_vertical{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20rpx;
+}

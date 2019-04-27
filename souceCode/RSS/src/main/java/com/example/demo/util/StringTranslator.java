@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Component
-public class StringTranslator<T> {//T:目标数据类型
+public class StringTranslator {//T:目标数据类型
 
     public static List getListFromString(String string, int type){//type:0 转换为long  1:转换为int
         List list = null;
@@ -32,5 +32,20 @@ public class StringTranslator<T> {//T:目标数据类型
         }
 
         return list;
+    }
+
+    public static <T> String getStringFromList(List<T> list){
+        String listToString = "";
+
+        for(T t : list){
+            listToString += ( t + "_" );
+        }
+
+        if( listToString.length() == 0 ){
+            return listToString;
+        }
+
+        String result = (String) listToString.subSequence(0,listToString.length()-1);
+        return result;
     }
 }

@@ -17,14 +17,17 @@ public class DiscountRecord {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "discount")
-    private double discount;
+    private Double discount;
 
     /**
      * 生效金额，当结算金额大于生效金额时，满减起效，当type为折扣时，此字段不生效
      * */
     @Column(name = "money_limit")
-    private double moneyLimit;
+    private Double moneyLimit;
 
     /**
      * 0: 折扣
@@ -52,4 +55,15 @@ public class DiscountRecord {
      * */
     @Column(name = "enable")
     private Integer enable;
+
+    /**
+     * 折扣
+     * */
+    public static int DISCOUNT = 0;
+
+    /**
+     * 满减
+     * */
+    public static int DISCOUNT_ReachedLimitedMoney = 1;
+
 }

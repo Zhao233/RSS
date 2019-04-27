@@ -1,0 +1,50 @@
+/**index.wxss**/
+
+/* 购物车卡片以及选择框容器 */
+.container_card{
+  margin: 20rpx
+}
+
+.card{
+  width: 100%;
+}
+
+.container_checkout{
+  width: 100%;
+}
+
+.header_originalAccount{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 30px;
+}
+
+.footer_submit{
+  width: 100%;
+  height: 50px;
+}
+
+.container_discount{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 10px;
+}
+
+.dicount_button{
+  background-color: #f44;
+  color : white;
+  border: 0px;
+  font-size: 14px;
+  margin: 0px;
+}
+
+.discount_button_used{
+  background-color: #696969;
+  color : white;
+  border: 0px;
+  font-size: 14px;
+  margin: 0px;
+}

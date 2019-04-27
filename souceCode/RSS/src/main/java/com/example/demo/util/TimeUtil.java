@@ -32,4 +32,8 @@ public class TimeUtil {
             return new Timestamp(new Date().getTime());
         }
     }
+
+    public static Timestamp MilTimeToTimeStamp(long milTime){
+        return new Timestamp(milTime);
+    }
 }

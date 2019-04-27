@@ -7,5 +7,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerDao extends JpaRepository<Customer,Long> {
+    @Query(value = "SELECT customer.id FROM Customer customer WHERE customer.openID = ?1")
+    Long getIdByOpenID(String openID);
+
 }
 

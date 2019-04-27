@@ -17,8 +17,8 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "user_id")
-    private String userID;
+    @Column(name = "open_id")
+    private String openID;
 
     @Column(name = "user_name")
     private String userName;

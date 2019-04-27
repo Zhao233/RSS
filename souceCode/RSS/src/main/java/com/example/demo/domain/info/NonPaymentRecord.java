@@ -18,10 +18,16 @@ public class NonPaymentRecord {
     private long id;
 
     @Column(name = "user_id")
-    private long userId;
+    private long userID;
 
     @Column(name = "foods_id")
-    private String foodsId;
+    private String foodsID;
+
+    @Column(name = "foods_num")
+    private String foodsNum;
+
+    @Column(name = "styles_id")
+    private String stylesID;
 
     @Column(name = "settlement_amount")
     private double settlementAmount;
@@ -30,10 +36,10 @@ public class NonPaymentRecord {
     private double originAmount;
 
     @Column(name = "preference_id")
-    private long preferenceId;
+    private long preferenceID;
 
     @Column(name = "discount_id")
-    private long discountId;
+    private long discountID;
 
     @Column(name = "expiration_time")
     private Timestamp expirationTime;

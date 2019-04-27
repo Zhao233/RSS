@@ -14,7 +14,7 @@ public interface FrequentlyUsedFoodDao extends JpaRepository<FrequentlyUsedFood,
     @Query(value ="SELECT frequentlyUsedFood FROM FrequentlyUsedFood frequentlyUsedFood " +
             "INNER JOIN Customer customer " +
             "ON frequentlyUsedFood.userID = customer.id " +
-            "WHERE customer.userID = ?1")
-    FrequentlyUsedFood getFrequentlyUsedFoodById(String userID);
+            "WHERE customer.openID = ?1")
+    FrequentlyUsedFood getFrequentlyUsedFoodById(String openID);
 }
 

@@ -80,5 +80,9 @@ App({
       icon: 'none',   
       duration: 1000
     })
+  },
+
+  clearCartList : function(e){
+    this.globalData.cartListRecord = new Map;
   }
 })

@@ -82,6 +82,7 @@ Page({
     }
   },
 
+  //将购物车的商品加一
   addOne : function(e) {
     var id = e.currentTarget.dataset.foodid;
     var temp = this.getOneFromFoodCartList(id);
@@ -95,6 +96,7 @@ Page({
     this.getAccounts();
   }, 
 
+  //将购物车的商品减一
   removeOne : function(e) {
     var id = e.currentTarget.dataset.foodid;
     var temp = this.getOneFromFoodCartList(id);
@@ -114,12 +116,23 @@ Page({
     this.getAccounts();
   }, 
 
-  //事件处理函数
-  bindViewTap: function() {
+  //向后台提交订单
+  onSubmit : function (e) {
+      if(app.globalData.cartListRecord.size == 0){
+        app.showToast("购物车中无商品")
+
+        return ;
+      }
+
+      var true_account = this.data.food_accounts / 100;
+
+    var data = "account=" + true_account + "&foodList=" + this.data.food_cart;
+
     wx.navigateTo({
-      url: '../logs/logs'
+      url: 'settleAccount/settleAccount?' + data
     })
   },
+
   onLoad: function () {
     
   },

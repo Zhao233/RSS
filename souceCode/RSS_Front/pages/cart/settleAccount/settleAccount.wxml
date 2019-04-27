@@ -1,0 +1,49 @@
+<!--index.wxml-->
+<view class="container" style='padding: 0;'>
+  <view class='header_originalAccount'>
+    <text>折扣前 </text>
+    <text>{{account}}</text>
+  </view>
+
+  <view class='header_originalAccount'>
+    <text>折扣后 </text>
+    <text>{{account_discount}}</text>
+  </view>
+  <!-- <view style='width:100%;flex:1 1 auto;height:100%;overflow-y:auto'>
+    <scroll-view style='height:100%;'>
+      <block wx:for="{{food_cart}}">
+        <view style='margin:10rpx'>
+
+          <van-card
+          num="{{item.num}}"
+          price="{{item.price}}"
+          title="{{item.name}}"
+          thumb="{{ item.picUrl }}"
+          >
+            <view slot="footer" style='padding:10rpx'>
+              <van-button data-foodID="{{item.id}}" size="mini" round="true" style='margin-right:5rpx;'>-</van-button>
+              <van-button data-foodID="{{item.id}}" size="mini" round="true" style='margin-left:5rpx;'>+</van-button>
+            </view>
+
+          </van-card>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+  -->
+
+  <view style='width:100%;height:{{screenHeight}}px; overflow-y:auto'>
+    <block wx:for="{{discount}}">
+                    <!-- 此处是 B 节点 -->
+                    <view class = "container_discount">
+                      <text>{{item.title}}</text>
+                      <button class="{{usedDiscountID==item.id?'discount_button_used' : 'dicount_button'}}" data-discountID="{{item.id}}" data-discount="{{item.discount}}" bindtap='useDiscount'>{{usedDiscountID==item.id?'已使用' : '使用'}}</button>
+                    </view>
+            </block>
+  </view>
+
+  <view class='footer_submit'>
+    <van-button type="danger" size="large" bindtap='onSubmit'>确认提交</van-button>
+  </view>
+
+</view>
