@@ -8,7 +8,8 @@
     "pages/mine/menu_management/menu_management",
     "pages/mine/score/score",
     "pages/mine/order_record/order_record",
-    "pages/quickService/quickService"
+    "pages/quickService/quickService",
+    "pages/cart/confirmOrder/confirmOrder"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -32,7 +32,6 @@ public class FrequentlyUsedFoodServiceImp implements FrequentlyUsedFoodService {
         FrequentlyUsedFood frequentlyUsedFoodList = frequentlyUsedFoodDao.getFrequentlyUsedFoodById(openID);
         List<FoodForCustomerFrequentlyModel> modelList = new LinkedList<>();
 
-
         List<Long> foodIDList = StringTranslator.getListFromString(frequentlyUsedFoodList.getFoodsId(), 0);
         List<Long> styleIDList = StringTranslator.getListFromString(frequentlyUsedFoodList.getStylesId(), 0);
         List<Integer> nums = StringTranslator.getListFromString(frequentlyUsedFoodList.getNums(),1);

@@ -61,9 +61,10 @@ public class CustomerCartController {
         }
 
         if( checkFoodAccount(foodIDList_, foodNumList_, account) ){
-            nonPaymentRecordService.addOne(foodIDList_, foodNumList_, styleIDList_, discountID, openID, Long.parseLong(expirationTime), account);
+            Long recordID = nonPaymentRecordService.addOne(foodIDList_, foodNumList_, styleIDList_, discountID, openID, Long.parseLong(expirationTime), account);
 
             map.put("status", "SUCCEED");
+            map.put("nonPaymentRecordID", recordID);
         } else {
             String message = "订单金额出错，请刷新菜单，并重新下单";
 

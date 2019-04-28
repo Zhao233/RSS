@@ -1,0 +1,104 @@
+<view class="order-confirm-wrapper">
+
+  <view class="info">
+    <!--<icon class="icon icon-info" />-->
+      <view class="icon-info-box"><image src="../../../images/ic_info.png"></image></view>
+
+  </view>
+
+  <view class="zhekou">
+    <view class="youhuiquan">
+      <view class="title">优惠券</view>
+
+      <view  style="display:flex" wx:if="{{discount.length > 0}}">
+        <view bindtap="toChooseDiscount" class="cont">点击领取优惠卷
+
+        </view>
+
+        <van-popup
+          show="{{show_chooseDiscount}}" 
+          overlay="true" 
+          bind:close="onClose_popup"
+        >
+          <view style='width:{{screenWidth}}px;'>
+            <van-cell-group style='height:288px; overflow-y:auto'>
+
+              <block wx:for="{{discount}}">
+                  <van-cell bindtap='chooseDiscount'  data-num="{{index}}" title="{{item.type == 1 ? '满减':'满折'}}" value="{{item.title}}" size="large" />
+              </block>
+
+            </van-cell-group>
+
+            <van-button size="large" bindtap='chooseNoDiscount'>不使用优惠卷</van-button>
+          </view>
+        </van-popup>
+        
+
+        <icon class="icon icon-arrow-right" />
+      </view>
+
+      <view class="cont" wx:else>
+        无可用优惠卷
+        <icon class="icon icon-arrow-right" />
+      </view>
+    </view>
+
+    <!-- <view wx:if="{{orderInfo.card_is_opened}}" class="vipcard">
+      <view class="title">会员卡</view>
+      <view bindtap="gotoGetVipCard" wx:if="{{orderInfo.card_discount.length<=0}}" class="cont">点击领取会员卡
+        <icon class="icon icon-arrow-right" />
+      </view>
+      <view wx:else class="cont">
+        {{orderInfo.card_discount.discount_type == 1?orderInfo.card_discount.group_name+'满'+orderInfo.card_discount.condition+'减'+orderInfo.card_discount.discount+'元':(orderInfo.card_discount.condition == 0?orderInfo.card_discount.group_name+'打'+orderInfo.card_discount.rate+'折':orderInfo.card_discount.group_name+'满'+orderInfo.card_discount.condition+'元'+'打'+orderInfo.card_discount.rate+'折')}} -->
+        <!--{{orderInfo.card_discount.group_name}}打{{orderInfo.card_discount.discount*10}}折-->
+        <!--<switch color="#fd711c" checked="{{switchChecked}}" bindchange="isUseVipCard" type="switch" />-->
+        <!-- <view bindtap="isUseVipCard" class="switch"><image src="{{switchChecked?'/images/switch-on.png':'/images/switch-off.png'}}"></image></view>
+      </view>
+    </view> -->
+
+    <view class="xiaoji">
+      小计 <text class="orange">
+          ¥{{orderInfo.price}}</text>
+    </view>
+
+    <van-cell wx:if="{{isChoosed}}" title="{{choosedDiscount.type == '1' ? '满减':'满折'}}" value="{{choosedDiscount.title}}" size="large" />
+  </view>
+  <!-- 优惠选项end -->
+
+  <!-- 备注start -->
+  <view class="remark-box">
+      <view class="title">备注</view>
+      <view bindtap="goRemarks" class="remark-c">
+        <icon class="icon icon-arrow-right" />
+        <view class="content {{remarkFlag?'active':''}}">{{remarks}}</view>
+      </view>
+  </view>
+
+  <!-- 备注end -->
+  <view class="footer">
+    <text>已优惠¥{{account_discount}}</text>
+    <text>
+          合计 <text class="orange">
+          ¥{{account_final}}</text>
+    </text>
+    <button disabled="{{(mode == 2 && addressList.length<=0) || (orderInfo.price == 0)}}" bindtap="gotoPayOrder">去支付</button>
+  </view>
+  <!-- 时间选择器弹层start -->
+  <view catchtap="catchtap" wx:if="{{isShowTimeChoose}}" class="time-choose">
+    <view bindtap="toggleTimeChoose" class="mask"></view>
+    <view class="wrapper">
+      <view class="content">
+        <scroll-view scroll-y="{{true}}" class="day-list">
+          <view bindtap="selectDay" data-index="{{index}}" class="{{selectedIndex.x == index?'day-selected':''}}" wx:for-index="index" wx:for="{{timer.days}}">{{item}}</view>
+        </scroll-view>
+        <scroll-view scroll-y="{{true}}" class="hour-list">
+          <view bindtap="selectHour" data-index="{{index}}" class="{{selectedIndex.y == index?'hour-selected':''}}" wx:for-index="index" wx:for="{{timer.hours[selectedIndex.x]}}">{{item}}</view>
+        </scroll-view>
+      </view>
+      <view class="btn">
+        <button bindtap="toggleTimeChoose">完成</button>
+      </view>
+    </view>
+  </view>
+  <!-- 时间选择器弹层end -->
+</view>

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "确认订单",
+  "usingComponents": {
+    "van-popup": "../../../dist/popup/index",
+    "van-cell": "../../../dist/cell/index",
+    "van-cell-group": "../../../dist/cell-group/index",
+    "van-button": "../../../dist/button/index"
+  }
+}

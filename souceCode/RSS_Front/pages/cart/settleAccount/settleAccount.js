@@ -38,7 +38,6 @@ Page({
       account_discount : discount_account
     })
 
-
   },
 
   onLoad : function(e) {
@@ -61,6 +60,7 @@ Page({
       },
 
       success(res) {
+
         if (res.data.status == "SUCCEED") {
         } else {
           app.showToast("网络请求失败");
@@ -157,35 +157,21 @@ Page({
           "foodNumList": foodNumList,
           "styleIDList" : styleIDList,
           "discountID": discountID,
-          "openID" : openid,
+          "openID" : openid, 
           "account" : account,
           "expirationTime" : expirationTime.getTime()
         },
   
         success(res) {
-          if(res.data.status == "SUCCEED"){
-          } else {
-            app.showToast("网络请求失败");
-            return ;
-          }
-  
-          console.log(res);
-  
-          var temp_classfiyList = new Array;
-  
-          temp_classfiyList.push({ id: "", name: "推荐" });
-  
-          for (var x in res.data.menuList) {
-            var rawData = res.data.menuList[x];
-  
-            var item = { id: rawData.id, name: rawData.name }
-  
-            temp_classfiyList.push(item);
-          }
-  
-          that.setData({
-            classfiyList: temp_classfiyList
+          app.internetResponseHandler(res, function(){
+            app.clearCartList();
           })
+
+          // if(res.data.status == "SUCCEED"){
+          // } else {
+          //   app.showToast("网络请求失败");
+          //   return ;
+          // }
   
           console.log(res.data)
         },

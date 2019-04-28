@@ -27,7 +27,7 @@ public class NonPaymentRecordServiceImp implements NonPaymentRecordService {
     private DiscountService discountService;
 
     @Override
-    public void addOne(List<Long> foodIDList, List<Integer> foodNumList, List<Long> styleIDList, Long discountID, String openid, long expirationTime, Double account) {
+    public Long addOne(List<Long> foodIDList, List<Integer> foodNumList, List<Long> styleIDList, Long discountID, String openid, long expirationTime, Double account) {
         Long userID = customerService.getIDByOpenID(openid);
         String foodIDList_String = StringTranslator.getStringFromList(foodIDList);
         String foodNum_String = StringTranslator.getStringFromList(foodNumList);
@@ -53,6 +53,6 @@ public class NonPaymentRecordServiceImp implements NonPaymentRecordService {
         nonPaymentRecord.setExpirationTime(TimeUtil.MilTimeToTimeStamp(expirationTime));
         nonPaymentRecord.setCreateTime(TimeUtil.getTimeNow());
 
-        nonPaymentRecordDao.save(nonPaymentRecord);
+        return nonPaymentRecordDao.save(nonPaymentRecord).getId();
     }
 }

@@ -129,7 +129,7 @@ Page({
     var data = "account=" + true_account + "&foodList=" + this.data.food_cart;
 
     wx.navigateTo({
-      url: 'settleAccount/settleAccount?' + data
+      url: 'confirmOrder/confirmOrder?' + data
     })
   },
 
@@ -149,7 +149,4 @@ Page({
       result: event.detail
     });
   }
-
-  
-
 })
