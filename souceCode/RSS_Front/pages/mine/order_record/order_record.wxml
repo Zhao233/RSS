@@ -1,0 +1,11 @@
+<import src="../../templates/item_mine_orderRecord/item_mine_orderRecord.wxml"/>
+
+<!--index.wxml-->
+<view class="container_" style='padding: 0;'>
+
+  <scroll-view class='container_scroll'>
+      <block wx:for="{{orderList}}" wx:for-item="blockItem"> 
+        <template is="item_mine_orderRecord" data="{{...blockItem, ...{screenWidth : screenWidth} }}" />
+      </block>
+  </scroll-view>
+</view>

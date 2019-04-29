@@ -2,6 +2,6 @@
 <view class="container" style='margin-left : 50rpx; margin-right : 50rpx;'>
   <van-button type="info" size="large" class='button_quickService'>查看积分</van-button>
   <van-button type="info" size="large" class='button_quickService'>管理常用菜单</van-button>
-  <van-button type="info" size="large" class='button_quickService'>查看订单</van-button>
+  <van-button type="info" size="large" class='button_quickService' bindtap='toOrderRecord'>查看订单</van-button>
   <van-button type="info" size="large" class='button_quickService'>消费统计</van-button>
 </view>

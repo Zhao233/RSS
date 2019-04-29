@@ -10,11 +10,12 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
-  bindViewTap: function() {
+  toOrderRecord : function(e){
     wx.navigateTo({
-      url: '../logs/logs'
+      url: 'order_record/order_record',
     })
   },
+
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -42,13 +43,5 @@ Page({
         }
       })
     }
-  },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
   }
 })

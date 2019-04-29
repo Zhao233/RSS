@@ -1,0 +1,29 @@
+<template name="item_mine_orderRecord">
+  <view class="container_template" >
+    <!-- 订单的状态 -->
+    <view class="status">
+      <text>{{status}}</text>
+    </view>
+
+    <!-- 已点菜品的图片信息 -->
+    <view class='details'>
+      <scroll-view scroll-x style="white-space:nowrap">
+        <block wx:for="{{foodList}}" wx:for-item="picItem" wx:ket="picURL">
+          <image src="{{picItem.picURL}}" class='details_picture'  mode="aspectFill" ></image>
+        </block>
+
+        <view  style="display:inline-block;margin-right:20rpx">
+                 
+        </view>
+      </scroll-view>  
+
+    </view>
+
+    <!-- 订单信息(日期，优惠， 实付) -->
+    <view class='orderInfo'>
+      <text style='font-size:12px'>消费日期: {{date}}</text>
+      <text style='font-size:12px'>实付: {{account_final}}￥</text>
+    </view>
+
+  </view>
+</template>
