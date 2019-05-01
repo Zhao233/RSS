@@ -36,4 +36,14 @@ public class TimeUtil {
     public static Timestamp MilTimeToTimeStamp(long milTime){
         return new Timestamp(milTime);
     }
+
+    public static String getFormattedTime(Timestamp time){
+        String formattedTime = "";
+
+        Date date = new Date(time.getTime());
+
+        formattedTime = simpleDateFormat.format(date);
+
+        return formattedTime;
+    }
 }
