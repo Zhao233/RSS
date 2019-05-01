@@ -2,7 +2,6 @@ package com.example.demo.service.foodInfo;
 
 import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.model.admin.FoodForRecommendModel;
-import com.example.demo.model.customer.FoodForCustomerRecommendModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -27,4 +26,6 @@ public interface FoodService {
 
     /**=================================For Customer================================================*/
     List<Food> getFoodsByMenuId(long menuId);
+
+    List<String> getFoodsPicUrlByFoodIDs(List<Long> foodIDs);
 }

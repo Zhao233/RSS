@@ -23,7 +23,6 @@ public class FoodServiceImp implements FoodService {
     }
 
 
-
     @Override
     public Page<Food> getFoodList(String search, Pageable pageable) {
         if(search.equals("")){
@@ -63,5 +62,14 @@ public class FoodServiceImp implements FoodService {
     @Override
     public List<Food> getFoodsByMenuId(long menuId) {
         return foodDao.getFoodsByMenuId(menuId);
+    }
+
+    /**
+     * 获取一个id列表下对应的图片地址
+     * foodIDs ： "1,2,4"
+     * */
+    @Override
+    public List<String> getFoodsPicUrlByFoodIDs(List<Long> foodIDs) {
+        return foodDao.findFoodByIdIn(foodIDs);
     }
 }

@@ -2,13 +2,10 @@ package com.example.demo.controller.customerController.cartController;
 
 import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.domain.info.DiscountRecord;
-import com.example.demo.domain.info.NonPaymentRecord;
-import com.example.demo.repository.foodInfo.FoodDao;
 import com.example.demo.service.foodInfo.FoodService;
 import com.example.demo.service.info.DiscountService;
-import com.example.demo.service.info.NonPaymentRecordService;
+import com.example.demo.service.info.OrderRecordService;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +28,7 @@ public class CustomerCartController {
     private DiscountService discountService;
 
     @Autowired
-    private NonPaymentRecordService nonPaymentRecordService;
+    private OrderRecordService orderRecordService;
 
     @ResponseBody
     @RequestMapping("/onSubmit")
@@ -61,7 +58,7 @@ public class CustomerCartController {
         }
 
         if( checkFoodAccount(foodIDList_, foodNumList_, account) ){
-            Long recordID = nonPaymentRecordService.addOne(foodIDList_, foodNumList_, styleIDList_, discountID, openID, Long.parseLong(expirationTime), account);
+            Long recordID = orderRecordService.addOne(foodIDList_, foodNumList_, styleIDList_, discountID, openID, Long.parseLong(expirationTime), account);
 
             map.put("status", "SUCCEED");
             map.put("nonPaymentRecordID", recordID);

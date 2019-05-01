@@ -32,6 +32,55 @@ Page({
         })
 
       },
-    })  
+    });
+
+    wx.request({
+      url: "http://" + app.info.hostname + ":" + app.info.port + "/customer/orderRecord/getOrderRecord",
+
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+
+      data : {
+        openid : app.globalData.userInfo.openid
+      },
+
+      success(res) {
+        app.internetResponseHandler(res);
+
+        var temp_orderList = res.data.orderList;
+
+        for(var x in temp_orderList){
+          var temp_orderRecord = temp_orderList[x];
+
+          switch(temp_orderRecord.status){
+            case 0:
+              //已完成
+              temp_orderList[x].status = '已完成';
+
+              break;
+            case 1:
+              //超时
+              temp_orderList[x].status = '已超时';
+
+              break;
+            case 2:
+              //未支付
+              temp_orderList[x].status = '未支付';
+
+              break;
+          }
+        }
+
+        that.setData({
+          orderList: temp_orderList
+        })
+
+        console.log(res);
+      },
+      fail(res) {
+        app.showToast("网络请求失败")
+      }
+    })
   }
 })

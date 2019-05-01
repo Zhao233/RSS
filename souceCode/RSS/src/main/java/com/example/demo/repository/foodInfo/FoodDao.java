@@ -3,10 +3,12 @@ package com.example.demo.repository.foodInfo;
 import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.model.admin.FoodForRecommendModel;
 import com.example.demo.model.customer.FoodForCustomerRecommendModel;
+import com.sun.org.glassfish.gmbal.ParameterNames;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -47,4 +49,7 @@ public interface FoodDao extends JpaRepository<Food,Long> {
     Page<FoodForRecommendModel> getFoodListForRecommend(String search, Pageable pageable);
 
     /**=================================For Customer================================================*/
+
+    @Query(value = "SELECT food.picUrl FROM Food food WHERE food.id in ( :foodIDs )")
+    List<String> findFoodByIdIn(@Param("foodIDs") List<Long> foodIDs);
 }
