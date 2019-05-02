@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="container" style='padding: 0;'>
-  <scroll-view style='height:100%;'>
+  <scroll-view style='height:100%; margin-bottom:50px'>
       <block wx:for="{{food_cart}}">
         <view style='margin:10rpx'>
 
@@ -12,8 +12,13 @@
           thumb="{{ item.picUrl }}"
           >
             <view slot="footer" style='padding:10rpx'>
-              <van-button size="small" data-foodID="{{item.id}}" bindtap='removeOne' round="true" style='margin-right:5rpx;'>-</van-button>
-              <van-button size="small" data-foodID="{{item.id}}" bindtap='addOne' round="true" style='margin-left:5rpx;'>+</van-button>
+              <van-button data-foodID="{{item.id}}" size='small' round  bindtap="addToQuickOrder" style='margin-left : 20rpx;'>添加至快速点餐</van-button>
+
+              <van-button data-foodID="{{item.id}}" size='small' round  bindtap="addOne" style='margin-left : 20rpx;'>+</van-button>
+              <van-button data-foodID="{{item.id}}" size='small' round  bindtap="removeOne" style='margin-left : 20rpx;'>-</van-button>
+
+              <!-- <button data-foodID="{{item.id}}" bindtap='removeOne' class='editButton' ><text>-</text></button>
+              <button  data-foodID="{{item.id}}" bindtap='addOne'  class='editButton'><text>+</text></button> -->
             </view>
 
           </van-card>

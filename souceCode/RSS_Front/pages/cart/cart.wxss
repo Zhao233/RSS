@@ -12,3 +12,9 @@
 .container_checkout{
   width: 100%;
 }
+
+.editButton{
+  width:50rx;
+  height: 50rx;
+  margin-right:5rpx;
+}

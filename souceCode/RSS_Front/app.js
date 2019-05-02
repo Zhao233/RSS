@@ -89,7 +89,7 @@ App({
   internetResponseHandler : function (res, succeed, error, failed) {
     switch(res.data.status){
       case "SUCCEED" :
-        succeed == undefined ? succeed() : ''
+        succeed();
 
         break;
       case "ERROR" : 
@@ -100,6 +100,11 @@ App({
         }
 
         break;
+
+      case "FAILED":
+        if (res.data.message != undefined) {
+          this.showToast(res.data.message)
+        }
     }
   }
 })

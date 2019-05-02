@@ -116,7 +116,35 @@ Page({
     this.getAccounts();
   }, 
 
-  //向后台提交订单
+  addToQuickOrder : function(e){
+    var foodID = e.target.dataset.foodid;
+    var openid = app.globalData.userInfo.openid;
+
+    wx.request({
+      url: "http://" + app.info.hostname + ":" + app.info.port + "/customer/quickService/addFoodToFrequentlyUsedFoodList",
+
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      
+      data: {
+        openID: openid,
+        foodID : foodID,
+        styleID : 1
+      },
+
+      success(res) {
+        app.internetResponseHandler(res, function(){
+          app.showToast("添加成功");
+        });
+      },
+      fail(res) {
+        app.showToast("网络请求失败")
+      }
+    })
+  },
+
+  //提交订单
   onSubmit : function (e) {
       if(app.globalData.cartListRecord.size == 0){
         app.showToast("购物车中无商品")
