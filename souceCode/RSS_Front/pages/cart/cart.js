@@ -65,8 +65,6 @@ Page({
 
         break;
     }
-
-    
   },
 
   getOneFromFoodCartList(id){

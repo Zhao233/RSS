@@ -2,3 +2,21 @@
   margin-bottom: 50rpx;
   width: 100%;
 }
+/* 购物车卡片以及选择框容器 */
+.container_card{
+  margin: 20rpx
+}
+
+.card{
+  width: 100%;
+}
+
+.container_checkout{
+  width: 100%;
+}
+
+.editButton{
+  width:50rx;
+  height: 50rx;
+  margin-right:5rpx;
+}

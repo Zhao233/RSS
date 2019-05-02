@@ -15,6 +15,11 @@ Page({
       url: 'order_record/order_record',
     })
   },
+  toMenuManagement: function (e) {
+    wx.navigateTo({
+      url: 'menu_management/menu_management',
+    })
+  },
 
   onLoad: function () {
     if (app.globalData.userInfo) {
