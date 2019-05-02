@@ -27,6 +27,9 @@ public class FrequentlyUsedFoodServiceImp implements FrequentlyUsedFoodService {
     @Autowired
     private StyleDao styleDao;
 
+    @Autowired
+    private CustomerDao customerDao;
+
     @Override
     public FoodForCustomerFrequentlyModel getFrequentlyUsedFoodByUserID(String openID) {
         FrequentlyUsedFood frequentlyUsedFoodList = frequentlyUsedFoodDao.getFrequentlyUsedFoodById(openID);
@@ -49,6 +52,35 @@ public class FrequentlyUsedFoodServiceImp implements FrequentlyUsedFoodService {
         return temp_foodModel;
         }
 
+    @Override
+    public boolean addFoodToFrequentlyUsedFoodList(String openID, Long foodID, Long styID) {
+        FrequentlyUsedFood frequentlyUsedFoodList = frequentlyUsedFoodDao.getFrequentlyUsedFoodById(openID);
+
+        String foodIDs = frequentlyUsedFoodList.getFoodsId();
+        String styleIDs = frequentlyUsedFoodList.getStylesId();
+        String nums = frequentlyUsedFoodList.getNums();
+
+        String[] foodIDs_ = foodIDs.split("_");
+        String[] styleIDs_ = styleIDs.split("_");
+
+        for(String temp_foodID : foodIDs_){
+            if( temp_foodID.equals( String.valueOf(foodID) ) ){
+                return false;
+            }
+        }
+
+        foodIDs += "_"+foodID;
+        styleIDs += "_1";
+        nums += "_1";
+
+        frequentlyUsedFoodList.setFoodsId(foodIDs);
+        frequentlyUsedFoodList.setStylesId(styleIDs);
+        frequentlyUsedFoodList.setNums(nums);
+
+        frequentlyUsedFoodDao.save(frequentlyUsedFoodList);
+
+        return true;
+    }
 
 
 }

@@ -29,4 +29,23 @@ public class CustomerQuickServiceController {
         map.put("status", "SUCCEED");
         return map;
     }
+
+    @ResponseBody
+    @RequestMapping("/addFoodToFrequentlyUsedFoodList")
+    public Map<String, Object> addFoodToFrequentlyUsedFoodList(@RequestParam(value = "openID") String openID,
+                                                               @RequestParam(value = "styleID") Long styleID,
+                                                               @RequestParam(value = "foodID") Long foodID){
+        Map<String, Object> map = new HashMap<>();
+
+        boolean flag = frequentlyUsedFoodService.addFoodToFrequentlyUsedFoodList(openID,foodID, styleID);
+
+        if(flag){//添加成功
+            map.put("status", "SUCCEED");
+        } else {//添加失败
+            map.put("status", "FAILED");
+            map.put("message", "快捷菜单中已存在该菜品");
+        }
+
+        return map;
+    }
 }

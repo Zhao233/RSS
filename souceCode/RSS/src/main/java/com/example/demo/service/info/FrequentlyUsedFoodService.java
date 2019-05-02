@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface FrequentlyUsedFoodService {
     FoodForCustomerFrequentlyModel getFrequentlyUsedFoodByUserID(String openID);
+
+    boolean addFoodToFrequentlyUsedFoodList(String openID, Long foodID, Long styID);
 }
