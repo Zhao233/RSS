@@ -1,1 +1,2 @@
 Controller中获取list时，先new一个空LinkedList，然后再向service中获取
+git commit格式
