@@ -48,4 +48,14 @@ public class StringTranslator {//T:目标数据类型
         String result = (String) listToString.subSequence(0,listToString.length()-1);
         return result;
     }
+
+    public static <T> String getStringFromArray(T[] list){
+        String result = "";
+
+        for(T t : list){
+            result += t+"_";
+        }
+
+        return result;
+    }
 }
