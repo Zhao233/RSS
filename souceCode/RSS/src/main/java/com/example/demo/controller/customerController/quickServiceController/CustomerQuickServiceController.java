@@ -48,4 +48,19 @@ public class CustomerQuickServiceController {
 
         return map;
     }
+
+    @ResponseBody
+    @RequestMapping("/addFrequentlyUsedFoodList")
+    public Map<String, Object> addFrequentlyUsedFoodList(@RequestParam(value = "openID") String openID,
+                                                         @RequestParam(value = "foodIDs") String foodIDs,
+                                                         @RequestParam(value = "styleIDs") String styleIDs,
+                                                         @RequestParam(value = "nums") String nums ){
+        Map<String, Object> map = new HashMap<>();
+
+        frequentlyUsedFoodService.saveFrequentlyUsedFoodList(openID, foodIDs, styleIDs, nums);
+
+        map.put("status", "SUCCEED");
+
+        return map;
+    }
 }

@@ -9,4 +9,6 @@ public interface FrequentlyUsedFoodService {
     FoodForCustomerFrequentlyModel getFrequentlyUsedFoodByUserID(String openID);
 
     boolean addFoodToFrequentlyUsedFoodList(String openID, Long foodID, Long styID);
+
+    void saveFrequentlyUsedFoodList(String openID, String foodIDs, String styleIDs, String nums);
 }
