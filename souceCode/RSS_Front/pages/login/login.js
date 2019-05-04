@@ -11,7 +11,25 @@ Page({
   },
 
   loginAsCustomer : function(e){
+    var that = this;
 
+    wx.request({
+      url: "http://" + app.info.hostname + ':' + app.info.port + '/weapp/login',
+      data: {
+        "openid": app.globalData.userInfo.openid
+      },
+
+      success: res => {
+        app.showToast("登录成功");
+
+        that.toCustomerOrder();
+
+        console.log(res);
+      },
+      fail: res => {
+        console.log(res);
+      }
+    })
   },
 
   loginAsService : function(e){
@@ -74,6 +92,8 @@ Page({
   },
 
   checkLoginStatus(openid){
+    var that = this;
+
     wx.request({
       url: "http://" + app.info.hostname + ':' + app.info.port + '/weapp/loginCheck',
       data: {
@@ -81,7 +101,26 @@ Page({
       },
 
       success: res => {
-        app.internetResponseHandler(res, function(e){
+        app.internetResponseHandler(res, function(){
+          var identity = res.data.identity;
+
+          switch(identity){
+            case 1 : //服务员
+              that.toWaiterWorkingBench();
+
+              break;
+            case 2 : //厨师
+              that.toWaiterWorkingBench();
+              
+              break;
+            case 3: //客户
+              that.toCustomerOrder();
+
+              break;
+            default:
+              app.showToast("身份错误,请重新打开微信小程序"); 
+          }
+
           console.log(res);
         })
 
@@ -95,5 +134,19 @@ Page({
       }
     })
 
-  }
+  },
+
+  toWaiterWorkingBench(){
+    wx.redirectTo({
+      url: '/pages/forWaiterService/waiter',
+    })
+  },
+
+  toCustomerOrder(){
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
+  },
+
+  toCookerWoringBench(){}
 })
