@@ -1,4 +1,4 @@
-package com.example.demo.controller.customerController;
+package com.example.demo.controller.weApp.customerController;
 
 import com.example.demo.service.user.CustomerLoginService;
 import org.springframework.beans.factory.annotation.Autowired;

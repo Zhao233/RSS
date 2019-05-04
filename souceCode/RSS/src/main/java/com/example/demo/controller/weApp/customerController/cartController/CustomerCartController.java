@@ -1,4 +1,4 @@
-package com.example.demo.controller.customerController.cartController;
+package com.example.demo.controller.weApp.customerController.cartController;
 
 import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.domain.info.DiscountRecord;

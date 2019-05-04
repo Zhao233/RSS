@@ -1,4 +1,4 @@
-package com.example.demo.controller.customerController.quickServiceController;
+package com.example.demo.controller.weApp.customerController.quickServiceController;
 
 import com.example.demo.model.customer.FoodForCustomerFrequentlyModel;
 import com.example.demo.service.info.FrequentlyUsedFoodService;

@@ -1,4 +1,4 @@
-package com.example.demo.controller.customerController.Mine;
+package com.example.demo.controller.weApp.customerController.Mine;
 
 import com.example.demo.model.customer.OrderRecordModel;
 import com.example.demo.service.info.OrderRecordService;

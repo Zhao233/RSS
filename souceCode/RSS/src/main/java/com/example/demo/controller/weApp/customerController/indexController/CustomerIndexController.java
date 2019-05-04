@@ -1,8 +1,7 @@
-package com.example.demo.controller.customerController.indexController;
+package com.example.demo.controller.weApp.customerController.indexController;
 
 import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.domain.foodInfo.Menu;
-import com.example.demo.domain.info.RecommendFood;
 import com.example.demo.model.customer.FoodForCustomerRecommendModel;
 import com.example.demo.service.foodInfo.FoodService;
 import com.example.demo.service.foodInfo.MenuService;

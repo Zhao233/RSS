@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service("customerLoginService")
+@Service("loginService")
 public class CustomerLoginServiceImp implements CustomerLoginService {
     @Autowired
     private AppInfoService appInfoService;
