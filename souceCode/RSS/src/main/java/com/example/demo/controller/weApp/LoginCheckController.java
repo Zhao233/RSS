@@ -1,5 +1,6 @@
 package com.example.demo.controller.weApp;
 
+import com.example.demo.domain.user.Waiter;
 import com.example.demo.service.user.CustomerService;
 import com.example.demo.service.user.LoginService;
 import com.example.demo.service.user.WaiterService;
@@ -71,26 +72,47 @@ public class LoginCheckController {
     @ResponseBody
     @RequestMapping("/login")
     public Map<String, Object> weappLogin(@RequestParam("openid") String openid,
-                                          @RequestParam("identity") Integer identity,
-                                          @RequestParam("loginID") String loginID){
+                                          @RequestParam(value = "loginID", required = false) String loginID){
         Map<String, Object> map = new HashMap<>();
 
-        switch (identity){
-            case 1://服务员
+        int isExist = 0;
 
+        isExist = waiterService.checkIsWaiterExistByLoginID(loginID);
 
-                break;
+        if(isExist == 3){//录入成功
+            Waiter waiter = waiterService.registerWaiter(loginID, openid);
 
-            case 2://厨师
-                break;
-
-            case 3://顾客
-                break;
-
-            default://无识别
-                break;
+            map.put("status", "SUCCEED");
+            map.put("userInfo", waiter);
+            return map;
         }
 
+        /**
+         *厨师的录入
+         */
+//        isExist = waiterService.checkIsWaiterExistByLoginID(loginID);
+//
+//        if(isExist == 3){//录入成功
+//            cookerService.registerWaiter(openid, loginID);
+
+//            map.put("status", "SUCCEED");
+//            return map;
+//        }
+
+        switch (isExist){
+            case 1 :
+                map.put("status", "FAILED");
+                map.put("message", "登录码错误或管理员未录入信息，请重新输入，或联系管理员");
+
+                return map;
+            case 2:
+                map.put("status", "FAILED");
+                map.put("message", "登录码错误或管理员未录入信息，请重新输入，或联系管理员");
+
+                return map;
+        }
+
+        map.put("status", "ERROR");
         return map;
     }
 

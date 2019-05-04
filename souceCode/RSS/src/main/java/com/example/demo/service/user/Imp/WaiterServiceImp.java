@@ -3,6 +3,7 @@ package com.example.demo.service.user.Imp;
 import com.example.demo.domain.user.Waiter;
 import com.example.demo.repository.user.WaiterDao;
 import com.example.demo.service.user.WaiterService;
+import com.example.demo.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,46 +46,6 @@ public class WaiterServiceImp implements WaiterService {
     /**=========================For Waiter==========================*/
 
     @Override
-    public Map<String, Object> waiterLoginCheck(String openid, String secret) {
-        Waiter waiter = waiterDao.isWaiterExist(secret);
-
-        if(waiter == null){// 输错secret
-            Map<String, Object> map = new HashMap<>();
-
-            map.put("status", "FAILED");
-            map.put("message", "用户未注册或登录码输入错误，请联系管理员注册");
-
-            return map;
-        }
-
-        if(waiter != null && waiter.getUserID() == null){//secret正确, 但之前未登录
-            Map<String, Object> map = new HashMap<>();
-
-            waiter.setUserID(openid);
-
-            waiterDao.save(waiter);
-
-            map.put("status", "SUCCEED");
-            map.put("message", "注册成功");
-            return map;
-        }
-
-        if(waiter != null && waiter.getUserID() != null){//已注册
-            Map<String, Object> map = new HashMap<>();
-
-            map.put("status", "SUCCEED");
-            map.put("message", "登录成功");
-            return map;
-        }
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("status","ERROR");
-
-        return map;
-
-    }
-
-    @Override
     public boolean isLogin(String openid) {
         Map<String, Object> map = new HashMap<>();
 
@@ -95,5 +56,47 @@ public class WaiterServiceImp implements WaiterService {
         }
 
         return true;
+    }
+
+    @Override
+    public int checkIsWaiterExistByLoginID(String loginID){
+        Waiter waiter = waiterDao.getWaiterByLoginID(loginID);
+
+        if(waiter == null){//后台未录入
+            return 1;
+        }
+
+        if(waiter != null && waiter.getUserID() != null){//后台已存在
+
+            return 2;
+        }
+
+        return 3;
+    }
+
+    @Override
+    public Waiter registerWaiter(String loginID, String openid) {
+        Waiter waiter = waiterDao.getWaiterByLoginID(loginID);
+
+//        if(waiter == null){//后台未录入
+//            map.put("status", "FAILED");
+//            map.put("message", "登录码错误或管理员未录入信息，请重新输入，或联系管理员");
+//
+//            return map;
+//        }
+//
+//        if(waiter != null && waiter.getUserID() != null){//后台已存在
+//            map.put("status", "FAILED");
+//            map.put("message", "登录码错误或管理员未录入信息，请重新输入，或联系管理员");
+//
+//            return map;
+//        }
+
+        waiter.setUserID(openid);
+        waiter.setUpdateTime(TimeUtil.getTimeNow());
+        waiterDao.save(waiter);
+
+        return waiter;
+
     }
 }

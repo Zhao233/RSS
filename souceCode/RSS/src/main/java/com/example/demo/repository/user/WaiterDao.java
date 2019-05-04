@@ -15,10 +15,10 @@ public interface WaiterDao extends JpaRepository<Waiter,Long> {
     Page<Waiter> getAll(String search, Pageable pageable);
 
     /**==============================For Waiter====================================*/
-    @Query(value = "SELECT waiter FROM Waiter waiter WHERE waiter.loginID = ?1 AND waiter.enable = 1")
-    Waiter isWaiterExist(String secret);
-
     @Query(value = "SELECT waiter FROM Waiter waiter WHERE waiter.userID = ?1 AND waiter.enable = 1")
     Waiter getWaiterByOpenID(String openid);
+
+    @Query(value = "SELECT waiter FROM Waiter waiter WHERE waiter.loginID = ?1 AND waiter.enable = 1")
+    Waiter getWaiterByLoginID(String secret);
 }
 
