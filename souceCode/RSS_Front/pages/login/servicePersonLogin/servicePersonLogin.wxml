@@ -1,0 +1,30 @@
+<!--pages/login.wxml-->
+<view class="container_">
+
+  <view class='loginContainer'>
+
+    <view class="loginCodeContainer">
+      <input placeholder='请输入登录码' class="loginCodeInput" bindinput='inputLoginCode'></input>
+    </view>
+
+    <view class="usermotto">
+      <view class='loginButtonContainer'>
+        <button class="loginButton" bindtap='loginWithLoginCode'>确认登录</button>
+      </view>
+    </view>
+
+    <van-popup
+      show="{{ popupShow }}"
+      overlay="true"
+      bind:close="onClosePopup"
+    >
+      <view class='messageContainer'>
+        <text>欢迎: {{user.name}}</text>
+      </view>
+      <view class='messageContainer'>
+        <text style='white-space: nowrap'> {{countDown}}秒后进入工作界面 </text>
+      </view>
+    </van-popup>
+
+  </view>
+</view>

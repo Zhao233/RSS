@@ -1,0 +1,55 @@
+/* pages/login.wxss */
+page{
+  height: 100%;
+}
+
+.container_{
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.loginContainer{
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+.loginCodeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 128rpx;
+}
+
+.loginCodeInput{
+  background: #aaa;
+  width: 200px;
+  height: 50px;
+  text-align: center;
+}
+
+
+.usermotto {
+  margin: 128rpx;
+}
+
+.loginButtonContainer{
+  margin: 10px;
+}
+
+.loginButton{
+  width: 200px
+}
+
+.messageContainer{
+  margin: 20px;
+}

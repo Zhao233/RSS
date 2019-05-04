@@ -1,0 +1,24 @@
+<!--pages/login.wxml-->
+<view class="container_">
+
+  <view class='loginContainer'>
+
+    <view class="userinfo">
+
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+
+
+    </view>
+      <view class="usermotto">
+        <view class='loginButtonContainer'>
+        <button class="loginButton" bindtap='loginAsCustomer'>以用户身份登录</button>
+      </view>
+
+      <view class='loginButtonContainer'>
+        <button class="loginButton" bindtap='loginAsService'>以服务人员登录</button>
+      </view>
+    </view>
+
+  </view>
+</view>

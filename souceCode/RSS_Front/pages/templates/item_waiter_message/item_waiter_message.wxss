@@ -1,0 +1,51 @@
+.container_template{
+  width: 100%;
+  background: #F5F5F5;
+
+  margin-top: 10px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.status{
+  padding:5px;
+}
+
+.container_details{
+  overflow-x: auto;
+}
+
+.item_details{
+
+}
+
+.orderInfo{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  padding-left : 5px;
+}
+
+.details_picture{
+  height: 100px;
+  width: 100px;
+  display:inline-block;
+  margin-left: 5px;
+}
+
+.tableNumContainer{
+  display: inline-block;
+}
+
+.details{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.acceptContainer{
+    display: inline-block;
+    margin-right: 5px;
+}

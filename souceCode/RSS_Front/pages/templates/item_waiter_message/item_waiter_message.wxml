@@ -1,0 +1,26 @@
+<template name="item_waiter_message">
+  <view class="container_template" >
+    <!-- 订单的类型 -->
+    <view class="status">
+      <text>{{item.type}}</text>
+    </view>
+
+    <!-- 已点菜品的图片信息 -->
+    <view class='details'>
+      <image src='{{item.picUrl}}' class='details_picture'></image>
+
+      <view class='tableNumContainer'>
+        <text class='tableNum'> 桌号: {{item.tableNum}} </text>
+      </view>
+      <view class='acceptContainer'>
+        <button>接单</button>
+      </view>
+    </view>
+
+    <!-- 订单信息 -->
+    <view class='orderInfo'>
+      <text style='font-size:12px'>创建日期: {{item.createTime}}</text>
+    </view>
+
+  </view>
+</template>
