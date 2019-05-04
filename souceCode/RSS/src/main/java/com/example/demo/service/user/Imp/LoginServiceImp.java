@@ -2,10 +2,8 @@ package com.example.demo.service.user.Imp;
 
 import com.example.demo.domain.info.AppInfo;
 import com.example.demo.service.info.imp.AppInfoService;
-import com.example.demo.service.user.CustomerLoginService;
-import net.sf.json.JSON;
+import com.example.demo.service.user.LoginService;
 import net.sf.json.JSONObject;
-import org.hibernate.sql.OracleJoinFragment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
@@ -14,11 +12,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service("loginService")
-public class CustomerLoginServiceImp implements CustomerLoginService {
+public class LoginServiceImp implements LoginService {
     @Autowired
     private AppInfoService appInfoService;
 

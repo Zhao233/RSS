@@ -1,5 +1,6 @@
 package com.example.demo.service.user.Imp;
 
+import com.example.demo.domain.user.Customer;
 import com.example.demo.repository.user.CustomerDao;
 import com.example.demo.service.user.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,5 +15,16 @@ public class CustomerServiceImp implements CustomerService {
     public Long getIDByOpenID(String openID) {
 
         return customerDao.getIdByOpenID(openID);
+    }
+
+    @Override
+    public boolean isLogin(String openid) {
+        Customer customer = customerDao.getCustomerByOpenID(openid);
+
+        if(customer == null){
+            return false;
+        }
+
+        return true;
     }
 }

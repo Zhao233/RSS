@@ -1,6 +1,6 @@
 package com.example.demo.controller.weApp.customerController;
 
-import com.example.demo.service.user.CustomerLoginService;
+import com.example.demo.service.user.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,7 @@ import java.util.Map;
 @RequestMapping(value = "/customer")
 public class CustomerLoginController {
     @Autowired
-    private CustomerLoginService customerLoginService;
+    private LoginService customerLoginService;
 
     @ResponseBody
     @RequestMapping(value = "/login")
