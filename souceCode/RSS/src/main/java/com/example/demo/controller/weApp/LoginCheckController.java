@@ -1,5 +1,6 @@
 package com.example.demo.controller.weApp;
 
+import com.example.demo.domain.user.Customer;
 import com.example.demo.domain.user.Waiter;
 import com.example.demo.service.user.CustomerService;
 import com.example.demo.service.user.LoginService;
@@ -53,6 +54,7 @@ public class LoginCheckController {
         identity = 3;
         if( !isLogin ) {// 未注册
             map.put("status", "FAILED");
+
         }
 
         if(isLogin){//已注册
@@ -63,8 +65,6 @@ public class LoginCheckController {
         }
 
 
-        map.put("status", "ERROR");
-        map.put("message", "服务器错误，无法识别身份");
 
         return map;
     }
@@ -88,7 +88,7 @@ public class LoginCheckController {
         }
 
         /**
-         *厨师的录入
+         * 厨师的录入
          */
 //        isExist = waiterService.checkIsWaiterExistByLoginID(loginID);
 //
@@ -98,6 +98,19 @@ public class LoginCheckController {
 //            map.put("status", "SUCCEED");
 //            return map;
 //        }
+
+        /**
+         * 客户的录入
+         */
+        isExist = customerService.checkIsCustomerExistByLoginID(loginID);
+
+        if(isExist == 1){//后台未录入
+            Customer customer = customerService.registerCustomer(openid);
+
+            map.put("status", "SUCCEED");
+            map.put("userInfo", customer);
+            return map;
+        }
 
         switch (isExist){
             case 1 :

@@ -3,6 +3,7 @@ package com.example.demo.service.user.Imp;
 import com.example.demo.domain.user.Customer;
 import com.example.demo.repository.user.CustomerDao;
 import com.example.demo.service.user.CustomerService;
+import com.example.demo.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +18,44 @@ public class CustomerServiceImp implements CustomerService {
         return customerDao.getIdByOpenID(openID);
     }
 
-    @Override
-    public boolean isLogin(String openid) {
-        Customer customer = customerDao.getCustomerByOpenID(openid);
 
-        if(customer == null){
-            return false;
+
+    /**=======================For Customer=================================*/
+    @Override
+    public boolean isLogin(String openID) {
+        Customer customer = customerDao.getCustomerByOpenID(openID);
+
+        return customer != null;
+    }
+
+
+    @Override
+    public int checkIsCustomerExistByLoginID(String openID) {
+        Customer customer = customerDao.getCustomerByOpenID(openID);
+
+        if(customer == null){//后台未录入
+            return 1;
         }
 
-        return true;
+        return 3;
     }
+
+    @Override
+    public Customer registerCustomer(String openID) {
+        if( !isLogin(openID) ){
+
+            Customer customer = new Customer();
+            customer.setOpenID( openID );
+            customer.setCreateTime( TimeUtil.getTimeNow() );
+            customer.setLogInTimes(0);
+
+            customerDao.save(customer);
+
+            return customer;
+        }
+
+        return null;
+    }
+
+
 }

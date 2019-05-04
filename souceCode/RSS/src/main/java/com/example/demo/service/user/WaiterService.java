@@ -20,5 +20,5 @@ public interface WaiterService {
 
     int checkIsWaiterExistByLoginID(String loginID);
 
-    public Waiter registerWaiter(String loginID, String openid);
+    Waiter registerWaiter(String loginID, String openid);
 }
