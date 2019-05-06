@@ -35,11 +35,6 @@ Page({
     isConnect : false,
 
     messageQueue : [
-      { id: 41, type: "派送", picUrl: "https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555678910117.jpg", tableNum: 10, createTime: "2018-10-9:10-11"},
-      { id: 42,  type: "派送", picUrl: "https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555678910117.jpg", tableNum: 11, createTime: "2018-10-9:10-11" },
-      { id: 43,  type: "服务", picUrl: "", tableNum: 11, createTime: "2018-10-9:10-11" },
-      { id: 44,  type: "服务", picUrl: "", tableNum: 13, createTime: "2018-10-9:10-11" },
-      { id: 45,  type: "派送", picUrl: "https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555678910117.jpg", tableNum: 11, createTime: "2018-10-9:10-11" },
     ]
   },
 
@@ -103,7 +98,7 @@ Page({
           for (var i in message) {
             var tempMessage = message[i];
 
-            if (tempMessage.id == res.id) {
+            if (tempMessage.orderID == res.id) {
               message.splice(i, 1);
 
               that.setData({
@@ -115,7 +110,21 @@ Page({
 
         break;
       case type_changeWorkingStatus:
-        
+        app.socketResponseHandler(res);
+        break;
+
+      case type_getMission:
+        app.socketResponseHandler(res, function(){
+          var messageQueue = that.data.messageQueue;
+          var message = res.data;
+
+          messageQueue.push(message);
+          messageQueue.reverse();
+
+          that.setData({
+            messageQueue: messageQueue
+          })
+        });
         
         break;
     }

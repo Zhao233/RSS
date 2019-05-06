@@ -7,13 +7,13 @@
 
     <!-- 已点菜品的图片信息 -->
     <view class='details'>
-      <image src='{{item.picUrl}}' class='details_picture'></image>
+      <image src='{{item.foodPicUrl}}' class='details_picture'></image>
 
       <view class='tableNumContainer'>
         <text class='tableNum'> 桌号: {{item.tableNum}} </text>
       </view>
       <view class='acceptContainer'>
-        <button data-recordID='{{item.id}}' bindtap='completeMission'>接单</button>
+        <button data-recordID='{{item.orderID}}' bindtap='completeMission'>接单</button>
       </view>
     </view>
 
