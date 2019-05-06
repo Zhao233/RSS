@@ -104,6 +104,8 @@ Page({
               that.setData({
                 messageQueue: message
               })
+
+              break;
             }
           }
         })
@@ -119,7 +121,6 @@ Page({
           var message = res.data;
 
           messageQueue.push(message);
-          messageQueue.reverse();
 
           that.setData({
             messageQueue: messageQueue
