@@ -1,0 +1,38 @@
+/* pages/forWaiterService/waiter.wxss */
+@import 
+"../templates/item_waiter_message/item_waiter_message.wxss";
+
+.container_{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+
+}
+
+.errorTextConatainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.errorText{
+  margin: 20px;
+}
+
+.messageQueue{
+  width: 95%;
+}
+
+.workingStatus{
+  height: 80px;
+  width: 100%;
+}
+
+.workingStatusButton{
+  margin: 5px;
+  height: 100%;
+  line-height: 80px;
+}

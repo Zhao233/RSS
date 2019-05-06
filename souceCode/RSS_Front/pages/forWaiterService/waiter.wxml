@@ -1,0 +1,20 @@
+<!--pages/forWaiterService/waiter.wxml-->
+<import src="../templates/item_waiter_message/item_waiter_message.wxml"/>
+
+<view class='container_'>
+  <!-- 服务消息队列 -->
+  <scroll-view wx:if='{{isConnect}}' scroll-y='true' class='messageQueue' style='height:{{screenHeight}}px'>
+    <block wx:for="{{messageQueue}}">
+      <template is="item_waiter_message" data="{{item}}" />
+    </block>
+  </scroll-view>
+
+  <view wx:if='{{!isConnect}}' class='errorTextConatainer' style='height:{{screenHeight}}px'>
+    <text class='errorText'>已与服务器断开,请重新进入小程序或与管理员联系</text>
+  </view>
+
+  <!-- 工作状态 -->
+  <view wx:if='{{isConnect}}' class='workingStatus'>
+    <button class='workingStatusButton' bindtap='changeWorkingStatus'>{{workingStatus ? '工作':'暂停'}} </button>
+  </view>
+</view>

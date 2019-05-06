@@ -94,5 +94,27 @@ App({
           this.showToast(res.data.message)
         }
     }
+  },
+
+  socketResponseHandler : function(res, succeed, error, failed){
+    switch (res.status) {
+      case "SUCCEED":
+        succeed();
+
+        break;
+      case "ERROR":
+        var message = "服务器错误";
+
+        if (res.message != undefined) {
+          this.showToast(message + "  " + res.data.message)
+        }
+
+        break;
+
+      case "FAILED":
+        if (res.message != undefined) {
+          this.showToast(res.data.message)
+        }
+    }
   }
 })

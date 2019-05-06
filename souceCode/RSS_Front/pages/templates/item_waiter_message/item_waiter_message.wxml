@@ -13,7 +13,7 @@
         <text class='tableNum'> 桌号: {{item.tableNum}} </text>
       </view>
       <view class='acceptContainer'>
-        <button>接单</button>
+        <button data-recordID='{{item.id}}' bindtap='completeMission'>接单</button>
       </view>
     </view>
 

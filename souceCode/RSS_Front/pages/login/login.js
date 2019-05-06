@@ -43,7 +43,7 @@ Page({
 
     //获取头像
     wx.getUserInfo({
-      success: res => {
+      success:  res => {
         app.globalData.userInfo = res.userInfo
         this.setData({
           userInfo: res.userInfo,
