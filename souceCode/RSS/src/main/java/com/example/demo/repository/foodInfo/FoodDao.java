@@ -52,4 +52,7 @@ public interface FoodDao extends JpaRepository<Food,Long> {
 
     @Query(value = "SELECT food.picUrl FROM Food food WHERE food.id in ( :foodIDs )")
     List<String> findFoodByIdIn(@Param("foodIDs") List<Long> foodIDs);
+
+    @Query(value = "SELECT food.picUrl FROM Food food WHERE food.id = ?1")
+    String getFoodPicUrlById(Long id);
 }

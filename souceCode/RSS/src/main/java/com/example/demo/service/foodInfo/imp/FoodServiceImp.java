@@ -72,4 +72,9 @@ public class FoodServiceImp implements FoodService {
     public List<String> getFoodsPicUrlByFoodIDs(List<Long> foodIDs) {
         return foodDao.findFoodByIdIn(foodIDs);
     }
+
+    @Override
+    public String getFoodPicUrlByFoodID(Long foodID) {
+        return foodDao.getFoodPicUrlById(foodID);
+    }
 }

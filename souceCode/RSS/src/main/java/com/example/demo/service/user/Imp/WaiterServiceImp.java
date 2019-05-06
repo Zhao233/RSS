@@ -99,4 +99,9 @@ public class WaiterServiceImp implements WaiterService {
         return waiter;
 
     }
+
+    @Override
+    public Waiter getWaiterByOpenID(String openID) {
+        return waiterDao.getWaiterByOpenID(openID);
+    }
 }

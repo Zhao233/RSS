@@ -28,4 +28,6 @@ public interface FoodService {
     List<Food> getFoodsByMenuId(long menuId);
 
     List<String> getFoodsPicUrlByFoodIDs(List<Long> foodIDs);
+
+    String getFoodPicUrlByFoodID(Long foodID);
 }
