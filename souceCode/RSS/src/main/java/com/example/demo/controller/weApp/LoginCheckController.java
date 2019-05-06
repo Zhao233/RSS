@@ -140,7 +140,6 @@ public class LoginCheckController {
 
         Map<String, Object> map_result = loginService.getLoginSession(loginCode);
 
-
         map.put("userInfo", map_result);
         map.put("status", "SUCCEED");
         return map;
