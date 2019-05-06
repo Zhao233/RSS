@@ -8,8 +8,10 @@ var socketMsgQueue = [];
 /*
   发送信息的内容标识符 
 */
-const type_getMession =  101;
+const type_completeMission =  101;
 const type_changeWorkingStatus = 102;
+const type_getMission = 103;
+
 
 /*
   工作状态
@@ -93,7 +95,8 @@ Page({
     var res = JSON.parse(res.data);
     
     switch(res.type){
-      case type_getMession :
+      case type_completeMission :
+      
         app.socketResponseHandler(res, function () {
           var message = that.data.messageQueue;
 
@@ -179,7 +182,7 @@ Page({
     var id = parseInt(e.target.dataset.recordid);
 
     var msg = {
-      "type": type_getMession,
+      "type": type_completeMission,
       "id": id
     }
 
