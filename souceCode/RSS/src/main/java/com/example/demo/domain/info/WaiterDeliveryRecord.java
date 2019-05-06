@@ -34,21 +34,39 @@ public class WaiterDeliveryRecord {
     @Column(name = "table_num")
     private Integer tableNum;
 
+    /**
+     * 服务员ID
+     * */
     @Column(name = "waiter_id")
     private Long waiterID;
 
+    /**
+     * 订单ID
+     * */
     @Column(name = "order_record_id")
     private long orderRecordID;
 
+    /**
+     * 菜品ID
+     * */
     @Column(name = "food_id")
     private long foodID;
 
+    /**
+     * 是否已完成
+     * */
     @Column(name = "is_complete")
     private int isComplete = 0;
 
+    /**
+     * 创建时间
+     * */
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    /**
+     * 完成时间
+     * */
     @Column(name = "update_time")
     private Timestamp updateTime;
 }
