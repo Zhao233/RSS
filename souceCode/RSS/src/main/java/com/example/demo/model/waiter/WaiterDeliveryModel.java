@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class WaiterDeliveryModel {
     private Long orderID;
-    private Integer type;
+    private String type;
     private int tableNum;
     private String foodPicUrl;
     private String createTime;

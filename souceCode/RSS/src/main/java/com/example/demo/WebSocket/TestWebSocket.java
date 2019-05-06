@@ -1,12 +1,14 @@
 package com.example.demo.WebSocket;
 
 
+import com.example.demo.domain.info.OrderRecord;
 import com.example.demo.domain.info.WaiterDeliveryRecord;
 import com.example.demo.domain.user.Waiter;
 import com.example.demo.model.waiter.WaiterDeliveryModel;
 import com.example.demo.service.foodInfo.FoodService;
 import com.example.demo.service.info.WaiterDeliveryRecordService;
 import com.example.demo.service.user.WaiterService;
+import com.example.demo.util.TimeUtil;
 import com.sun.deploy.security.ValidationState;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONObject;
@@ -52,6 +54,10 @@ public class TestWebSocket {
     public static final int SUCCEED = 201;
     public static final int FAILED = 202;
     public static final int ERROR = 203;
+
+    /**
+     *
+     * */
 
     /**
      * 内在属性
@@ -101,12 +107,13 @@ public class TestWebSocket {
 
 
             while (true){
-                if(messageQueue.size() != 0 ){
+                if(getMessageQueueSize() != 0 ){
                     int index = getNextWaiter();
 
                     log.info("waiter index : "+index);
 
                     while(true){
+
                         TestWebSocket socket = webSocketSet.get(index);
 
                         if(socket.status == STATUS_WORKING){
@@ -116,7 +123,19 @@ public class TestWebSocket {
 
                             WaiterDeliveryModel model = new WaiterDeliveryModel();
                             model.setOrderID(deliveryRecord.getId());
-                            model.setType(deliveryRecord.getType());
+
+                            switch (deliveryRecord.getType()){
+                                case WaiterDeliveryRecord.TYPE_DELIVERY :
+                                    model.setType("派送");
+
+                                    break;
+                                case WaiterDeliveryRecord.TYPE_SERVICE :
+                                    model.setType("服务");
+                                    break;
+                                default:
+                                    model.setType("无");
+                            }
+
 
                             if(deliveryRecord.getType() == WaiterDeliveryRecord.TYPE_DELIVERY) {
                                 String picUrl = foodService.getFoodPicUrlByFoodID(deliveryRecord.getFoodID());
@@ -124,10 +143,14 @@ public class TestWebSocket {
                                 model.setFoodPicUrl(picUrl);
                             }
 
-                            model.setCreateTime("2019-5-4:12.30");
+                            model.setCreateTime(TimeUtil.getFormattedTime(deliveryRecord.getCreateTime()));
                             model.setTableNum(deliveryRecord.getTableNum());
 
-                            JSONObject jsonObject = JSONObject.fromObject(model);
+                            JSONObject jsonObject = new JSONObject();
+                            jsonObject.put("status","SUCCEED");
+                            jsonObject.put("type",TYPE_GETMISSION);
+                            jsonObject.put("data", model);
+
                             String jsonMessage = jsonObject.toString();
 
                             try {
@@ -154,6 +177,8 @@ public class TestWebSocket {
     static{
         WaiterServiceThread serviceThread = new WaiterServiceThread();
         serviceThread.start();
+
+
     }
 
 
@@ -172,6 +197,29 @@ public class TestWebSocket {
         this.waiter = waiter;
 
         webSocketSet.add(this);     //加入set中
+
+        for(int i = 0; i < 10; i++){
+            WaiterDeliveryRecord record = new WaiterDeliveryRecord();
+            record.setType(WaiterDeliveryRecord.TYPE_DELIVERY);
+            record.setTableNum(i);
+            record.setFoodID(13);
+            record.setOrderRecordID(i);
+            record.setCreateTime(TimeUtil.getTimeNow());
+
+            putMessageToWaiterMessageBlockingQueue(record);
+        }
+
+        for(int i = 0; i < 10; i++){
+            OrderRecord a = new OrderRecord();
+
+            WaiterDeliveryRecord record = new WaiterDeliveryRecord();
+            record.setType(WaiterDeliveryRecord.TYPE_SERVICE);
+            record.setTableNum(i);
+            record.setOrderRecordID(i);
+            record.setCreateTime(TimeUtil.getTimeNow());
+
+            putMessageToWaiterMessageBlockingQueue(record);
+        }
 
         addOnlineCount();
         //在线数加1
@@ -294,7 +342,7 @@ public class TestWebSocket {
     public synchronized static int getNextWaiter(){
         index_waiter++;
 
-        if(index_waiter >= getMessageQueueSize() ){
+        if(index_waiter >= getSocketQueueSize() ){
             return 0;
         }
 
@@ -312,6 +360,7 @@ public class TestWebSocket {
     }
 
     public static synchronized int getMessageQueueSize(){return messageQueue.size();}
+    public static synchronized int getSocketQueueSize(){return webSocketSet.size();}
 
     private void changStatus(int newStatus){
         this.status = newStatus;
