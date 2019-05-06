@@ -43,9 +43,9 @@ public class TestWebSocket {
      * TYPE_WORKING : 接受任务
      * TYPE_STATUS : 改变工作状态
      * */
-    public static final int TYPE_GETMEESSION = 101;
+    public static final int TYPE_COMPLETEMISSION = 101;
     public static final int TYPE_STATUS = 102;
-
+    public static final int TYPE_GETMISSION = 103;
     /**
      * 处理的状态码
      * */
@@ -209,17 +209,17 @@ public class TestWebSocket {
         Integer messageFlag = object.getInt("type");
 
         switch (messageFlag){
-            case TYPE_GETMEESSION ://任务接收
+            case TYPE_COMPLETEMISSION ://任务接收
                 Long recordID = object.getLong("id");
 
                 WaiterDeliveryRecord waiterDeliveryRecord = acceptedMission(recordID);
 
                 if(waiterDeliveryRecord != null && waiterDeliveryRecord.getIsComplete() == 1){//保存成功
-                    String result = getJsonResult(TYPE_GETMEESSION,SUCCEED, String.valueOf(waiterDeliveryRecord.getId()));
+                    String result = getJsonResult(TYPE_COMPLETEMISSION,SUCCEED, String.valueOf(waiterDeliveryRecord.getId()));
 
                     sendMessage(result);
                 } else {
-                    String result = getJsonResult(TYPE_GETMEESSION,FAILED, "");
+                    String result = getJsonResult(TYPE_COMPLETEMISSION,FAILED, "");
 
                     sendMessage(result);
                 }
@@ -259,7 +259,7 @@ public class TestWebSocket {
             case SUCCEED://处理成功
                 object.put("status", "SUCCEED");
 
-                if(resultType == TYPE_GETMEESSION){
+                if(resultType == TYPE_COMPLETEMISSION){
                     object.put("id", Long.parseLong(data));
                 }
 
