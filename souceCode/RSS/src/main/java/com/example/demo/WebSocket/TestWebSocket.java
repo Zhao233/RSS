@@ -9,7 +9,6 @@ import com.example.demo.service.foodInfo.FoodService;
 import com.example.demo.service.info.WaiterDeliveryRecordService;
 import com.example.demo.service.user.WaiterService;
 import com.example.demo.util.TimeUtil;
-import com.sun.deploy.security.ValidationState;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +47,7 @@ public class TestWebSocket {
     public static final int TYPE_COMPLETEMISSION = 101;
     public static final int TYPE_STATUS = 102;
     public static final int TYPE_GETMISSION = 103;
+
     /**
      * 处理的状态码
      * */
@@ -63,9 +63,7 @@ public class TestWebSocket {
      * 内在属性
      * */
     private Waiter waiter;
-    ;
     private int status = STATUS_WORKING;
-
     private Session session;
 
 
@@ -108,63 +106,65 @@ public class TestWebSocket {
 
             while (true){
                 if(getMessageQueueSize() != 0 ){
-                    int index = getNextWaiter();
-
-                    log.info("waiter index : "+index);
-
                     while(true){
+                        int index = getNextWaiter();
+
+                        log.info("waiter index : "+index);
+
+                        if(getSocketQueueSize() == 0){
+                            continue;
+                        }
 
                         TestWebSocket socket = webSocketSet.get(index);
 
-                        if(socket.status == STATUS_WORKING){
-                            WaiterDeliveryRecord deliveryRecord = getFirstWaiterDeliveryRecord();
-                            deliveryRecord.setWaiterID(socket.waiter.getId());
-                            waiterDeliveryRecordService.save(deliveryRecord);
-
-                            WaiterDeliveryModel model = new WaiterDeliveryModel();
-                            model.setOrderID(deliveryRecord.getId());
-
-                            switch (deliveryRecord.getType()){
-                                case WaiterDeliveryRecord.TYPE_DELIVERY :
-                                    model.setType("派送");
-
-                                    break;
-                                case WaiterDeliveryRecord.TYPE_SERVICE :
-                                    model.setType("服务");
-                                    break;
-                                default:
-                                    model.setType("无");
-                            }
-
-
-                            if(deliveryRecord.getType() == WaiterDeliveryRecord.TYPE_DELIVERY) {
-                                String picUrl = foodService.getFoodPicUrlByFoodID(deliveryRecord.getFoodID());
-
-                                model.setFoodPicUrl(picUrl);
-                            }
-
-                            model.setCreateTime(TimeUtil.getFormattedTime(deliveryRecord.getCreateTime()));
-                            model.setTableNum(deliveryRecord.getTableNum());
-
-                            JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("status","SUCCEED");
-                            jsonObject.put("type",TYPE_GETMISSION);
-                            jsonObject.put("data", model);
-
-                            String jsonMessage = jsonObject.toString();
-
-                            try {
-                                socket.sendMessage(jsonMessage);
-
-                                removeFirstWaiterDeliveryRecord();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                            break;
+                        if(socket.status != STATUS_WORKING){
+                            continue;
                         }
 
-                        index = getNextWaiter();
+                        WaiterDeliveryRecord deliveryRecord = getFirstWaiterDeliveryRecord();
+                        deliveryRecord.setWaiterID(socket.waiter.getId());
+                        waiterDeliveryRecordService.save(deliveryRecord);
+
+                        WaiterDeliveryModel model = new WaiterDeliveryModel();
+                        model.setOrderID(deliveryRecord.getId());
+
+                        switch (deliveryRecord.getType()){
+                            case WaiterDeliveryRecord.TYPE_DELIVERY :
+                                model.setType("派送");
+
+                                break;
+                            case WaiterDeliveryRecord.TYPE_SERVICE :
+                                model.setType("服务");
+                                break;
+                            default:
+                                model.setType("无");
+                        }
+
+                        if(deliveryRecord.getType() == WaiterDeliveryRecord.TYPE_DELIVERY) {
+                            String picUrl = foodService.getFoodPicUrlByFoodID(deliveryRecord.getFoodID());
+
+                            model.setFoodPicUrl(picUrl);
+                        }
+
+                        model.setCreateTime(TimeUtil.getFormattedTime(deliveryRecord.getCreateTime()));
+                        model.setTableNum(deliveryRecord.getTableNum());
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("status","SUCCEED");
+                        jsonObject.put("type",TYPE_GETMISSION);
+                        jsonObject.put("data", model);
+
+                        String jsonMessage = jsonObject.toString();
+
+                        try {
+                            socket.sendMessage(jsonMessage);
+
+                            removeFirstWaiterDeliveryRecord();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        break;
                     }
                 }
             }
@@ -177,10 +177,9 @@ public class TestWebSocket {
     static{
         WaiterServiceThread serviceThread = new WaiterServiceThread();
         serviceThread.start();
-
-
     }
 
+    /**=======================================Socket状态发生改变时的调用函数===============================================================*/
 
     /**
      * 连接建立成功调用的方法*/
@@ -329,6 +328,8 @@ public class TestWebSocket {
 
     }
 
+    /**========================================对messageQueue的所有线程安全操作=========================================================*/
+
     /**
      * 外部程序将订单记录传至阻塞队列中等待处理
      * */
@@ -361,6 +362,8 @@ public class TestWebSocket {
 
     public static synchronized int getMessageQueueSize(){return messageQueue.size();}
     public static synchronized int getSocketQueueSize(){return webSocketSet.size();}
+
+    /**=======================================每个厨师私有的方法====================================================================*/
 
     private void changStatus(int newStatus){
         this.status = newStatus;
