@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="container" style='margin-left : 50rpx; margin-right : 50rpx;'>
   <van-button type="info" size="large" class='button_quickService' bindtap='toCartPage'>快捷点餐</van-button>
-  <van-button type="info" size="large" class='button_quickService'>呼叫服务员</van-button>
+  <van-button type="info" size="large" class='button_quickService' bindtap='callWaiter'>呼叫服务员</van-button>
   <van-button type="info" size="large" class='button_quickService'>投诉</van-button>
 </view>

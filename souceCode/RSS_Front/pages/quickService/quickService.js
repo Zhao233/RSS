@@ -4,6 +4,8 @@ const app = getApp()
 
 Page({
   data: {
+    isCallWaiterButtonActive : true,
+
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
@@ -54,6 +56,34 @@ Page({
       },
       fail(res) {
         app.showToast("网络请求失败")
+      }
+    })
+  },
+
+  callWaiter : function(e){
+    var openid = app.globalData.userInfo.openid;
+    var tableNum = app.globalData.tableNum;
+
+    wx.request({
+      url: "http://" + app.info.hostname + ":" + app.info.port + "/customer/quickService/callWaiter",
+
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+
+      data: {
+        openID: openid,
+        tableNum: tableNum,
+      },
+
+      success(res) {
+        app.internetResponseHandler(res, function () {
+          app.showToast("呼叫成功");
+        });
+      },
+      
+      fail(res) {
+        app.showToast("呼叫失败")
       }
     })
   },
