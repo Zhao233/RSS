@@ -7,6 +7,8 @@ App({
 
     userOpenId: 0,
 
+    tableNum : 0,
+
     quickService_foodIDList: [],
     quickService_styleIDList: [],
   },
@@ -16,8 +18,16 @@ App({
     port:8881,
   },
 
-  onLaunch: function () {
+  onLaunch: function (options) {
     var that = this;
+
+    var tableNum = options.query.tableNum;
+
+    if(tableNum == undefined){
+      this.showToast("请扫描桌上二维码");
+    } else {
+      this.globalData.tableNum = tableNum;
+    }
 
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
