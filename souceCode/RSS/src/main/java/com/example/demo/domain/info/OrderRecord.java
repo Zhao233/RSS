@@ -58,7 +58,24 @@ public class OrderRecord {
     /**
      * status
      * */
-    public final static int DONE = 0;
-    public final static int TIMEOUT = 1;
-    public final static int NOT_PAID = 2;
+    public final static int DONE = 1;
+    public final static int TIMEOUT = 2;
+    public final static int NOT_PAID = 0;
+
+    /**
+     * 获取支付信息时的类型
+     * */
+    public static final int TYPE_ACCOUNT_MONTH = 1;
+    public static final int TYPE_ACCOUNT_WEEK = 2;
+    public static final int TYPE_ACCOUNT_DAY = 3;
+
+    /***
+     * 获取订单次数的的类型
+     */
+    public static final int TYPE_ORDERTIME_DAY = 3;
+
+    /***
+     * 获取最受欢迎的菜品的类型
+     */
+    public static final int TYPE_POPULARFOODS_DAY = 3;
 }

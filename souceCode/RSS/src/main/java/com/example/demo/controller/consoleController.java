@@ -14,8 +14,14 @@ public class consoleController {
     /**
      * 活动管理
      * */
+    @RequestMapping("/admin/index")
+    public ModelAndView toIndex(){
+        return new ModelAndView("console/index");
+    }
 
-
+    /**
+     * 活动管理
+     * */
     @RequestMapping("/admin/activityManagement")
     public ModelAndView toActivityManagement(){
         return new ModelAndView("console/activityManagement/activityManagement");
