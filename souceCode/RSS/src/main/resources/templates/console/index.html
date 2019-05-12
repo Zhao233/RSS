@@ -42,21 +42,66 @@
 
     <script src="/javascript/custom-scripts.js"></script>
 
+    <script src="/javascript/chart.js"></script>
+
     <!--<script src="/javascript/jquery-1.11.1.min.js"></script>-->
     <script src="/javascript/bootstrap-table.min.js"></script>
     <script src="/javascript/bootstrap-table-zh-CN.js"></script>
 
     <style>
-        .fixed-table-body {
-            overflow-x: auto;
-            overflow-y: scroll;
-            height: 450px;
-            width: 100%;
+        .icon-rounded{
+            background-color:#7460ee;
+            color: #ffffff;
+            border-radius: 50px;
+            /* -webkit-border-radius: 50px; */
+            -moz-border-radius: 50px;
+            -o-border-radius: 50px;
+            -ms-border-radius: 50px;
+            font-size: 25px;
+            width: 60px;
+            height: 60px;
+
+            line-height: 60px;
+            text-align: center;
         }
 
-        .fixed-table-header {
-            overflow-x: auto;
-            clear:both;
+        .r3_counter_box {
+            min-height: 100px;
+            background: #ffffff;
+            padding: 15px;
+        }
+
+        .stats{
+            overflow: hidden;
+        }
+        
+        .chart-wrapper{
+            display: flex;
+            align-items: center;
+            position: relative;
+            height: 400px;
+            background: #FFFFFF;
+        }
+
+
+        .activity_box{
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+
+            background: #FFFFFF;
+
+            overflow:scroll;
+        }
+
+        .activity-row{
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+
+            padding: 5px;
+
+            align-items: center;
         }
 
         table thead th{
@@ -77,26 +122,11 @@
             text-align: center;
         }
 
-        .kv-avatar {
-            display: inline-block;
-        }
-
         .kv-avatar .file-input {
             display: table-cell;
             width: 213px;
         }
 
-        .kv-reqd {
-            color: red;
-            font-family: monospace;
-            font-weight: normal;
-        }
-
-        .center-vertical {
-            position: relative;
-            top: 50%;
-            transform: translateY(-50%);
-        }
 
         .table th, .table td {
             text-align: center;
@@ -109,15 +139,6 @@
         }
 
 
-        .search{
-            padding-bottom: 1em;
-        }
-
-        .W180{width:180px;}
-        .W150{width:150px;}
-        .W150 {width:100px !important;}
-        .W280{width:280px !important;}
-        .W400{width:400px !important;}
         .W100 {width:100px !important;}
         .W30 {width:30px !important;}
     </style>
@@ -155,56 +176,6 @@
     <!--内容主体-->
     <div id="page-wrapper">
         <div id="page-inner">
-
-            <div class="col-md-12">
-                <!--折扣管理标题-->
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="page-header" style="color: #FFFFFF;">
-                            折扣管理
-                        </h1>
-                    </div>
-                </div>
-
-                <!--折扣管理-->
-                <div class="row">
-                    <div class="col-md-12">
-                    <!-- Advanced Tables -->
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table id="_table_discount_" class="table table-striped table-bordered table-hover" data-toolbar="#toolbar_discount">
-                                        <thead>
-                                            <tr>
-                                                <th data-field="id" class="W30" data-formatter="_formatte_id_discount"><input id="id_discount_" type="checkbox" name="id_discount_" onclick="doAllCheck('id_discount_')"></th>
-                                                <th data-field="type" class="W100" data-formatter="_formatte_discount_type">类型</th>
-                                                <th data-field="discount" class="W100" data-formatter="_formatte_discount">折扣</th>
-                                                <th data-field="moneyLimit" class="W100" style="border:none;">条件金额</th>
-                                                <th data-field="startTime"  class="W100" style="border:none;" data-formatter="_formatte_time">有效时间</th>
-                                                <th data-field="endTime" class="W100" style="border:none;" data-formatter="_formatte_time">失效时间</th>
-                                                <th data-field="enable" class="W100" style="border:none;" data-formatter="_formatte_select_enable">是否启动</th>
-                                                <th data-field="createTime" class="W100" style="border:none;" data-formatter="_formatte_time">创建时间</th>
-                                                <th data-field="updateTime" class="W100" style="border:none;" data-formatter="_formatte_time">修改时间</th>
-                                            </tr>
-                                        </thead>
-
-                                    </table>
-
-                                    <div id="toolbar_discount">
-                                        <button class="btn btn-primary open-add-discount-dialog" data-toggle="modal">新增
-                                        </button>
-                                        <button class="btn btn-success open-update-discount-dialog" data-toggle="modal">修改
-                                        </button>
-                                        <button class="btn btn-danger delete-discount-dialog">删除</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <!--End Advanced Tables -->
-                    </div>
-                </div>
-            </div>
-
             <div class="col-md-12">
                 <!--推荐管理标题-->
                 <div class="row">
@@ -217,38 +188,201 @@
 
                 <!--推荐管理-->
                 <div class="row">
-                    <div class="col-md-12">
-                        <!-- Advanced Tables -->
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table id="_table_recommend_" class="table table-striped table-bordered table-hover" data-toolbar="#toolbar_recommend">
-                                        <thead>
-                                        <tr>
-                                            <th data-field="id" class="W30" data-formatter="_formatte_id_recommend"><input id="id_recommend_" name="id_recommend_" type="checkbox" onclick="doAllCheck('id_recommend_')"></th>
-                                            <th data-field="picUrl" class="W100" data-formatter="_formatte_image">图像</th>
-                                            <th data-field="name" class="W100">名称</th>
-                                            <th data-field="menuName" class="W100" style="border:none;">一级菜单</th>
-                                            <th data-field="type" class="W100" style="border:none;" data-formatter="_formatte_recommend_type">类型</th>
-                                            <th data-field="enable" class="W100" style="border:none;" data-formatter="_formatte_select_enable">是否启用</th>
-                                            <th data-field="createTime" class="W100" style="border:none;" data-formatter="_formatte_time">创建时间</th>
-                                            <th data-field="updateTime" class="W100" style="border:none;" data-formatter="_formatte_time">修改时间</th>
-                                        </tr>
-                                        </thead>
-
-                                    </table>
-
-                                    <div id="toolbar_recommend">
-                                        <button class="btn btn-primary open-add-recommend-dialog" data-toggle="modal">新增
-                                        </button>
-                                        <button class="btn btn-success open-update-recommend-dialog" data-toggle="modal">修改
-                                        </button>
-                                        <button class="btn btn-danger delete-recommend-dialog">删除</button>
-                                    </div>
-                                </div>
+                    <div class="col-md-3 widget widget1">
+                        <div class="r3_counter_box">
+                            <i class="pull-left fa fa-dollar icon-rounded"></i>
+                            <div class="stats">
+                                <h5><strong>$452</strong></h5>
+                                <span>Total Revenue</span>
                             </div>
                         </div>
-                        <!--End Advanced Tables -->
+                    </div>
+
+                    <div class="col-md-3 widget widget1">
+                        <div class="r3_counter_box">
+                            <i class="pull-left fa fa-dollar icon-rounded"></i>
+                            <div class="stats">
+                                <h5><strong>$452</strong></h5>
+                                <span>Total Revenue</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 widget widget1">
+                        <div class="r3_counter_box">
+                            <i class="pull-left fa fa-dollar icon-rounded"></i>
+                            <div class="stats">
+                                <h5><strong>$452</strong></h5>
+                                <span>Total Revenue</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 widget widget1">
+                        <div class="r3_counter_box">
+                            <i class="pull-left fa fa-dollar icon-rounded"></i>
+                            <div class="stats">
+                                <h5><strong>$452</strong></h5>
+                                <span>Total Revenue</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-md-8 content-top-2 card">
+                        <div class="canvas-wrapper form-group" style=" margin:0px;">
+                            <div class="chart-wrapper">
+                                <canvas id="line-chart" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 span_8">
+                            <div class="activity_box">
+                                <h2 style="margin: 0px; padding-left: 15px;">Inbox</h2>
+                                <div class="activity-row">
+                                    <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                    <div>名称</div>
+                                    <div>排名</div>
+                                </div>
+                                <div class="activity-row">
+                                    <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                    <div>名称</div>
+                                    <div>排名</div>
+                                </div>
+                                <div class="activity-row">
+                                    <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                    <div>名称</div>
+                                    <div>排名</div>
+                                </div>
+                                <div class="activity-row">
+                                    <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                    <div>名称</div>
+                                    <div>排名</div>
+                                </div>
+                                <div class="activity-row">
+                                    <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                    <div>名称</div>
+                                    <div>排名</div>
+                                </div>
+                                <div class="activity-row">
+                                    <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                    <div>名称</div>
+                                    <div>排名</div>
+                                </div>
+                                <div class="activity-row">
+                                    <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                    <div>名称</div>
+                                    <div>排名</div>
+                                </div>
+                                <div class="activity-row">
+                                    <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                    <div>名称</div>
+                                    <div>排名</div>
+                                </div>
+                                <div class="activity-row">
+                                    <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                    <div>名称</div>
+                                    <div>排名</div>
+                                </div>
+                                <div class="activity-row">
+                                    <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                    <div>名称</div>
+                                    <div>排名</div>
+                                </div>
+                                <div class="activity-row">
+                                    <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                    <div>名称</div>
+                                    <div>排名</div>
+                                </div>
+                                <!--<div class="activity-row">-->
+                                        <!--<div class="col-xs-3 activity-img"><img src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/></div>-->
+                                        <!--<div class="col-xs-7 activity-desc">-->
+                                            <!--<h5><a href="#">Alexander</a></h5>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-2 activity-desc1"><h6>12:06 PM</h6></div>-->
+                                        <!--<div class="clearfix"> </div>-->
+                                    <!--</div>-->
+                                <!--<div class="activity-row">-->
+                                        <!--<div class="col-xs-3 activity-img"><img src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/></div>-->
+                                        <!--<div class="col-xs-7 activity-desc">-->
+                                            <!--<h5><a href="#">Daniel Lucas</a></h5>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-2 activity-desc1"><h6>01:30 PM</h6></div>-->
+                                        <!--<div class="clearfix"> </div>-->
+                                    <!--</div>-->
+                                <!--<div class="activity-row">-->
+                                        <!--<div class="col-xs-3 activity-img"><img src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/></div>-->
+                                        <!--<div class="col-xs-7 activity-desc">-->
+                                            <!--<h5><a href="#">Jackson Jacob</a></h5>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-2 activity-desc1"><h6>01:50 PM</h6></div>-->
+                                        <!--<div class="clearfix"> </div>-->
+                                    <!--</div>-->
+                                <!--<div class="activity-row">-->
+                                        <!--<div class="col-xs-3 activity-img"><img src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/></div>-->
+                                        <!--<div class="col-xs-7 activity-desc">-->
+                                            <!--<h5><a href="#">David Samuel</a></h5>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-2 activity-desc1"><h6>12:20 PM</h6></div>-->
+                                        <!--<div class="clearfix"> </div>-->
+                                    <!--</div>-->
+                                <!--<div class="activity-row">-->
+                                        <!--<div class="col-xs-3 activity-img"><img src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/></div>-->
+                                        <!--<div class="col-xs-7 activity-desc">-->
+                                            <!--<h5><a href="#">laura Smith</a></h5>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-xs-2 activity-desc1"><h6>12:50 PM</h6></div>-->
+                                        <!--<div class="clearfix"> </div>-->
+                                    <!--</div>-->
+                                <!--<div class="activity-row">-->
+                                    <!--<div class="col-xs-3 activity-img"><img src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/></div>-->
+                                    <!--<div class="col-xs-7 activity-desc">-->
+                                        <!--<h5><a href="#">laura Smith</a></h5>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-xs-2 activity-desc1"><h6>12:50 PM</h6></div>-->
+                                    <!--<div class="clearfix"> </div>-->
+                                <!--</div>-->
+
+                                <!--<div class="activity-row">-->
+                                    <!--<div class="col-xs-3 activity-img"><img src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/></div>-->
+                                    <!--<div class="col-xs-7 activity-desc">-->
+                                        <!--<h5><a href="#">laura Smith</a></h5>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-xs-2 activity-desc1"><h6>12:50 PM</h6></div>-->
+                                    <!--<div class="clearfix"> </div>-->
+                                <!--</div>-->
+
+                                <!--<div class="activity-row">-->
+                                    <!--<div class="col-xs-3 activity-img"><img src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/></div>-->
+                                    <!--<div class="col-xs-7 activity-desc">-->
+                                        <!--<h5><a href="#">laura Smith</a></h5>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-xs-2 activity-desc1"><h6>12:50 PM</h6></div>-->
+                                    <!--<div class="clearfix"> </div>-->
+                                <!--</div>-->
+
+                                <!--<div class="activity-row">-->
+                                    <!--<div class="col-xs-3 activity-img"><img src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/></div>-->
+                                    <!--<div class="col-xs-7 activity-desc">-->
+                                        <!--<h5><a href="#">laura Smith</a></h5>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-xs-2 activity-desc1"><h6>12:50 PM</h6></div>-->
+                                    <!--<div class="clearfix"> </div>-->
+                                <!--</div>-->
+                            </div>
                     </div>
                 </div>
             </div>
@@ -566,6 +700,48 @@
     var IDMapForRecommendAdd = new Map();
     var foodID_recommend_update;
 
+    var lineChart;
+
+    var options = {
+        scaleOverride :true ,   //是否用硬编码重写y轴网格线
+        scaleSteps : 10,        //y轴刻度的个数
+        scaleStepWidth : 10,   //y轴每个刻度的宽度
+        scaleStartValue : 0,    //y轴的起始值
+        scaleLabel : "<%=value%>RH",
+
+        showScale : true,
+        responsive:true,
+        showTooltips: true
+    };
+
+    var data_chart = {
+        labels : ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","6","7","8","9","10","11"],
+        datasets : [
+            {
+                fillColor : "rgba(151,187,205,0.5)",
+                strokeColor : "rgba(151,187,205,1)",
+                pointColor : "rgba(151,187,205,1)",
+                pointStrokeColor : "#fff",
+                data : [1,0,2,0,0,0,0,4,0,0,10,5,1,0,2,0,0,0,0,4,0,0,10,5,]
+            }
+        ]
+    };
+
+    function adjustPositionOfLineChart(){//adjust the position of line-chart
+        console.log("chart-wrapper: " + $(".chart-wrapper").height() );
+        console.log("line-chart margin-top: " + $("#line-chart").css("margin-top") );
+        console.log("line-chart: " + $("#line-chart").height() );
+
+        if( $(".chart-wrapper").height() > $("#line-chart").height() ){
+            $("#line-chart").css("margin-top",  ( $(".chart-wrapper").height() - $("#line-chart").height() ) / 2 );
+        }
+
+        console.log("chart-wrapper: " + $(".chart-wrapper").height() );
+        console.log("line-chart margin-top: " + $("#line-chart").css("margin-top") );
+        console.log("line-chart: " + $("#line-chart").height() );
+
+    }
+
     !function ($) {
         $(document).on("click","ul.nav li.parent > a > span.icon", function(){
             $(this).find('em:first').toggleClass("glyphicon-minus");
@@ -576,149 +752,15 @@
     $(window).on('resize', function () {
         if ($(window).width() > 768) $('#sidebar-collapse').collapse('show');
         else $('#sidebar-collapse').collapse('hide');
+
+        adjustItemHeight();
     });
 
 
     $(document).ready(function() {
-        $('#_table_discount_').bootstrapTable({
-            method: 'get',
-            url: "/admin/activity/getAll_Discount",
-            striped: true,
-            height:300,
-            dataType: "json",
-            pagination: true,
-            queryParamsType: "limit",
-            singleSelect: true,
-            contentType: "application/x-www-form-urlencoded",
-            pageSize: 10,
-            pageNumber: 1,
-            search: true,
-            showColumns: true,
-            showRefresh: true,
-            sidePagination: "server", //服务端请求
-            queryParams: function (params) {
-
-                return {
-                    limit: params.limit,
-                    offset: params.offset / params.limit,
-                    search: $(".search").find("input").val(),
-                    sort: params.sort,
-                    order: params.order,
-                };
-            },
-            responseHandler: function (res) {
-                $("#doAllCheckBtn").checked != $("#doAllCheckBtn").checked;
-
-                //doallcheck();
-
-                //config = res.config;
-
-                return {
-                    "rows": res.rows,
-                    "total": res.total
-                };
-            },
-            onPostBody : function(){
-                //adjustTableHeight($(".fixed-table-body"),20);//custom-script
-            },
-            onSort(name,order){
-                $(".temperature").find(".sortable").empty();
-                $(".humidity").find(".sortable").empty();
-
-                $(".temperature").find(".sortable").append("温度");
-                $(".humidity").find(".sortable").append("湿度");
-
-                if(name == "temperature"){
-
-                    $(".humidity").find(".sortable").append('<i class="glyphicon sort_default"></i>');
-
-                    if(order == "asc"){
-                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
-                    } else {
-                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
-                    }
-
-                } else {//humidity
-                    $(".temperature").find(".sortable").append('<i class="glyphicon sort_default"></i>');
-
-                    if (order == "asc") {
-                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
-                    } else {
-                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
-                    }
-                }
-            }
-        });
-
-        $('#_table_recommend_').bootstrapTable({
-            method: 'get',
-            url: "/admin/activity/getAll_Recommend",
-            striped: true,
-            height:300,
-            dataType: "json",
-            pagination: true,
-            queryParamsType: "limit",
-            singleSelect: true,
-            contentType: "application/x-www-form-urlencoded",
-            pageSize: 10,
-            pageNumber: 1,
-            search: true,
-            showColumns: true,
-            showRefresh: true,
-            sidePagination: "server", //服务端请求
-            queryParams: function (params) {
-
-                return {
-                    limit: params.limit,
-                    offset: params.offset / params.limit,
-                    search: $(".search").find("input").val(),
-                    sort: params.sort,
-                    order: params.order,
-                };
-            },
-            responseHandler: function (res) {
-                $("#doAllCheckBtn").checked != $("#doAllCheckBtn").checked;
-
-                //doallcheck();
-
-                //config = res.config;
-
-                return {
-                    "rows": res.rows,
-                    "total": res.total
-                };
-            },
-            onPostBody : function(){
-                //adjustTableHeight($(".fixed-table-body"),20);//custom-script
-            },
-            onSort(name,order){
-                $(".temperature").find(".sortable").empty();
-                $(".humidity").find(".sortable").empty();
-
-                $(".temperature").find(".sortable").append("温度");
-                $(".humidity").find(".sortable").append("湿度");
-
-                if(name == "temperature"){
-
-                    $(".humidity").find(".sortable").append('<i class="glyphicon sort_default"></i>');
-
-                    if(order == "asc"){
-                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
-                    } else {
-                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
-                    }
-
-                } else {//humidity
-                    $(".temperature").find(".sortable").append('<i class="glyphicon sort_default"></i>');
-
-                    if (order == "asc") {
-                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
-                    } else {
-                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
-                    }
-                }
-            }
-        });
+        adjustItemHeight();
+        //displayLineChart( adjustHeight($("#line-chart")),20 );
+        displayLineChart( );
     });
 
     //重置input
@@ -737,6 +779,12 @@
         _reset_input(from.find("input"));
 
         $("#choosedPic").attr("src","/images/default_avatar_male.jpg");
+    }
+
+    function adjustItemHeight(){
+        adjustHeight( $(".chart-wrapper"), 10);//调增wrapper的高度，做到根据页面高度，动态响应页面高度。完毕后调整line-chart在wrapper中的位置
+
+        $(".activity_box").height($(".chart-wrapper").height());
     }
 
     //打开添加折扣弹出框
@@ -1361,160 +1409,7 @@
         });
     })
 
-    //当添加推荐modal打开时，初始化Table
-    $('#dialog-recommend-add').on('show.bs.modal', function (e) {
-        $('#_table_recommend_food').bootstrapTable({
-            method: 'get',
-            url: "/admin/activity/getAllFood",
-            striped: true,
-            height:300,
-            dataType: "json",
-            pagination: true,
-            queryParamsType: "limit",
-            singleSelect: true,
-            contentType: "application/x-www-form-urlencoded",
-            pageSize: 10,
-            pageNumber: 1,
-            search: true,
-            showColumns: true,
-            showRefresh: true,
-            sidePagination: "server", //服务端请求
-            queryParams: function (params) {
 
-                return {
-                    limit: params.limit,
-                    offset: params.offset / params.limit,
-                    search: $(".search").find("input").val(),
-                    sort: params.sort,
-                    order: params.order,
-                };
-            },
-            responseHandler: function (res) {
-                $("#doAllCheckBtn").checked != $("#doAllCheckBtn").checked;
-
-                //doallcheck();
-
-                //config = res.config;
-
-                return {
-                    "rows": res.rows,
-                    "total": res.total
-                };
-            },
-            onPostBody : function(){
-                $("input[name='table_id_recommend_dialog']").each(function () {
-                    if( IDMapForRecommendAdd.get( $(this).val() ) != undefined ){
-                        $(this).attr("checked","checked");
-                    }
-                })
-                // adjustTableHeight($(".fixed-table-body"),20);//custom-script
-                // console.log("shit")
-            },
-            onSort(name,order){
-                /*$(".temperature").find(".sortable").empty();
-                $(".humidity").find(".sortable").empty();
-
-                $(".temperature").find(".sortable").append("温度");
-                $(".humidity").find(".sortable").append("湿度");
-
-                if(name == "temperature"){
-
-                    $(".humidity").find(".sortable").append('<i class="glyphicon sort_default"></i>');
-
-                    if(order == "asc"){
-                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
-                    } else {
-                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
-                    }
-
-                } else {//humidity
-                    $(".temperature").find(".sortable").append('<i class="glyphicon sort_default"></i>');
-
-                    if (order == "asc") {
-                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
-                    } else {
-                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
-                    }
-                }*/
-            }
-        });
-    })
-    //当添加推荐modal关闭时，将map清空
-    $('#dialog-recommend-add').on('hidden.bs.modal', function (e) {
-        IDMapForRecommendAdd = new Map();
-    })
-
-    $("#dialog-recommend-update").on('show.bs.modal', function (e) {
-        $('#_table_recommend_food_update').bootstrapTable({
-            method: 'get',
-            url: "/admin/activity/getAllFood",
-            striped: true,
-            height:300,
-            dataType: "json",
-            pagination: true,
-            queryParamsType: "limit",
-            singleSelect: true,
-            contentType: "application/x-www-form-urlencoded",
-            pageSize: 10,
-            pageNumber: 1,
-            search: true,
-            showColumns: true,
-            showRefresh: true,
-            sidePagination: "server", //服务端请求
-            queryParams: function (params) {
-
-                return {
-                    limit: params.limit,
-                    offset: params.offset / params.limit,
-                    search: $(".search").find("input").val(),
-                    sort: params.sort,
-                    order: params.order,
-                };
-            },
-            responseHandler: function (res) {
-                $("#doAllCheckBtn").checked != $("#doAllCheckBtn").checked;
-
-                //doallcheck();
-
-                //config = res.config;
-
-                return {
-                    "rows": res.rows,
-                    "total": res.total
-                };
-            },
-            onPostBody : function(){
-
-            },
-            onSort(name,order){
-                /*$(".temperature").find(".sortable").empty();
-                $(".humidity").find(".sortable").empty();
-
-                $(".temperature").find(".sortable").append("温度");
-                $(".humidity").find(".sortable").append("湿度");
-
-                if(name == "temperature"){
-
-                    $(".humidity").find(".sortable").append('<i class="glyphicon sort_default"></i>');
-
-                    if(order == "asc"){
-                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
-                    } else {
-                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
-                    }
-
-                } else {//humidity
-                    $(".temperature").find(".sortable").append('<i class="glyphicon sort_default"></i>');
-
-                    if (order == "asc") {
-                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
-                    } else {
-                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
-                    }
-                }*/
-            }
-        });
-    })
 
     function single_select(e){
         $("input[name='table_id_recommend_dialog']").removeAttr("checked");
@@ -1625,6 +1520,14 @@
                 return "轮播";
 
         }
+    }
+
+    function displayLineChart(callback) {
+        var ctx = document.getElementById("line-chart").getContext("2d");
+
+        lineChart = new Chart(ctx).Line(data_chart, options);
+
+        callback();
     }
 
     //注销
