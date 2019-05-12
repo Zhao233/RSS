@@ -15,17 +15,47 @@ import java.sql.Timestamp;
 public class CookerDeliveryRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
+    /**
+     * 订单ID
+     * */
     @Column(name = "order_record_id")
-    private long orderRecordId;
+    private Long orderRecordId;
 
+    /**
+     * 厨师ID
+     * */
+    @Column(name = "cooker_id")
+    private Long cookerID;
+
+    /**
+     * 桌号
+     * */
+    @Column(name = "table_num")
+    private Integer tableNum;
+
+    /**
+     * 菜品ID
+     * */
     @Column(name = "food_id")
-    private long foodId;
+    private Long foodId;
 
+    /**
+     * 是否已完成
+     * */
+    @Column(name = "is_complete")
+    private int isComplete = 0;
+
+    /**
+     * 创建时间
+     * */
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    /**
+     * 完成时间
+     * */
     @Column(name = "update_time")
     private Timestamp updateTime;
 }

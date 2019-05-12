@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WaiterDeliveryRecordDao extends JpaRepository<WaiterDeliveryRecord,Long> {
 
+    /**=============================================== For Waiter ================================================================*/
+
     @Query(value = "SELECT waiterDeliveryRecord FROM WaiterDeliveryRecord waiterDeliveryRecord WHERE waiterDeliveryRecord.id = ?1 AND waiterDeliveryRecord.isComplete = 0")
     WaiterDeliveryRecord getOne(Long id);
 }

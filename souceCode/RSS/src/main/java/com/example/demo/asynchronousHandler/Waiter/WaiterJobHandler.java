@@ -1,7 +1,6 @@
-package com.example.demo.WebSocket;
+package com.example.demo.asynchronousHandler.Waiter;
 
 
-import com.example.demo.domain.info.OrderRecord;
 import com.example.demo.domain.info.WaiterDeliveryRecord;
 import com.example.demo.domain.user.Waiter;
 import com.example.demo.model.waiter.WaiterDeliveryModel;
@@ -31,7 +30,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 @ServerEndpoint(value = "/websocket/{openid}")
 @Component
 @ComponentScan("com.example.demo.service.*")
-public class TestWebSocket {
+public class WaiterJobHandler {
 
     /**
      * 工作的状态
@@ -56,16 +55,11 @@ public class TestWebSocket {
     public static final int ERROR = 203;
 
     /**
-     *
-     * */
-
-    /**
      * 内在属性
      * */
     private Waiter waiter;
     private int status = STATUS_WORKING;
     private Session session;
-
 
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
@@ -73,10 +67,9 @@ public class TestWebSocket {
     private static volatile int index_waiter = -1;
 
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
-    private static CopyOnWriteArrayList<TestWebSocket> webSocketSet = new CopyOnWriteArrayList<TestWebSocket>();
+    private static CopyOnWriteArrayList<WaiterJobHandler> webSocketSet = new CopyOnWriteArrayList<WaiterJobHandler>();
 
     private static BlockingQueue<WaiterDeliveryRecord> messageQueue = new LinkedBlockingDeque();
-
 
     public static WaiterService waiterService;
     public static WaiterDeliveryRecordService waiterDeliveryRecordService;
@@ -84,25 +77,28 @@ public class TestWebSocket {
 
     @Autowired
     public void setWaiterService(WaiterDeliveryRecordService waiterService){
-        TestWebSocket.waiterDeliveryRecordService = waiterService;
+        WaiterJobHandler.waiterDeliveryRecordService = waiterService;
     }
     @Autowired
     public void setFoodService(FoodService foodService){
-        TestWebSocket.foodService = foodService;
+        WaiterJobHandler.foodService = foodService;
     }
     @Autowired
     public void setWaiterService(WaiterService waiterService){
-        TestWebSocket.waiterService = waiterService;
+        WaiterJobHandler.waiterService = waiterService;
     }
 
     /**
      * 监听线程
      * */
     static class WaiterServiceThread extends Thread{
+        public boolean isStart = false;
+
         @Override
         public void run(){
             log.info("监听线程已启动");
 
+            setRunningStatus(true);
 
             while (true){
                 if(getMessageQueueSize() != 0 ){
@@ -115,7 +111,7 @@ public class TestWebSocket {
                             continue;
                         }
 
-                        TestWebSocket socket = webSocketSet.get(index);
+                        WaiterJobHandler socket = webSocketSet.get(index);
 
                         if(socket.status != STATUS_WORKING){
                             continue;
@@ -169,22 +165,24 @@ public class TestWebSocket {
                 }
             }
         }
+
+        public synchronized void setRunningStatus(boolean status){
+            isStart = status;
+        }
+
+        public synchronized boolean getRunningStatus(){
+            return isStart;
+        }
     }
 
-    /**
-     * 当Socket类被实例化时，建立监听线程
-     * */
-    static{
-        WaiterServiceThread serviceThread = new WaiterServiceThread();
-        serviceThread.start();
-    }
+    public static WaiterServiceThread waiterServiceThread = new WaiterServiceThread();
 
     /**=======================================Socket状态发生改变时的调用函数===============================================================*/
 
     /**
      * 连接建立成功调用的方法*/
     @OnOpen
-    public void onOpen(Session session,@PathParam("openid") String openid) throws IOException {
+    public void onOpen(Session session, @PathParam("openid") String openid) throws IOException {
         this.session = session;
 
         Waiter waiter = waiterService.getWaiterByOpenID(openid);
@@ -197,32 +195,15 @@ public class TestWebSocket {
 
         webSocketSet.add(this);     //加入set中
 
-        for(int i = 0; i < 10; i++){
-            WaiterDeliveryRecord record = new WaiterDeliveryRecord();
-            record.setType(WaiterDeliveryRecord.TYPE_DELIVERY);
-            record.setTableNum(i);
-            record.setFoodID(13);
-            record.setOrderRecordID(i);
-            record.setCreateTime(TimeUtil.getTimeNow());
-
-            putMessageToWaiterMessageBlockingQueue(record);
-        }
-
-        for(int i = 0; i < 10; i++){
-            OrderRecord a = new OrderRecord();
-
-            WaiterDeliveryRecord record = new WaiterDeliveryRecord();
-            record.setType(WaiterDeliveryRecord.TYPE_SERVICE);
-            record.setTableNum(i);
-            record.setOrderRecordID(i);
-            record.setCreateTime(TimeUtil.getTimeNow());
-
-            putMessageToWaiterMessageBlockingQueue(record);
-        }
 
         addOnlineCount();
         //在线数加1
         log.info("有新连接加入！当前在线人数为" + getOnlineCount());
+
+        if(getSocketQueueSize() == 1) {//当第一个服务员连接时，启用线程
+            startThread();
+        }
+
         try {
             JSONObject object = new JSONObject();
             object.put("status", "SUCCEED");
@@ -236,10 +217,16 @@ public class TestWebSocket {
      * 连接关闭调用的方法
      */
     @OnClose
-    public void onClose() {
+    public void onClose() throws InterruptedException {
         webSocketSet.remove(this);  //从array中删除
         subOnlineCount();           //在线数减1
         log.info("有一连接关闭！当前在线人数为" + getOnlineCount());
+
+//        if( getSocketQueueSize() == 0){//当没有人在线时，线程停止工作
+//            pauseThread();
+//
+//            log.info("线程中断");
+//        }
     }
 
     /**
@@ -363,6 +350,19 @@ public class TestWebSocket {
     public static synchronized int getMessageQueueSize(){return messageQueue.size();}
     public static synchronized int getSocketQueueSize(){return webSocketSet.size();}
 
+    public static synchronized void startThread(){
+        if( WaiterJobHandler.waiterServiceThread.getRunningStatus() ){
+            WaiterJobHandler.waiterServiceThread.notify();
+        } else {
+            WaiterJobHandler.waiterServiceThread.start();
+        }
+    }
+    public static synchronized void pauseThread() throws InterruptedException {
+        if( WaiterJobHandler.waiterServiceThread.getRunningStatus() ){
+            WaiterJobHandler.waiterServiceThread.interrupt();
+        }
+    }
+
     /**=======================================每个厨师私有的方法====================================================================*/
 
     private void changStatus(int newStatus){
@@ -389,7 +389,7 @@ public class TestWebSocket {
      * */
     public static void sendInfo(String message) throws IOException {
         log.info(message);
-        for (TestWebSocket item : webSocketSet) {
+        for (WaiterJobHandler item : webSocketSet) {
             try {
                 item.sendMessage(message);
             } catch (IOException e) {
@@ -403,11 +403,11 @@ public class TestWebSocket {
     }
 
     public static synchronized void addOnlineCount() {
-        TestWebSocket.onlineCount++;
+        WaiterJobHandler.onlineCount++;
     }
 
     public static synchronized void subOnlineCount() {
-        TestWebSocket.onlineCount--;
+        WaiterJobHandler.onlineCount--;
     }
 
 

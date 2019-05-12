@@ -29,9 +29,6 @@ public class FrequentlyUsedFoodServiceImp implements FrequentlyUsedFoodService {
     @Autowired
     private StyleDao styleDao;
 
-    @Autowired
-    private CustomerDao customerDao;
-
     @Override
     public FoodForCustomerFrequentlyModel getFrequentlyUsedFoodByUserID(String openID) {
         FrequentlyUsedFood frequentlyUsedFoodList = frequentlyUsedFoodDao.getFrequentlyUsedFoodById(openID);

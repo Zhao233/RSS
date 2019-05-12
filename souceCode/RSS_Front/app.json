@@ -5,8 +5,10 @@
     "pages/cart/cart",
     "pages/cart/settleAccount/settleAccount",
     "pages/cart/confirmOrder/confirmOrder",
+    "pages/cart/pay/pay",
 
     "pages/mine/mine",
+
     "pages/mine/consumption_statistics/consumption_statistics",
     "pages/mine/menu_management/menu_management",
     "pages/mine/score/score",

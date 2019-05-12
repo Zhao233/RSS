@@ -107,6 +107,69 @@ Page({
     this.onClose_popup();
   },
 
+  onSubmit() {
+    var foodIDList = new Array;
+    var foodNumList = new Array;
+    var styleIDList = new Array;
+    var openid = app.globalData.userInfo.openid;
+    var account = this.data.account;
+
+    var discountID = 90000;
+
+    if ( this.data.choosedDiscount != undefined){
+      discountID = this.data.choosedDiscount.id;
+    }
+    
+    var expirationTime = new Date;
+    expirationTime.setMinutes(expirationTime.getMinutes() + 5);
+
+    for (var x of app.globalData.cartListRecord) {
+      foodIDList.push(x[0]);
+      foodNumList.push(x[1].num)
+    }
+
+    wx.request({
+      url: "http://" + app.info.hostname + ":" + app.info.port + "/customer/cart/onSubmit",
+
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+
+      data: {
+        "foodIDList": foodIDList,
+        "foodNumList": foodNumList,
+        "styleIDList": styleIDList,
+        "discountID": discountID,
+        "openID": openid,
+        "account": account,
+        "expirationTime": expirationTime.getTime()
+      },
+
+      success(res) {
+        app.internetResponseHandler(res, function () {
+          app.clearCartList();
+
+          wx.navigateTo({
+            url: 'pay/pay',
+          })
+        })
+
+        // if(res.data.status == "SUCCEED"){
+        // } else {
+        //   app.showToast("网络请求失败");
+        //   return ;
+        // }
+
+        console.log(res.data)
+      },
+      fail(res) {
+        app.showToast("网络请求失败")
+      }
+    })
+
+
+  },
+
     /**
      * 生命周期函数--监听页面加载
      */

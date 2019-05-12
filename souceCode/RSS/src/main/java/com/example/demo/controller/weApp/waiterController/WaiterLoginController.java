@@ -22,7 +22,6 @@ public class WaiterLoginController {
                                      @RequestParam("secret") String secret){
         Map<String, Object> res = new HashMap<>();
 
-        res = waiterService.waiterLoginCheck(openid, secret);
 
         return res;
     }

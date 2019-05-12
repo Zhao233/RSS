@@ -3,6 +3,7 @@ package com.example.demo.util;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 
@@ -45,5 +46,33 @@ public class TimeUtil {
         formattedTime = simpleDateFormat.format(date);
 
         return formattedTime;
+    }
+
+    public static Timestamp getTimeWithMonth(){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+
+        return new Timestamp(calendar.getTime().getTime());
+    }
+    public static Timestamp getTimeWithWeek(){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+
+        return new Timestamp(calendar.getTime().getTime());
+    }
+    public static Timestamp getTimeWithDay(){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+
+        return new Timestamp(calendar.getTime().getTime());
     }
 }

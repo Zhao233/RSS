@@ -29,6 +29,14 @@ public class WaiterDeliveryRecord {
     private Integer type;
 
     /**
+     * 用户的openid
+     *
+     * 当配送类型为送餐时，设置此字段
+     * */
+    @Column(name = "open_id")
+    private String openID;
+
+    /**
      * 桌号
      * */
     @Column(name = "table_num")

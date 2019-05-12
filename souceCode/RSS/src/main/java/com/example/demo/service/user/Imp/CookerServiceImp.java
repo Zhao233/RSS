@@ -1,12 +1,17 @@
 package com.example.demo.service.user.Imp;
 
 import com.example.demo.domain.user.Cooker;
+import com.example.demo.domain.user.Waiter;
 import com.example.demo.repository.user.CookerDao;
 import com.example.demo.service.user.CookerService;
+import com.example.demo.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service("cookerService")
 public class CookerServiceImp implements CookerService {
@@ -37,5 +42,50 @@ public class CookerServiceImp implements CookerService {
     @Override
     public void deleteOne(long id) {
         cookerDao.deleteById(id);
+    }
+
+    /**=========================For Cooker==========================*/
+
+    @Override
+    public boolean isLogin(String openid) {
+        Cooker cooker = cookerDao.getCookerByOpenID(openid);
+
+        if(cooker == null || cooker.getLoginID() == null){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int checkIsCookerExistByLoginID(String loginID) {
+        Cooker cooker = cookerDao.getCookerByLoginID(loginID);
+
+        if(cooker == null){//后台未录入
+            return 1;
+        }
+
+        if(cooker != null && cooker.getUserID() != null){//后台已存在
+
+            return 2;
+        }
+
+        return 3;
+    }
+
+    @Override
+    public Cooker registerCooker(String loginID, String openid) {
+        Cooker cooker = cookerDao.getCookerByLoginID(loginID);
+
+        cooker.setUserID(openid);
+        cooker.setUpdateTime(TimeUtil.getTimeNow());
+        cookerDao.save(cooker);
+
+        return cooker;
+    }
+
+    @Override
+    public Cooker getCookerByOpenID(String openID) {
+        return cookerDao.getCookerByOpenID(openID);
     }
 }

@@ -81,7 +81,7 @@
           合计 <text class="orange">
           ¥{{account_final}}</text>
     </text>
-    <button disabled="{{(mode == 2 && addressList.length<=0) || (orderInfo.price == 0)}}" bindtap="gotoPayOrder">去支付</button>
+    <button disabled="{{(mode == 2 && addressList.length<=0) || (orderInfo.price == 0)}}" bindtap="onSubmit">去支付</button>
   </view>
   <!-- 时间选择器弹层start -->
   <view catchtap="catchtap" wx:if="{{isShowTimeChoose}}" class="time-choose">

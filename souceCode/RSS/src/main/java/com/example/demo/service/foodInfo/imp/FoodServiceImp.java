@@ -22,6 +22,12 @@ public class FoodServiceImp implements FoodService {
 
     }
 
+    /**=========================================For Admin====================================================*/
+    @Override
+    public Page<Food> getMostTenPopularFood() {
+        return null;
+    }
+
 
     @Override
     public Page<Food> getFoodList(String search, Pageable pageable) {
@@ -56,6 +62,7 @@ public class FoodServiceImp implements FoodService {
     public Page<FoodForRecommendModel> getFoodListForRecommend(String search, Pageable pageable) {
         return foodDao.getFoodListForRecommend(search, pageable);
     }
+
 
     /**=========================================For Customer====================================================*/
 

@@ -1,7 +1,9 @@
 package com.example.demo.controller.weApp.customerController.quickServiceController;
 
+import com.example.demo.domain.info.WaiterDeliveryRecord;
 import com.example.demo.model.customer.FoodForCustomerFrequentlyModel;
 import com.example.demo.service.info.FrequentlyUsedFoodService;
+import com.example.demo.service.info.WaiterDeliveryRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,8 @@ public class CustomerQuickServiceController {
     @Autowired
     private FrequentlyUsedFoodService frequentlyUsedFoodService;
 
+    @Autowired
+    private WaiterDeliveryRecordService waiterDeliveryRecordService;
 
     @ResponseBody
     @RequestMapping("/getFrequentlyUsedFoodList")
@@ -62,5 +66,19 @@ public class CustomerQuickServiceController {
         map.put("status", "SUCCEED");
 
         return map;
+    }
+
+    @ResponseBody
+    @RequestMapping("/callWaiter")
+    public Map<String, Object> callWaiter(@RequestParam(value = "openID") String openid,
+                                          @RequestParam(value = "tableNum") Integer tableNum){
+        Map<String, Object> res = new HashMap<>();
+
+
+        WaiterDeliveryRecord record = waiterDeliveryRecordService.callWaiter(openid, tableNum);
+
+        res.put("status", "SUCCEED");
+        res.put("recordID", record.getId());
+        return res;
     }
 }

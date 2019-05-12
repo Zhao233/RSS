@@ -1,0 +1,49 @@
+<!--pages/pay/pay.wxml-->
+<view class="pay">
+  <view class="pay-text">支付剩余时间</view>
+  <view class="pay-time">
+    <view class="time-list">
+      <view class="time-item">{{firstNum}}</view>
+      <view class="time-item">{{secondNum}}</view>
+      <text>:</text>
+      <view class="time-item">{{thirdNum}}</view>
+      <view class="time-item">{{fourthNum}}</view>
+    </view>
+  </view>
+</view>
+<view class="pay-message">
+  <!--<image src="/images/bg_pay.png"></image>-->
+  <view class="pay-message-left">
+    <image src="{{info.params.logo}}"></image>
+  </view>
+  <view class="pay-message-right">
+    <view class="pay-price"><text>￥{{info.params.totalprice}}</text></view>
+    <view class="pay-address">{{info.params.store_name}}－{{info.params.ordersn}}</view>
+  </view>
+</view>
+<view data-index="0" bindtap="choosePayType" class="pay-method">
+  <view class="pay-icon">
+    <image src="/images/icon_wechat.png"></image>
+  </view>
+  <view class="pay-method-name">
+    <text>微信支付</text>
+  </view>
+  <view class="pay-check {{selectIndex == 0?'active':''}}">
+    <image wx:if="{{selectIndex == 0}}" src="{{selectIndex == 0?'/images/icon_check_o.png':''}}"></image>
+  </view>
+</view>
+<view data-index="1" bindtap="choosePayType" class="pay-method">
+  <view class="pay-icon">
+    <image src="/images/icon_balance.png"></image>
+  </view>
+  <view class="pay-method-name">
+    <text>余额支付 (余额￥{{info.credit}})</text>
+  </view>
+  <view class="pay-check {{selectIndex == 1?'active':''}}">
+    <image wx:if="{{selectIndex == 1}}" src="{{selectIndex == 1?'/images/icon_check_o.png':''}}"></image>
+  </view>
+</view>
+
+<view class="btn-group">
+  <button disabled="{{isDisabled}}" bindtap="payAction">确认支付 <text class="big-text">¥{{info.params.totalprice}}</text></button>
+</view>

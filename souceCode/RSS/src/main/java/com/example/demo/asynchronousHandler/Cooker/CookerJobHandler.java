@@ -1,13 +1,11 @@
 package com.example.demo.asynchronousHandler.Cooker;
 
+import com.example.demo.asynchronousHandler.Waiter.WaiterJobHandler;
 import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.domain.info.CookerDeliveryRecord;
 import com.example.demo.domain.info.WaiterDeliveryRecord;
 import com.example.demo.domain.user.Cooker;
-import com.example.demo.domain.user.CookerRole;
-import com.example.demo.domain.user.Waiter;
 import com.example.demo.model.cooker.CookerDeliveryModel;
-import com.example.demo.model.waiter.WaiterDeliveryModel;
 import com.example.demo.service.foodInfo.FoodService;
 import com.example.demo.service.info.CookerDeliveryRecordService;
 import com.example.demo.service.user.CookerService;
@@ -34,7 +32,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 @ServerEndpoint(value = "/websocket/cooker/{openid}")
 @Component
 @ComponentScan("com.example.demo.service.*")
-public class CookerDeliveryHandler {
+public class CookerJobHandler {
 
     /**
      * 工作的状态
@@ -74,7 +72,7 @@ public class CookerDeliveryHandler {
     /**
      * 已连接的对象合集
      * */
-    private static CopyOnWriteArrayList<CookerDeliveryHandler> webSocketSet = new CopyOnWriteArrayList<>();
+    private static CopyOnWriteArrayList<CookerJobHandler> webSocketSet = new CopyOnWriteArrayList<>();
 
     /**
      * 消息队列
@@ -90,22 +88,22 @@ public class CookerDeliveryHandler {
 
     @Autowired
     public void setWaiterService(CookerService waiterService){
-        CookerDeliveryHandler.cookerService = waiterService;
+        CookerJobHandler.cookerService = waiterService;
     }
     @Autowired
     public void setWaiterService(CookerDeliveryRecordService cookerDeliveryRecordService){
-        CookerDeliveryHandler.cookerDeliveryRecordService = cookerDeliveryRecordService;
+        CookerJobHandler.cookerDeliveryRecordService = cookerDeliveryRecordService;
     }
     @Autowired
     public void setFoodService(FoodService foodService){
-        CookerDeliveryHandler.foodService = foodService;
+        CookerJobHandler.foodService = foodService;
     }
 
 
     /**
      * 监听线程
      * */
-    static class WaiterServiceThread extends Thread{
+    static class CookerServiceThread extends Thread{
         @Override
         public void run(){
             log.info("监听线程已启动");
@@ -124,13 +122,13 @@ public class CookerDeliveryHandler {
                             continue;
                         }
 
-                        CookerDeliveryHandler socket = webSocketSet.get(index);
+                        CookerJobHandler socket = webSocketSet.get(index);
 
                         if(socket.status != STATUS_WORKING){//如果当前已连接厨师的工作状态处于暂停
                             continue;
                         }
 
-                        CookerDeliveryRecord cookerDeliveryRecord = CookerDeliveryHandler.getFirstCookerDeliveryRecord();
+                        CookerDeliveryRecord cookerDeliveryRecord = CookerJobHandler.getFirstCookerDeliveryRecord();
                         Food food = foodService.getOne(cookerDeliveryRecord.getFoodId());
 
                         if(socket.cooker.getRole() != food.getRole()){ //如果菜品的制作类型不属于该厨师，就遍历下一个
@@ -167,10 +165,9 @@ public class CookerDeliveryHandler {
     /**
      * 当Socket类被实例化时，建立监听线程
      * */
-    static{
-        CookerDeliveryHandler.WaiterServiceThread serviceThread = new CookerDeliveryHandler.WaiterServiceThread();
-        serviceThread.start();
-    }
+
+
+    public static CookerServiceThread cookerServiceThread = new CookerServiceThread();
 
     /**=======================================Socket状态发生改变时的调用函数===============================================================*/
 
@@ -193,6 +190,11 @@ public class CookerDeliveryHandler {
         addOnlineCount();
         //在线数加1
         log.info("有新连接加入！当前在线人数为" + getOnlineCount());
+
+        if(getSocketQueueSize() == 1){
+            cookerServiceThread.start();
+        }
+
         try {
             JSONObject object = new JSONObject();
             object.put("status", "SUCCEED");
@@ -206,10 +208,14 @@ public class CookerDeliveryHandler {
      * 连接关闭调用的方法
      */
     @OnClose
-    public void onClose() {
+    public void onClose() throws InterruptedException {
         webSocketSet.remove(this);  //从array中删除
         subOnlineCount();           //在线数减1
         log.info("有一连接关闭！当前在线人数为" + getOnlineCount());
+
+        if( getSocketQueueSize() == 0){//当没有人在线时，线程停止工作
+            CookerJobHandler.cookerServiceThread.wait();
+        }
     }
 
     /**
@@ -228,12 +234,15 @@ public class CookerDeliveryHandler {
             case TYPE_COMPLETEMISSION ://任务接收
                 Long recordID = object.getLong("id");
 
-                CookerDeliveryRecord cookerDeliveryRecord = acceptMession(recordID);
+                CookerDeliveryRecord cookerDeliveryRecord = acceptMission(recordID);
 
                 if(cookerDeliveryRecord != null && cookerDeliveryRecord.getIsComplete() == 1){//保存成功
                     String result = getJsonResult(TYPE_COMPLETEMISSION,SUCCEED, String.valueOf(cookerDeliveryRecord.getId()));
 
                     sendMessage(result);
+
+                    //厨师完成任务后，通知服务员取餐
+                    sendDeliveryJobToWaiter(cookerDeliveryRecord);
                 } else {
                     String result = getJsonResult(TYPE_COMPLETEMISSION,FAILED, "");
 
@@ -344,6 +353,8 @@ public class CookerDeliveryHandler {
      * */
     public static synchronized int getMessageQueueSize(){return messageQueue.size();}
 
+
+
     /**=======================================每个厨师私有的方法====================================================================*/
 
     private void changStatus(int newStatus){
@@ -353,7 +364,7 @@ public class CookerDeliveryHandler {
     /**
      * 任务完成，根据id获取服务记录，将isComplete改写为1，说明已经完成任务
      * */
-    private CookerDeliveryRecord acceptMession(Long id){
+    private CookerDeliveryRecord acceptMission(Long id){
         CookerDeliveryRecord cookerDeliveryRecord = cookerDeliveryRecordService.findOneByID(id);
 
         if(cookerDeliveryRecord ==  null){
@@ -361,8 +372,21 @@ public class CookerDeliveryHandler {
         }
 
         cookerDeliveryRecord.setIsComplete(1);
+        cookerDeliveryRecord.setUpdateTime(TimeUtil.getTimeNow());
 
         return cookerDeliveryRecordService.save(cookerDeliveryRecord);
+    }
+
+    public void sendDeliveryJobToWaiter(CookerDeliveryRecord cookerDeliveryRecord){
+        WaiterDeliveryRecord record = new WaiterDeliveryRecord();
+        record.setOrderRecordID(cookerDeliveryRecord.getOrderRecordId());
+        record.setFoodID(cookerDeliveryRecord.getFoodId());
+        record.setTableNum(cookerDeliveryRecord.getTableNum());
+        record.setCreateTime(cookerDeliveryRecord.getCreateTime());
+        record.setType(WaiterDeliveryRecord.TYPE_DELIVERY);
+
+        //将送餐任务传送给服务员
+        WaiterJobHandler.putMessageToWaiterMessageBlockingQueue(record);
     }
 
 
@@ -372,11 +396,11 @@ public class CookerDeliveryHandler {
     }
 
     public static synchronized void addOnlineCount() {
-        CookerDeliveryHandler.onlineCount++;
+        CookerJobHandler.onlineCount++;
     }
 
     public static synchronized void subOnlineCount() {
-        CookerDeliveryHandler.onlineCount--;
+        CookerJobHandler.onlineCount--;
     }
 
 

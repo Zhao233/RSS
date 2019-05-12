@@ -35,7 +35,7 @@ public class CustomerCartController {
     private Map<String, Object> submitCartList(@RequestParam(value = "foodIDList") String foodIDList,
                                                @RequestParam(value = "foodNumList") String foodNumList,
                                                @RequestParam(value = "styleIDList") String styleIDList,
-                                               @RequestParam(value = "discountID") Long discountID,
+                                               @RequestParam(value = "discountID", required = false) Long discountID,
                                                @RequestParam(value = "openID" ) String openID,
                                                @RequestParam(value = "expirationTime" ) String expirationTime,
                                                @RequestParam(value = "account" ) Double account){
