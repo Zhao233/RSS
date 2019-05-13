@@ -152,13 +152,22 @@ public class OrderRecordServiceImp implements OrderRecordService {
 
                 account = orderRecordDao.getAccount(time_start, time_end);
 
+                if(account == null){
+                    return Double.valueOf(0);
+                }
+
                 return account;
+
             case OrderRecord.TYPE_ACCOUNT_WEEK:
                 time_end = new Timestamp(calendar.getTime().getTime());
 
                 time_start = getTimeWithWeek();
 
                 account = orderRecordDao.getAccount(time_start, time_end);
+
+                if(account == null){
+                    return Double.valueOf(0);
+                }
 
                 return account;
             case OrderRecord.TYPE_ACCOUNT_DAY:
@@ -168,6 +177,19 @@ public class OrderRecordServiceImp implements OrderRecordService {
                 time_start = getTimeWithDay();
 
                 account = orderRecordDao.getAccount(time_start, time_end);
+
+                if(account == null){
+                    return Double.valueOf(0);
+                }
+
+                return account;
+
+            case OrderRecord.TYPE_ACCOUNT_ALL:
+                account = orderRecordDao.getAllAccount();
+
+                if(account == null){
+                    return Double.valueOf(0);
+                }
 
                 return account;
         }
@@ -182,34 +204,60 @@ public class OrderRecordServiceImp implements OrderRecordService {
      * 3 今日点餐次数
      * */
     @Override
-    public int orderTime(int type) {
-        Integer times = new Integer(0);
+    public List<Integer> getOrderTime(Timestamp startTime) {
+        List<Integer> orderNumbers = new LinkedList<>();
+
+        Timestamp endTIme = TimeUtil.getTimeNow();
+        List<OrderRecord> orderRecordList = new ArrayList<>();
+
+        orderRecordList = orderRecordDao.getAllOrderByTime(startTime, TimeUtil.getTimeNow());
+
+        int index_orderRecord = 0;
 
         Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startTime);
 
-        Timestamp time_start = null;
-        Timestamp time_end = new Timestamp(calendar.getTime().getTime());
+        for(int i = 0; i < 24; i++){
+            calendar.set(Calendar.HOUR_OF_DAY, i);
+            calendar.set(Calendar.MINUTE, 0);
 
-        switch (type){
-            case 1 :
-                time_start = getTimeWithMonth();
+            int hourStart = calendar.get(Calendar.HOUR_OF_DAY);
 
-                break;
+            int hourEnd = hourStart + 1;
 
-            case 2:
-                time_start = getTimeWithWeek();
+//            if( temp_timestamp_start.after(endTIme) ){//如果超过了现在的时间就退出
+//                break;
+//            }
 
-                break;
+            int orderTime = 0;
 
-            case OrderRecord.TYPE_ORDERTIME_DAY:
-                time_start = getTimeWithDay();
+            for(;index_orderRecord < orderRecordList.size(); index_orderRecord++){
+                Timestamp temp_timestamp = orderRecordList.get(index_orderRecord).getCreateTime();
 
-                break;
+                Calendar temp_calendar = Calendar.getInstance();
+                temp_calendar.setTime(temp_timestamp);
+
+                int temp_hour = temp_calendar.get(Calendar.HOUR_OF_DAY);
+
+                if(temp_hour < hourStart) {
+                    break;
+                }
+
+                if(temp_hour > hourEnd ) {
+                    break;
+                }
+
+                if(temp_hour >= hourStart && temp_hour <= hourEnd){
+                    orderTime++;
+                }
+
+            }
+
+            orderNumbers.add(orderTime);
+
         }
 
-        times = orderRecordDao.getOrderTimes(time_start, time_end);
-
-        return times;
+        return orderNumbers;
     }
 
     @Override
@@ -270,8 +318,7 @@ public class OrderRecordServiceImp implements OrderRecordService {
     public Timestamp getTimeWithWeek(){
         Calendar calendar = Calendar.getInstance();
 
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.DAY_OF_WEEK, 2);
         calendar.set(Calendar.MINUTE, 0);
 
         return new Timestamp(calendar.getTime().getTime());
@@ -279,7 +326,6 @@ public class OrderRecordServiceImp implements OrderRecordService {
     public Timestamp getTimeWithDay(){
         Calendar calendar = Calendar.getInstance();
 
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
 

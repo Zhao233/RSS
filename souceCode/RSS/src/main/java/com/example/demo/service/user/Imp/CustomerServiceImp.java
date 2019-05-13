@@ -5,6 +5,8 @@ import com.example.demo.repository.user.CustomerDao;
 import com.example.demo.service.user.CustomerService;
 import com.example.demo.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service("customerService")
@@ -12,15 +14,20 @@ public class CustomerServiceImp implements CustomerService {
     @Autowired
     private CustomerDao customerDao;
 
+    /**=====================================For Admin=====================================*/
+
+    @Override
+    public Page<Customer> getAll(String search, Pageable pageable) {
+        return customerDao.getAll(search, pageable);
+    }
+
     @Override
     public Long getIDByOpenID(String openID) {
-
         return customerDao.getIdByOpenID(openID);
     }
 
 
-
-    /**=======================For Customer=================================*/
+    /**=====================================For Customer=================================*/
     @Override
     public boolean isLogin(String openID) {
         Customer customer = customerDao.getCustomerByOpenID(openID);

@@ -2,6 +2,7 @@ package com.example.demo.service.info;
 
 import com.example.demo.model.customer.OrderRecordModel;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface OrderRecordService {
      * 2 本星期点餐次数
      * 3 今日点餐次数
      * */
-    int orderTime(int type);
+    List<Integer> getOrderTime(Timestamp startTime);
 
     /**
      * 获取所有已支付的订单

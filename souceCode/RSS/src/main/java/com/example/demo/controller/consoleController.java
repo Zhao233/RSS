@@ -44,21 +44,35 @@ public class consoleController {
     /**
      * 人员管理
      * */
-
     @RequestMapping("/admin/cookerManagement")
     public ModelAndView toCookerManagement(){
         return new ModelAndView("console/peopleManagement/cookerManagement");
     }
+    @RequestMapping("/admin/cookerDetail")
+    public ModelAndView toCookerDetail(){
+        return new ModelAndView("console/peopleManagement/cookerDetail");
+    }
+
 
     @RequestMapping("/admin/userManagement")
     public ModelAndView toUserManagement(){
         return new ModelAndView("console/peopleManagement/userManagement");
     }
+    @RequestMapping("/admin/userDetail")
+    public ModelAndView toUserDetail(){
+        return new ModelAndView("console/peopleManagement/userDetail");
+    }
 
     @RequestMapping("/admin/waiterManagement")
-    public ModelAndView toUserMenuManagement(){
+    public ModelAndView toWaiterMenuManagement(){
         return new ModelAndView("console/peopleManagement/waiterManagement");
     }
+    @RequestMapping("/admin/waiterDetail")
+    public ModelAndView toWaiterDetail(){
+        return new ModelAndView("console/peopleManagement/waiterDetail");
+    }
+
+
 
 
 
