@@ -262,9 +262,12 @@ function adjustHeight(Object, adjustment){
     var windowHeight = $(window).height();
     var topNavbarHeight = $(".top-navbar").height();
 
+    console.log("windowHeight: "+windowHeight);
+    console.log("topNavbarHeight: "+topNavbarHeight);
+
     var distanceOfObjectFromTheButtom = windowHeight - ( Object.height()+Object.offset().top );
 
-    Object.height( Object.height() - distanceOfObjectFromTheButtom - topNavbarHeight - adjustment);
+    Object.height( Object.height() + distanceOfObjectFromTheButtom - topNavbarHeight);
 
 }
 
@@ -306,23 +309,13 @@ function getUrlParam(name) {
     if (r != null) return unescape(r[2]); return null; //返回参数值
 }
 
-function getToDayDateTime(offset_year, offset_month, offset_day) {
-    var date = new Date();
+function getToDayDateTime() {
+    var oDate = new Date();
+    var date = oDate.getFullYear() + '-'+ (parseInt(oDate.getMonth())+1) +'-'+oDate.getDate();
 
-    var dateTime = "";
+    var todayDateTime = date+" 00:00:00";
 
-    dateTime += ( date.getFullYear()  +"-")
-    dateTime += ( parseInt( date.getMonth() ) + 1) + "-";
-    dateTime +=  date.getDate() ;
-    dateTime += ( parseInt(date.getFullYear()) + parseInt(offset_year) )  + "-"
-    dateTime += ( parseInt( date.getMonth() ) + parseInt(offset_month) + 1) + "-";
-    dateTime += parseInt( date.getDate() ) + parseInt(offset_day);
-
-    dateTime += " "+date.getDay();
-    dateTime += ":"+date.getMinutes();
-    dateTime += ":"+date.getSeconds();
-
-    return dateTime;
+    return todayDateTime;
 }
 
 function getToDayDateTime_00_00() {
@@ -352,11 +345,13 @@ function getFormattedTime(time){
 
 function getPrimaryMenuNumber(secondaryMenuName){
     switch (secondaryMenuName){
+        case "index" :
+            return {primaryMenuNumber : 0,
+                secondaryMenu : 0};
+
         case "activityManagement" :
             return {primaryMenuNumber : 0,
-                    secondaryMenu : 0};
-
-
+                    secondaryMenu : 1};
 
 
         case "userManagement" :
