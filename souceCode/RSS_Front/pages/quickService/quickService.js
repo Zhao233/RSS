@@ -25,33 +25,42 @@ Page({
 
       success(res) {
         if (res.data.status == "SUCCEED") {
+
+          var frequentlyUsedModel = res.data.FrequentlyUsedFood;
+
+          if(frequentlyUsedModel.foodList.length == 0){
+            app.showToast("无常用菜品");
+
+            return ;
+          }
+
+          var foodList = frequentlyUsedModel.foodList;
+          var styleList = frequentlyUsedModel.styleList;
+          var numList = frequentlyUsedModel.numList;
+
+          for (var x in foodList) {
+
+            var item = {
+              "id": foodList[x].id,
+              "picUrl": foodList[x].picUrl,
+              "name": foodList[x].name,
+              "price": foodList[x].price,
+              "num": numList[x]
+            };
+
+            app.globalData.cartListRecord.set(foodList[x].id, item);
+          }
+
+          wx.switchTab({
+            url: '/pages/cart/cart'
+          })
+
         } else {
           app.showToast("网络请求失败");
           return;
         }
         
-        var frequentlyUsedModel = res.data.FrequentlyUsedFood;
-
-        var foodList = frequentlyUsedModel.foodList;
-        var styleList = frequentlyUsedModel.styleList;
-        var numList = frequentlyUsedModel.numList;
-
-        for( var x in foodList ){
-        
-          var item = {
-            "id": foodList[x].id,
-            "picUrl": foodList[x].picUrl,
-            "name": foodList[x].name,
-            "price": foodList[x].price,
-            "num": numList[x]
-          };
-
-          app.globalData.cartListRecord.set(foodList[x].id, item);
-        }
-
-        wx.switchTab({
-          url: '/pages/cart/cart'
-        })
+       
   
       },
       fail(res) {

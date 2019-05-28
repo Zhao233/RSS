@@ -133,12 +133,7 @@ public class LoginCheckController {
         if(isExist == 1){//后台未录入
             Customer customer = customerService.registerCustomer(openid);
 
-            FrequentlyUsedFood frequentlyUsedFood = new FrequentlyUsedFood();
-            frequentlyUsedFood.setUserID(customer.getId());
-            frequentlyUsedFood.setFoodsId("");
-            frequentlyUsedFood.setNums("");
-            frequentlyUsedFood.setStylesId("");
-            frequentlyUsedFood.setCreateTime(TimeUtil.getTimeNow());
+            frequentlyUsedFoodService.saveEmptyFrequentlyUsedFoodList(customer.getId());
 
             map.put("status", "SUCCEED");
             map.put("userInfo", customer);

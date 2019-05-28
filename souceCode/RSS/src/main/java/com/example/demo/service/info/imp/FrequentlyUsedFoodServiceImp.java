@@ -129,4 +129,17 @@ public class FrequentlyUsedFoodServiceImp implements FrequentlyUsedFoodService {
 
         frequentlyUsedFoodDao.save(frequentlyUsedFood);
     }
+
+    @Override
+    public void saveEmptyFrequentlyUsedFoodList(Long userID){
+        FrequentlyUsedFood frequentlyUsedFood = new FrequentlyUsedFood();
+
+        frequentlyUsedFood.setFoodsId("");
+        frequentlyUsedFood.setNums("");
+        frequentlyUsedFood.setStylesId("");
+        frequentlyUsedFood.setUserID(userID);
+        frequentlyUsedFood.setCreateTime(TimeUtil.getTimeNow());
+
+        frequentlyUsedFoodDao.save(frequentlyUsedFood);
+    }
 }
