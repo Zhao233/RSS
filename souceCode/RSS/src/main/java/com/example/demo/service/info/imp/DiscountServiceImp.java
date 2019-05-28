@@ -1,9 +1,8 @@
 package com.example.demo.service.info.imp;
 
-import com.example.demo.domain.info.DiscountRecord;
+import com.example.demo.domain.foodInfo.DiscountRecord;
 import com.example.demo.repository.info.DiscountRecordDao;
 import com.example.demo.service.info.DiscountService;
-import net.bytebuddy.dynamic.scaffold.MethodGraph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

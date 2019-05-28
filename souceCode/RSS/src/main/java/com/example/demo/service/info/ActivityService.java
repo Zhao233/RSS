@@ -1,7 +1,7 @@
 package com.example.demo.service.info;
 
-import com.example.demo.domain.info.DiscountRecord;
-import com.example.demo.domain.info.RecommendFood;
+import com.example.demo.domain.foodInfo.DiscountRecord;
+import com.example.demo.domain.foodInfo.RecommendFood;
 import com.example.demo.model.admin.RecommendForActivityModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

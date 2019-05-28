@@ -149,8 +149,12 @@ Page({
         app.internetResponseHandler(res, function () {
           app.clearCartList();
 
+          // wx.navigateTo({
+          //   url: 'pay/pay',
+          // })
+
           wx.navigateTo({
-            url: 'pay/pay',
+            url: '/pages/mine/order_record/order_record'
           })
         })
 

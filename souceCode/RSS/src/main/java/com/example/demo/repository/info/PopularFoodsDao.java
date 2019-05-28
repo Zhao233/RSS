@@ -1,7 +1,6 @@
 package com.example.demo.repository.info;
 
-import com.example.demo.domain.info.PopularFoods;
-import com.example.demo.model.admin.PopularFoodModel;
+import com.example.demo.domain.foodInfo.PopularFoods;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

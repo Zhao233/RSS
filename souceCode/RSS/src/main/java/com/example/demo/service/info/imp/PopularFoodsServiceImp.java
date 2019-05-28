@@ -1,7 +1,7 @@
 package com.example.demo.service.info.imp;
 
 import com.example.demo.domain.foodInfo.Food;
-import com.example.demo.domain.info.PopularFoods;
+import com.example.demo.domain.foodInfo.PopularFoods;
 import com.example.demo.model.admin.PopularFoodModel;
 import com.example.demo.repository.foodInfo.FoodDao;
 import com.example.demo.repository.info.PopularFoodsDao;

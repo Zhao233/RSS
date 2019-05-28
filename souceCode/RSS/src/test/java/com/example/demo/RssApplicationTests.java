@@ -8,18 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class RssApplicationTests {
-    @Autowired
-    private OrderRecordService orderRecordService;
-
     @Test
-    public void contextLoads(){
-        double a = orderRecordService.getAccount(1);
-
-        System.out.println(a);
+    public void run(){
+        System.out.println("dadad");
     }
-
-
-
 }

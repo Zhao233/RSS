@@ -5,7 +5,7 @@ function _formatte_id(value, row, index) {
 
     contactsNameMap.set(value,row.name);
 
-    return '<input name="visitor_id" type="checkbox" value="' + value + '" />';
+    return '<input name="table_id" type="checkbox" value="' + value + '" />';
 }
 
 

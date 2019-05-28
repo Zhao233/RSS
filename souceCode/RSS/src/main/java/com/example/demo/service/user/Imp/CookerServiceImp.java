@@ -65,7 +65,7 @@ public class CookerServiceImp implements CookerService {
             return 1;
         }
 
-        if(cooker != null && cooker.getUserID() != null){//后台已存在
+        if(cooker != null && cooker.getOpenID() != null){//后台已存在
 
             return 2;
         }
@@ -77,7 +77,7 @@ public class CookerServiceImp implements CookerService {
     public Cooker registerCooker(String loginID, String openid) {
         Cooker cooker = cookerDao.getCookerByLoginID(loginID);
 
-        cooker.setUserID(openid);
+        cooker.setOpenID(openid);
         cooker.setUpdateTime(TimeUtil.getTimeNow());
         cookerDao.save(cooker);
 

@@ -1,7 +1,7 @@
 package com.example.demo.controller.adminController.ActivityController;
 
-import com.example.demo.domain.info.DiscountRecord;
-import com.example.demo.domain.info.RecommendFood;
+import com.example.demo.domain.foodInfo.DiscountRecord;
+import com.example.demo.domain.foodInfo.RecommendFood;
 import com.example.demo.model.admin.FoodForRecommendModel;
 import com.example.demo.model.admin.RecommendForActivityModel;
 import com.example.demo.service.foodInfo.FoodService;

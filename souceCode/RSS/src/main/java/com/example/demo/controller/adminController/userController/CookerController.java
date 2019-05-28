@@ -109,17 +109,20 @@ public class CookerController {
 
     @ResponseBody
     @RequestMapping(value = "/update")
-    public Map<String, Object> updateMenu(@RequestParam(name = "id") long id,
+    public Map<String, Object> updateMenu(@RequestParam(name = "id") Long id,
                                           @RequestParam(name = "loginID") String loginID,
                                           @RequestParam(name = "name") String name,
                                           @RequestParam(name = "phoneNumber") String phoneNumber,
-                                          @RequestParam(name = "role") long role,
-                                          @RequestParam(name = "loginTimes") int loginTimes,
+                                          @RequestParam(name = "role") Long role,
+                                          @RequestParam(name = "loginTimes") Integer loginTimes,
                                           @RequestParam(name = "createTime") String createTime,
-                                          @RequestParam(name = "enable") int enable)  {
+                                          @RequestParam(name = "enable") Integer enable)  {
         Map<String, Object> map = new HashMap();
 
         Cooker cooker = new Cooker();
+
+        cooker = cookerService.getOne(id);
+
         cooker.setId(id);
         cooker.setLoginID(loginID);
         cooker.setPhoneNumber(phoneNumber);

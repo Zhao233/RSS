@@ -93,6 +93,9 @@ public class WaiterController {
         Map<String, Object> map = new HashMap();
 
         Waiter waiter = new Waiter();
+
+        waiter = waiterService.getOneByID(id);
+
         waiter.setId(id);
         waiter.setName(name);
         waiter.setEnable(enable);

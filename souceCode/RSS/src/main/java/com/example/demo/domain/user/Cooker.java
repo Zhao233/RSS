@@ -23,8 +23,8 @@ public class Cooker {
     /**
      * 微信id
      * */
-    @Column(name = "user_id")
-    private String userID;
+    @Column(name = "open_id")
+    private String openID;
 
     /**
      * 微信名

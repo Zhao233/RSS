@@ -74,7 +74,6 @@ public class CustomerQuickServiceController {
                                           @RequestParam(value = "tableNum") Integer tableNum){
         Map<String, Object> res = new HashMap<>();
 
-
         WaiterDeliveryRecord record = waiterDeliveryRecordService.callWaiter(openid, tableNum);
 
         res.put("status", "SUCCEED");

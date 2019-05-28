@@ -165,6 +165,10 @@ Page({
         success(res) {
           app.internetResponseHandler(res, function(){
             app.clearCartList();
+
+            wx.navigateTo({
+              url: '/mine/order_record/order_record?' + data
+            })
           })
 
           // if(res.data.status == "SUCCEED"){

@@ -34,7 +34,7 @@ public class OrderRecordServiceImp implements OrderRecordService {
     /**================================For Admin========================================================*/
 
     @Override
-    public Long addOne(List<Long> foodIDList, List<Integer> foodNumList, List<Long> styleIDList, Long discountID, String openid, long expirationTime, Double account) {
+    public Long addOne(List<Long> foodIDList, List<Integer> foodNumList, List<Long> styleIDList, Long discountID, String openid, long expirationTime, Double account, Integer tableNum) {
         Long userID = customerService.getIDByOpenID(openid);
         String foodIDList_String = StringTranslator.getStringFromList(foodIDList);
         String foodNum_String = StringTranslator.getStringFromList(foodNumList);
@@ -59,6 +59,7 @@ public class OrderRecordServiceImp implements OrderRecordService {
         orderRecord.setOriginAmount(account);
         orderRecord.setIsPaid(0);//未支付
         orderRecord.setDiscountID(90000);
+        orderRecord.setTableNum(tableNum);
 
         orderRecord.setExpirationTime(TimeUtil.MilTimeToTimeStamp(expirationTime));
         orderRecord.setCreateTime(TimeUtil.getTimeNow());
@@ -124,6 +125,11 @@ public class OrderRecordServiceImp implements OrderRecordService {
         }
 
         return orderRecordModelList;
+    }
+
+    @Override
+    public OrderRecord getOrderRecordByID(Long orderRecord) {
+        return orderRecordDao.getOne(orderRecord);
     }
 
     /**

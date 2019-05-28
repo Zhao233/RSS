@@ -1,4 +1,4 @@
-package com.example.demo.domain.info;
+package com.example.demo.domain.foodInfo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

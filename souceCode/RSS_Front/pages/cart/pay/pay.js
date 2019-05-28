@@ -1,4 +1,3 @@
-let Pormise = require('../../api/es6-promise.min.js')
 // pages/pay/pay.js
 let app = getApp()
 Page({

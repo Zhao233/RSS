@@ -1,22 +1,18 @@
 {
   "pages": [
     "pages/index/index",
-
     "pages/cart/cart",
     "pages/cart/settleAccount/settleAccount",
     "pages/cart/confirmOrder/confirmOrder",
     "pages/cart/pay/pay",
-
     "pages/mine/mine",
-
     "pages/mine/consumption_statistics/consumption_statistics",
     "pages/mine/menu_management/menu_management",
     "pages/mine/score/score",
     "pages/mine/order_record/order_record",
-
     "pages/quickService/quickService",
-
     "pages/forWaiterService/waiter",
+    "pages/forCookerService/cooker",
     "pages/login/login",
     "pages/login/servicePersonLogin/servicePersonLogin"
   ],

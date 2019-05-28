@@ -12,7 +12,7 @@
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.4",
+	"libVersion": "2.7.0",
 	"appid": "wxd203f27f77d9902b",
 	"projectname": "RSS_Front",
 	"debugOptions": {

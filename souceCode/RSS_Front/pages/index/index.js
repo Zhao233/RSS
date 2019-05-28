@@ -223,6 +223,8 @@ Page({
       app.globalData.cartListRecord.set(id, temp_item);
     }
 
+    app.showToast("已加入购物车: " + item.name);
+
   }
 
 })

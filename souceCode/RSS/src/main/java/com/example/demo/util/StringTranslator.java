@@ -9,6 +9,17 @@ import java.util.List;
 public class StringTranslator {//T:目标数据类型
 
     public static List getListFromString(String string, int type){//type:0 转换为long  1:转换为int
+        if(string.length() == 0) {
+            switch (type) {
+                case 0:
+
+                    return new LinkedList<Integer>();
+
+                case 1:
+                    return new LinkedList<Long>();
+            }
+        }
+
         List list = null;
         String[] strings = string.split("_");
 

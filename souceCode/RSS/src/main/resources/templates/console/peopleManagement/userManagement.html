@@ -41,6 +41,8 @@
     <script src="/javascript/bootstrap-table.min.js"></script>
     <script src="/javascript/bootstrap-table-zh-CN.js"></script>
 
+    <script src="/javascript/custom-table-formatter/formatter.js"></script>
+
     <style>
         .fixed-table-body {
             overflow-x: auto;
@@ -169,13 +171,13 @@
                                     <thead>
                                     <tr>
                                         <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="doAllCheckBtn" type="checkbox" onclick="doAllCheck(this)"></th>
-                                        <th data-field="userId"  class="W100" style="border:none;">微信ID</th>
-                                        <th data-field="name"  class="W100" style="border:none;">名称</th>
+                                        <th data-field="openID"  class="W100" style="border:none;" data-formatter="_formatte_to_detail">微信ID</th>
+                                        <th data-field="userName"  class="W100" style="border:none;">名称</th>
                                         <th data-field="loginTimes" class="W100" style="border:none;">登录次数</th>
                                         <th data-field="level" class="W100" style="border:none;">等级</th>
                                         <th data-field="credit" class="W100" style="border:none;">信用分</th>
-                                        <th data-field="createTime"  class="W100" style="border:none;">创建时间</th>
-                                        <th data-field="updateTime"  class="W100" style="border:none;">修改时间</th>
+                                        <th data-field="createTime" class="W100" style="border:none;" data-formatter="_formatte_time">创建时间</th>
+                                        <th data-field="updateTime" class="W100" style="border:none;" data-formatter="_formatte_time">修改时间</th>
                                     </tr>
                                     </thead>
 
@@ -321,6 +323,78 @@
 </div>
 
 <script>
+    $(document).ready(function() {
+        $('#_table_user_search').bootstrapTable({
+            method: 'get',
+            url: "/admin/customer/getAll",
+            striped: true,
+            height:300,
+            dataType: "json",
+            pagination: true,
+            queryParamsType: "limit",
+            singleSelect: true,
+            contentType: "application/x-www-form-urlencoded",
+            pageSize: 10,
+            pageNumber: 1,
+            search: true,
+            showColumns: true,
+            showRefresh: true,
+            sidePagination: "server", //服务端请求
+            queryParams: function (params) {
+
+                return {
+                    limit: params.limit,
+                    offset: params.offset / params.limit,
+                    search: $(".search").find("input").val(),
+                    sort: params.sort,
+                    order: params.order,
+                };
+            },
+            responseHandler: function (res) {
+                $("#doAllCheckBtn").checked != $("#doAllCheckBtn").checked;
+
+                //doallcheck();
+
+                //config = res.config;
+
+                return {
+                    "rows": res.rows,
+                    "total": res.total
+                };
+            },
+            onPostBody : function(){
+                adjustTableHeight($(".fixed-table-body"),20);//custom-script
+            },
+            onSort(name,order){
+                $(".temperature").find(".sortable").empty();
+                $(".humidity").find(".sortable").empty();
+
+                $(".temperature").find(".sortable").append("温度");
+                $(".humidity").find(".sortable").append("湿度");
+
+                if(name == "temperature"){
+
+                    $(".humidity").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if(order == "asc"){
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+
+                } else {//humidity
+                    $(".temperature").find(".sortable").append('<i class="glyphicon sort_default"></i>');
+
+                    if (order == "asc") {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
+                    } else {
+                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
+                    }
+                }
+            }
+        });
+    });
+
     //重置input
     function _reset_input(input) {
         input.removeClass("alert-danger");
@@ -551,15 +625,10 @@
         }
     }
 
-    function _formatte_id(value, row, index) {
-        if(index == 0){
-            contactsNameMap = new Map();
-        }
-
-        contactsNameMap.set(value,row.name);
-
-        return '<input name="visitor_id" type="checkbox" value="' + value + '" />';
+    function _formatte_to_detail(value, row, index){
+        return '<a href="/admin/userDetail?customerID=' + row.id +'">'+value+'</a>';
     }
+
 
     //注销
     $(".btn.btn-danger.btn-logout").click(function () {

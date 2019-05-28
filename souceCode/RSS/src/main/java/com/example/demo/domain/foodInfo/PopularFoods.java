@@ -1,4 +1,4 @@
-package com.example.demo.domain.info;
+package com.example.demo.domain.foodInfo;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;

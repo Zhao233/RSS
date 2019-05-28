@@ -1,6 +1,6 @@
 package com.example.demo.service.info;
 
-import com.example.demo.domain.info.PopularFoods;
+import com.example.demo.domain.foodInfo.PopularFoods;
 import com.example.demo.model.admin.PopularFoodModel;
 
 public interface PopularFoodsService {

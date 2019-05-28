@@ -1,5 +1,6 @@
 package com.example.demo.service.info;
 
+import com.example.demo.domain.info.OrderRecord;
 import com.example.demo.model.customer.OrderRecordModel;
 
 import java.sql.Timestamp;
@@ -32,7 +33,9 @@ public interface OrderRecordService {
     HashMap<Long, Integer> getAllOrderByTime(int type);
 
 
-    Long addOne(List<Long> foodIDList, List<Integer> foodNumList, List<Long> styleIDList, Long discountID, String openid, long expirationTime, Double account);
+    Long addOne(List<Long> foodIDList, List<Integer> foodNumList, List<Long> styleIDList, Long discountID, String openid, long expirationTime, Double account, Integer tableNum);
 
     List<OrderRecordModel> getAllOrderRecordModel(String openID);
+
+    OrderRecord getOrderRecordByID(Long orderRecord);
 }

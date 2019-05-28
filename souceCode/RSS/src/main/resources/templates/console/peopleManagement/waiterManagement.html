@@ -41,6 +41,8 @@
     <script src="/javascript/bootstrap-table.min.js"></script>
     <script src="/javascript/bootstrap-table-zh-CN.js"></script>
 
+    <script src="/javascript/custom-table-formatter/formatter.js"></script>
+
     <style>
         .fixed-table-body {
             overflow-x: auto;
@@ -169,7 +171,7 @@
                                     <thead>
                                     <tr>
                                         <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="doAllCheckBtn" type="checkbox" onclick="doAllCheck(this)"></th>
-                                        <th data-field="userID"  class="W100" style="border:none;">微信ID</th>
+                                        <th data-field="userID"  class="W100" style="border:none;" data-formatter="_formatte_to_detail">微信ID</th>
                                         <th data-field="loginID" class="W100" style="border:none;">登陆码</th>
                                         <th data-field="name"  class="W100" style="border:none;">名称</th>
                                         <th data-field="phoneNumber"  class="W100" style="border:none;">电话号码</th>
@@ -682,38 +684,22 @@
     })
 
     function doAllCheck(e){
-        var list = $("input[name='visitor_id']");
+        var list = $("input[name='table_id']");
 
         for(i in list){
             list[i].checked = !list[i].checked;
         }
     }
 
-    function _formatte_id(value, row, index) {
-        if(index == 0){
-            contactsNameMap = new Map();
-        }
-
-        contactsNameMap.set(value,row.name);
-
-        return '<input name="table_id" type="checkbox" value="' + value + '" />';
-    }
-
-    function _formatte_select_enable(value, row, index) {
-        return $.trim(value) ==$.trim('1') ? "是":"否" ;
-    }
 
     function _formatte_select_role(value, row, index) {
         return $.trim(value) ==$.trim('1') ? "是":"否" ;
     }
 
-    function _formatte_time(value, row, index) {
-        if(value==undefined){
-            return '-'
-        }
-
-        return getFormattedTime(value);
+    function _formatte_to_detail(value, row, index){
+        return '<a href="/admin/waiterDetail?waiterID=' + row.id +'">'+value+'</a>';
     }
+
 
     //注销
     $(".btn.btn-danger.btn-logout").click(function () {

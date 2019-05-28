@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+
+    <title>SOFTWARE</title>
+    <!-- Bootstrap Styles-->
+    <link href="/style/bootstrap.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500"/>
+
+    <!-- Custom Styles-->
+    <link href="/style/custom-styles.css" rel="stylesheet"/>
+    <!-- Google Fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <!-- TABLE STYLES-->
+    <link href="/javascript/dataTables/dataTables.bootstrap.css" rel="stylesheet"/>
+    <link href="http://www.bootcss.com/p/buttons/css/buttons.css" rel="stylesheet"/>
+
+    <!--datePicker-->
+    <link href="/style/jquery-ui.css" rel="stylesheet"/>
+
+    <link href="/style/font-awesome.css" rel="stylesheet"/>
+
+    <link href="/style/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+
+    <script src="/javascript/jquery-1.11.1.min.js"></script>
+
+    <!--datePicker-->
+    <script src="/javascript/jquery-ui.js"></script>
+
+    <script src="/javascript/bootstrap.min.js"></script>
+    <script src="/javascript/jquery.backstretch.min.js"></script>
+    <script src="/javascript/scripts.js"></script>
+
+    <!-- Bootstrap Js -->
+    <script src="/javascript/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="/javascript/jquery.metisMenu.js"></script>
+
+    <script src="/javascript/custom-scripts.js"></script>
+
+    <script src="/javascript/chart.js"></script>
+
+    <!--<script src="/javascript/jquery-1.11.1.min.js"></script>-->
+    <script src="/javascript/bootstrap-table.min.js"></script>
+    <script src="/javascript/bootstrap-table-zh-CN.js"></script>
+
+    <script src="/javascript/bootstrap-datetimepicker.js"></script>
+    <script src="/javascript/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <style>
+        .icon-rounded{
+            background-color:#7460ee;
+            color: #ffffff;
+            border-radius: 50px;
+            /* -webkit-border-radius: 50px; */
+            -moz-border-radius: 50px;
+            -o-border-radius: 50px;
+            -ms-border-radius: 50px;
+            font-size: 25px;
+            width: 60px;
+            height: 60px;
+
+            line-height: 60px;
+            text-align: center;
+        }
+
+        .r3_counter_box {
+            min-height: 100px;
+            background: #ffffff;
+            padding: 15px;
+        }
+
+        .stats{
+            overflow: hidden;
+        }
+
+        .chart-wrapper{
+            display: flex;
+            align-items: center;
+            position: relative;
+            height: 400px;
+            background: #FFFFFF;
+        }
+
+
+        .activity_box{
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+
+            background: #FFFFFF;
+
+            overflow:scroll;
+        }
+
+        .activity-row{
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+
+            padding: 5px;
+
+            align-items: center;
+        }
+
+        /*table thead th{*/
+        /*background:#275AB2;*/
+        /*}*/
+        /*thead{*/
+        /*color:#FFFFFF;*/
+        /*}*/
+
+        .navbar-brand-right_{
+            float:right;
+        }
+        .kv-avatar .krajee-default.file-preview-frame, .kv-avatar .krajee-default.file-preview-frame:hover {
+            margin: 0;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            text-align: center;
+        }
+
+        .kv-avatar .file-input {
+            display: table-cell;
+            width: 213px;
+        }
+
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle !important;
+        }
+
+        th{
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }
+
+
+        .W100 {width:100px !important;}
+        .W30 {width:30px !important;}
+    </style>
+
+</head>
+<body>
+
+<div id="wapper">
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+        <ul class="nav navbar-top-links navbar-brand-right_">
+            <li><a href="#" id="logout"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
+        </ul>
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"> <strong> &nbsp &nbsp &nbsp ZXSoft</strong></a>
+        </div>
+    </nav>
+    <!--/. NAV TOP  -->
+
+    <div id="nave_side">
+
+    </div>
+
+    <!--加载侧栏菜单-->
+    <script>
+        loadMenu();
+    </script>
+
+    <!--内容主体-->
+    <div id="page-wrapper">
+        <div id="page-inner">
+            <div class="col-md-12">
+                <!--推荐管理标题-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header" style="color: #FFFFFF;">
+                            厨师工作详情
+                        </h1>
+                    </div>
+                </div>
+
+                <!--推荐管理-->
+                <div class="row">
+                    <div class="col-md-3 widget widget1">
+                        <div class="r3_counter_box">
+                            <i class="pull-left fa fa-dollar icon-rounded"></i>
+                            <div class="stats">
+                                <h5><strong>总服务次数</strong></h5>
+                                <span>0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 widget widget1">
+                        <div class="r3_counter_box">
+                            <i class="pull-left fa fa-dollar icon-rounded"></i>
+                            <div class="stats">
+                                <h5><strong>本月服务次数</strong></h5>
+                                <span>0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 widget widget1">
+                        <div class="r3_counter_box">
+                            <i class="pull-left fa fa-dollar icon-rounded"></i>
+                            <div class="stats">
+                                <h5><strong>本周服务次数</strong></h5>
+                                <span>0e</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 widget widget1">
+                        <div class="r3_counter_box">
+                            <i class="pull-left fa fa-dollar icon-rounded"></i>
+                            <div class="stats">
+                                <h5><strong>今日服务次数</strong></h5>
+                                <span>0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-md-8 content-top-2 card">
+                        <h3 class="page-header" style="color: #FFFFFF;">
+                            服务情况
+                        </h3>
+
+                        <div class="form-inline timePicker">
+                            <div class="form-group" style="margin-bottom: 8px; margin-left: 1em;">
+                                <lable for="datepicker_start_box" style=";color: #ffffff">选择时间</lable>
+                                <div class="input-group date form_date" id="datepicker_start_box"  data-link-field="dtp_input2" >
+                                    <input class="form-control" id="datepicker_start" size="10" type="text" value="" readonly>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 8px; margin-left: 1em;">
+                                <button class="btn btn-primary searchData">查找</button>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="canvas-wrapper form-group" style=" margin:0px;">
+                            <div class="chart-wrapper">
+                                <canvas id="line-chart" height="180"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 span_8">
+                        <h3 class="page-header" style="color: #FFFFFF;">
+                            最近服务记录
+                        </h3>
+
+                        <div class="activity_box">
+                            <div class="activity-row">
+                                <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                <div>日期</div>
+                            </div>
+                            <div class="activity-row">
+                                <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                <div>日期</div>
+                            </div>
+                            <div class="activity-row">
+                                <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                <div>日期</div>
+                            </div>
+                            <div class="activity-row">
+                                <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                <div>日期</div>
+                            </div>
+                            <div class="activity-row">
+                                <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                <div>日期</div>
+                            </div>
+                            <div class="activity-row">
+                                <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                <div>日期</div>
+                            </div>
+                            <div class="activity-row">
+                                <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                <div>日期</div>
+                            </div>
+                            <div class="activity-row">
+                                <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                <div>日期</div>
+                            </div>
+                            <div class="activity-row">
+                                <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                <div>日期</div>
+                            </div>
+                            <div class="activity-row">
+                                <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                <div>日期</div>
+                            </div>
+                            <div class="activity-row">
+                                <img style="max-height: 70px" src='https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555471327466.jpg' class="img-responsive" alt=""/>
+
+                                <div>日期</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /. ROW  -->
+        </div>
+    </div>
+
+
+    <!--弹出框-->
+
+    <!--添加，修改折扣弹出框-->
+    <div id="dialog-discount-update" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">折扣管理 | <span id="dialog-discount-update-title"></span></h4>
+                </div>
+
+                <div class="modal-body">
+                    <form role="form" class="form-horizontal add-new form-uploadfiles"
+                          enctype="multipart/form-data"
+                          method="POST">
+                        <input type="text" style="display:none;" id="id_discount" name="id_discount"/>
+                        <input type="text" style="display:none;" id="createTime_discount" name="id"/>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="type_discount" class="col-sm-4 control-label">折扣类型</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" id="type_discount" name="type_discount">
+                                        <option class="discount_option" value="0"> 折扣 </option>
+                                        <option class="discount_option" value="1"> 满减 </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="moneyLimit_discount" class="col-sm-4 control-label">条件金额</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" id="moneyLimit_discount" name="moneyLimit_discount"
+                                           data-toggle="tooltip" data-placement="top" maxlength="30"
+                                           required="required" readonly/>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="discount" class="col-sm-4 control-label">折扣</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" id="discount" name="discount"
+                                           data-toggle="tooltip" data-placement="top" maxlength="30"
+                                           required="required"/>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="startTime_discount" class="col-sm-4 control-label">生效时间</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" id="startTime_discount" name="startTime"
+                                           data-toggle="tooltip" data-placement="top" maxlength="30"
+                                           required="required"/>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="endTime_discount" class="col-sm-4 control-label">失效时间</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" id="endTime_discount" name="endTime"
+                                           data-toggle="tooltip" data-placement="top" maxlength="30"
+                                           required="required"/>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="enable_discount" class="col-sm-4 control-label">是否启用</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" id="enable_discount" name="enable_discount">
+                                        <option value="1"> 是 </option>
+                                        <option value="0"> 否 </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9" style="text-align: right;padding-top: 20px;">
+                                <button type="button" class="btn btn-primary add-new-discount">保存</button>
+                                <button type="button" class="btn btn-default add-new-close" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--添加推荐弹出框-->
+    <div id="dialog-recommend-add" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">推荐管理 | <span id="dialog-recommend-add-title"></span></h4>
+                </div>
+
+                <div class="modal-body">
+                    <form role="form" class="form-horizontal add-new form-uploadfiles"
+                          enctype="multipart/form-data"
+                          method="POST">
+                        <input type="text" style="display:none;" id="id_recommend" name="id"/>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-1"></div>
+
+                                <div class="col-sm-10">
+                                    <label for="type_recommend" class="col-sm-5 control-label">展示类型</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="type_recommend" name="type_recommend">
+                                            <option value="0"> 轮播 </option>
+                                            <option value="1"> 列表 </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+
+                            <div style="width: 100%;">
+                                <div class="col-sm-1"></div>
+
+                                <div class="col-sm-10">
+                                    <div class="table-responsive">
+                                        <table id="_table_recommend_food" class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th data-field="id" class="W30" data-formatter="_formatte_id_recommend_dialog"><input id="id_recommend_food" name="id_recommend_food" type="checkbox" onclick="doAllCheck('id_recommend_food')"></th>
+                                                <th data-field="picUrl" class="W100" data-formatter="_formatte_image">图像</th>
+                                                <th data-field="name" class="W100">名称</th>
+                                                <th data-field="menuName" class="W100">一级菜单</th>
+                                            </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9" style="text-align: right;padding-top: 20px;">
+                                <button type="button" class="btn btn-primary add-new-recommend">保存</button>
+                                <button type="button" class="btn btn-default add-new-close" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--修改推荐弹出框-->
+    <div id="dialog-recommend-update" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">推荐管理 | <span >修改</span></h4>
+                </div>
+
+                <div class="modal-body">
+                    <form role="form" class="form-horizontal add-new form-uploadfiles"
+                          enctype="multipart/form-data"
+                          method="POST">
+                        <input type="text" style="display:none;" id="id_recommend_upate" name="id"/>
+                        <input type="text" style="display:none;" id="createTime_recommend"/>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-1"></div>
+
+                                <div class="col-sm-5">
+                                    <label for="type_recommend" class="col-sm-5 control-label">展示类型</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="type_recommend_update" name="type_recommend">
+                                            <option value="0"> 轮播 </option>
+                                            <option value="1"> 列表 </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-5">
+                                    <label for="type_recommend" class="col-sm-5 control-label">是否启用</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" id="enable_recommend_update" name="type_recommend">
+                                            <option value="0"> 否 </option>
+                                            <option value="1"> 是 </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+
+                            <div style="width: 100%;">
+                                <div class="col-sm-1"></div>
+
+                                <div class="col-sm-10">
+                                    <div class="table-responsive">
+                                        <table id="_table_recommend_food_update" class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th data-field="id" class="W30" data-formatter="_formatte_id_recommend_dialog_update"><input id="id_recommend_food_update" type="checkbox" ></th>
+                                                <th data-field="picUrl" class="W100" data-formatter="_formatte_image">图像</th>
+                                                <th data-field="name" class="W100">名称</th>
+                                                <th data-field="menuName" class="W100">一级菜单</th>
+                                            </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-1"></div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9" style="text-align: right;padding-top: 20px;">
+                                <button type="button" class="btn btn-primary update-new-recommend">保存</button>
+                                <button type="button" class="btn btn-default update-new-close" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <!--提示弹出框-->
+    <div id="dialog-return" class="modal fade" style="z-index:99999" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="mySmallModalLabel">提示</h4>
+                </div>
+                <div class="modal-body"></div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--折扣删除确认框-->
+    <div id="dialog-discount-delete" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="mySmallModalLabel0_discount">提示</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer modal-footer-delete-confirm">
+                    <button type="button" class="btn btn-danger btn-discount-delete-confirm" data-dismiss="modal">确认</button>
+                    <button type="button" class="btn btn-default btn-delete-cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--推荐删除确认框-->
+    <div id="dialog-recommend-delete" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="mySmallModalLabel0_recommend">提示</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer modal-footer-delete-confirm">
+                    <button type="button" class="btn btn-danger btn-recommend-delete-confirm" data-dismiss="modal">确认</button>
+                    <button type="button" class="btn btn-default btn-delete-cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+</div>
+
+<script>
+    var contactsNameMap = new Map();
+    var IDMapForRecommendAdd = new Map();
+    var foodID_recommend_update;
+
+    var lineChart;
+
+    var options = {
+        scaleOverride :true ,   //是否用硬编码重写y轴网格线
+        scaleSteps : 10,        //y轴刻度的个数
+        scaleStepWidth : 10,   //y轴每个刻度的宽度
+        scaleStartValue : 0,    //y轴的起始值
+        scaleLabel : "<%=value%>RH",
+
+        showScale : true,
+        responsive:true,
+        showTooltips: true
+    };
+
+    var data_chart = {
+        labels : ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","6","7","8","9","10","11"],
+        datasets : [
+            {
+                fillColor : "rgba(151,187,205,0.5)",
+                strokeColor : "rgba(151,187,205,1)",
+                pointColor : "rgba(151,187,205,1)",
+                pointStrokeColor : "#fff",
+                data : [1,0,2,0,0,0,0,4,0,0,10,5,1,0,2,0,0,0,0,4,0,0,10,5,]
+            }
+        ]
+    };
+
+    function adjustPositionOfLineChart(){//adjust the position of line-chart
+        console.log("chart-wrapper: " + $(".chart-wrapper").height() );
+        console.log("line-chart margin-top: " + $("#line-chart").css("margin-top") );
+        console.log("line-chart: " + $("#line-chart").height() );
+
+        if( $(".chart-wrapper").height() > $("#line-chart").height() ){
+            $("#line-chart").css("margin-top",  ( $(".chart-wrapper").height() - $("#line-chart").height() ) / 2 );
+        }
+
+        console.log("chart-wrapper: " + $(".chart-wrapper").height() );
+        console.log("line-chart margin-top: " + $("#line-chart").css("margin-top") );
+        console.log("line-chart: " + $("#line-chart").height() );
+
+    }
+
+    !function ($) {
+        $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+            $(this).find('em:first').toggleClass("glyphicon-minus");
+        });
+        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+    }(window.jQuery);
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show');
+        else $('#sidebar-collapse').collapse('hide');
+
+        adjustItemHeight();
+    });
+
+
+    $(document).ready(function() {
+        adjustItemHeight();
+        //displayLineChart( adjustHeight($("#line-chart")),20 );
+
+        $('.form_date').datetimepicker({
+            format: "yyyy-m-d",
+            language:  'zh-CN',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
+
+        displayLineChart( );
+
+    });
+
+    //重置input
+    function _reset_input(input) {
+        input.removeClass("alert-danger");
+        input.tooltip('destroy');
+
+    }
+
+    //重置表单
+    function _reset(from) {
+        $("#show-process").empty();
+
+        from[0].reset();
+
+        _reset_input(from.find("input"));
+
+        $("#choosedPic").attr("src","/images/default_avatar_male.jpg");
+    }
+
+    function adjustItemHeight(){
+        adjustHeight( $(".chart-wrapper"), 10);//调增wrapper的高度，做到根据页面高度，动态响应页面高度。完毕后调整line-chart在wrapper中的位置
+
+        $(".activity_box").height( $(".chart-wrapper").height() + $(".timePicker").height() );
+    }
+
+    //打开添加折扣弹出框
+    $(".btn.btn-primary.open-add-discount-dialog").click(function () {
+        window.flag = 'add';
+
+        _reset($(".form-horizontal.add-new"));
+
+        // $("#choosedPic").attr("src","/images/default_avatar_male.jpg");
+
+        $("#dialog-discount-update-title").html("新增");
+
+        $("#dialog-discount-update").modal("show");
+    });
+
+    //打开添加推荐弹出框
+    $(".btn.btn-primary.open-add-recommend-dialog").click(function () {
+        window.flag = 'add';
+
+        _reset($(".form-horizontal.add-new"));
+
+        // $("#choosedPic").attr("src","/images/default_avatar_male.jpg");
+
+        $("#dialog-recommend-add-title").html("新增");
+
+        $("#dialog-recommend-add").modal("show");
+    });
+
+    //打开修改折扣弹出框
+    $(".btn.btn-success.open-update-discount-dialog").click(function () {
+        window.flag = 'update'
+
+        var id = new Array();
+
+        var selectedBox = $("input[name='visitor_id']:checked");
+
+        window.id = id;
+        console.log('clicked update');
+
+        for(var i = 0; i < selectedBox.length; i++){
+            id.push( selectedBox[i].value );
+
+            if(id.length > 2){
+                break;
+            }
+        }
+
+        console.log(id);
+
+        if (id.length != 0) {
+            if(id.length > 1){
+                $("#dialog-return").find(".modal-body").html("请选择一个访客");
+                $("#dialog-return").modal("show");
+
+                return ;
+            }
+
+            _reset($(".form-horizontal.add-new"));
+
+
+            $("#dialog-title").html("修改");
+
+            $("#dialog-update").modal("show");
+
+            // 读取用户选中的折扣信息
+            $.get("/admin/activity/getDiscount/" + id[0], null, function (res, status) {
+                $("#dialog-discount-update-title").html("修改");
+                $("#dialog-discount-update").modal("show");
+
+                $("#dialog-discount-update").find("input[id='id_discount']").val( res.discount.id );
+                $("#dialog-discount-update").find("input[id='createTime_discount']").val( res.discount.discount );
+
+
+                $("#dialog-discount-update").find("select[id='type_discount']").find("option[value="+res.discount.type+"]").attr("selected","selected");
+
+                type_discount_change(res.discount.type);
+
+                switch(res.discount.type){
+                    case 1: // 满减
+                        $("#dialog-discount-update").find("input[id='moneyLimit_discount']").val(res.discount.moneyLimit);
+
+                        break;
+                    case 0: // 折扣
+                        $("#dialog-discount-update").find("input[id='discount']").val(res.discount.discount);
+
+                        break;
+                }
+
+                $("#dialog-discount-update").find("input[id='startTime_discount']").val( getFormattedTime(res.discount.startTime) );
+                $("#dialog-discount-update").find("input[id='endTime_discount']").val( getFormattedTime(res.discount.endTime) );
+                $("#dialog-discount-update").find("input[id='createTime_discount']").val( getFormattedTime(res.discount.createTime) );
+
+                $("#dialog-discount-update").find("input[id='enable_discount']").val(res.discount.enable == 1 ? "是" : "否");
+
+            });
+        } else {
+            $("#dialog-return").find(".modal-body").html("请选中折扣后操作");
+            $("#dialog-return").modal("show");
+        }
+    });
+
+    //打开修改推荐弹出框
+    $(".btn.btn-success.open-update-recommend-dialog").click(function () {
+        window.flag = 'update'
+
+        var id = new Array();
+
+        var selectedBox = $("input[name='table_id_recommend']:checked");
+
+        window.id = id;
+        console.log('clicked update');
+
+        for(var i = 0; i < selectedBox.length; i++){
+            id.push( selectedBox[i].value );
+
+            if(id.length > 2){
+                break;
+            }
+        }
+
+        console.log(id);
+
+        if (id.length != 0) {
+            if(id.length > 1){
+                $("#dialog-return").find(".modal-body").html("请选择一个推荐条目");
+                $("#dialog-return").modal("show");
+
+                return ;
+            }
+
+            _reset($(".form-horizontal.add-new"));
+
+            $("#dialog-recommend-update").modal("show")
+
+            $.get("/admin/activity/getRecommend/" + id[0], null, function (res, status) {
+                $("#type_recommend_update").find("option[value="+res.recommend.type+"]").attr("selected" , "selected");
+                $("#enable_recommend_update").find("option[value="+res.recommend.enable+"]").attr("selected", "selected");
+
+                foodID_recommend_update = res.recommend.foodID;
+
+                $("#createTime_recommend").val(getFormattedTime(res.recommend.createTime));
+                $("#id_recommend_upate").val(res.recommend.id);
+            });
+
+        } else {
+            $("#dialog-return").find(".modal-body").html("请选中推荐条目");
+            $("#dialog-return").modal("show");
+        }
+    });
+
+    //重置input框的状态
+    function _set(el, message) {
+        el.addClass("alert-danger");
+        el.attr("title", message);
+        el.tooltip('show');
+    }
+
+    //折扣和满减的状态切换
+    function type_discount_change(type){//1: 满减, 0: 折扣
+        switch ( type ){
+            case 1 : // 满减
+                $("#discount").attr("readonly","readonly");
+                $("#moneyLimit_discount").removeAttr("readonly");
+
+                break;
+
+            case 0 : // 折扣
+                $("#moneyLimit_discount").attr("readonly","readonly");
+                $("#discount").removeAttr("readonly");
+
+                break;
+
+            default :
+
+                break;
+        }
+    }
+
+    //折扣和满减的类型切换时，对输入框进行无效化操作
+    $("#type_discount").change(function (e) {
+        var type = parseInt( e.currentTarget.value );
+
+        type_discount_change(type);
+    });
+
+    function checkBoxClick(e){
+        if(IDMapForRecommendAdd.get( e.value ) == undefined){//之前未选中
+            IDMapForRecommendAdd.set(e.value,1);
+        } else {//之前已选中
+            IDMapForRecommendAdd.set(e.value, undefined);
+        }
+    }
+
+    //添加推荐弹出框的确认按钮
+    $(".btn.btn-primary.add-new-recommend").click(function () {
+        var startTime;
+        var endTime;
+
+        var isComplete = true;
+        var isFormatted = true;
+
+
+        if ($("input[name='table_id_recommend_dialog']").length == 0) {
+            $("#dialog-return").find(".modal-body").html("请选择菜品");
+            $("#dialog-return").modal("show");
+
+            return
+        }
+
+        var flag_ = window.flag;
+        console.log(window.flag);
+
+        var form = new FormData();
+        var IDList = new Array();
+
+
+        IDMapForRecommendAdd.forEach(function (value,key,map) {
+            IDList.push(key);
+        });
+
+        form.append("type", $("select[id='type_recommend']").val());
+        form.append("foodID", IDList);
+        form.append("enable", 1);//默认启用
+
+        $.ajax({
+            url: "/admin/activity/recommend/add",
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                switch (r.status) {
+                    case "SUCCEED" :
+                        //清空选项
+                        $("input[name='table_id_recommend_dialog']").removeAttr("checked");
+                        IDMapForRecommendAdd = new Map();
+
+                        var message;
+                        if (flag_ == 'add') {
+                            message = "新增成功";
+                        } else {
+                            message = "修改成功";
+                        }
+
+                        $("#dialog-return").find(".modal-body").html(message);
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.add-new-close").click();
+                        $(".panel.panel-default").find("button[name='refresh']").click();
+
+                        break
+
+                    case "FAILED" :
+                        if (flag_ == 'add') {
+                            message = "新增失败";
+                        } else {
+                            message = "修改失败";
+                        }
+
+                        $("#dialog-return").find(".modal-body").html(message);
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.add-new-close").click();
+
+                        break
+                }
+            },
+            error: function (r) {
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
+
+        form = '';//避免重复点击
+
+    });
+
+    //添加折扣弹出框的确认按钮
+    $(".btn.btn-primary.add-new-discount").click(function () {
+        var startTime;
+        var endTime;
+
+        var isComplete = true;
+        var isFormatted = true;
+
+        //check input
+        if ($("input[id='mac_id']").val() == "") {
+            _set($("input[id='mac_id']"), "设备id");
+            isComplete = false;
+        }
+        if ($("input[id='name']").val() == "") {
+            _set($("input[id='name']"), "设备名称");
+            isComplete = false;
+        }
+        if ($("input[id='attributionOfDevice']").val() == "") {
+            _set($("input[id='attributionOfDevice']"), "设备归属");
+            isComplete = false;
+        }
+        if ($("input[id='organization_name']").val() == "") {
+            _set($("input[id='organization_name']"), "组织");
+            isComplete = false;
+        }
+        if ($("input[id='addressOfDevice']").val() == "") {
+            _set($("input[id='addressOfDevice']"), "设备安装地址");
+            isComplete = false;
+        }
+        if ($("input[id='type']").val() == "") {
+            _set($("input[id='type']"), "类型");
+            isComplete = false;
+        }
+        if ($("input[id='level']").val() == "") {
+            _set($("input[id='level']"), "等级");
+            isComplete = false;
+        }
+
+        var flag_ = window.flag;
+        console.log(window.flag);
+
+        var form = new FormData();
+
+        if(flag_ == "update") {
+            form.append("id", $("input[id='id_discount']").val());
+            form.append("createTime", $("input[id='createTime_discount']").val());
+        } else {
+            form.append("id", 0);
+        }
+        form.append("type", $("select[id='type_discount']").val());
+        form.append("startTime", $("input[id='startTime_discount']").val());
+        form.append("endTime", $("input[id='endTime_discount']").val());
+        form.append("enable", $("select[id='enable_discount']").val());
+
+        if(form.get("type") == "1"){ // 满减
+            form.append("moneyLimit", $("input[id='moneyLimit_discount']").val() );
+            form.append("discount", 0 );
+        } else { // 折扣
+            form.append("moneyLimit", 0 );
+            form.append("discount", $("input[id='discount']").val() );
+        }
+
+        $.ajax({
+            url: "/admin/activity/discount/" + flag,
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                switch (r.status) {
+                    case "SUCCEED" :
+                        var message;
+                        if (flag_ == 'add') {
+                            message = "新增成功";
+                        } else {
+                            message = "修改成功";
+                        }
+
+                        $("#dialog-return").find(".modal-body").html(message);
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.add-new-close").click();
+                        $(".panel.panel-default").find("button[name='refresh']").click();
+
+                        break
+
+                    case "FAILED" :
+                        if (flag_ == 'add') {
+                            message = "新增失败";
+                        } else {
+                            message = "修改失败";
+                        }
+
+                        $("#dialog-return").find(".modal-body").html(message);
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.add-new-close").click();
+
+                        break
+                }
+            },
+            error: function (r) {
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
+
+        form = '';//避免重复点击
+
+    });
+
+    //点击删除按钮,打开折扣删除确认dialog
+    $(".btn.btn-danger.delete-discount-dialog").click(function (){
+        var selectedBox = $("input[name='table_id_discount']:checked");
+
+        var id = new Array();
+
+        for(var i = 0; i < selectedBox.length; i++){
+            id.push(selectedBox[i].value);
+        }
+
+        if (id.length > 0) {
+            $("#dialog-discount-delete").find(".modal-body").html("是否删除选中折扣菜单?</br>");
+
+            // for(var i = 0; i < id.length; i++){
+            //     $("#dialog-discount-delete").find(".modal-body").append("</br>"+contactsNameMap.get( parseInt(id[i]) ));
+            // }
+
+            $("#dialog-discount-delete").modal("show");
+        } else {
+            $("#dialog-return").find(".modal-body").html("请选择折扣");
+            $("#dialog-return").modal("show");
+        }
+    })
+
+    //点击删除按钮,打开推荐删除确认dialog
+    $(".btn.btn-danger.delete-recommend-dialog").click(function (){
+        var selectedBox = $("input[name='table_id_recommend']:checked");
+
+        var id = new Array();
+
+        for(var i = 0; i < selectedBox.length; i++){
+            id.push(selectedBox[i].value);
+        }
+
+        if (id.length > 0) {
+            $("#dialog-recommend-delete").find(".modal-body").html("是否删除选中的推荐?</br>");
+
+            $("#dialog-recommend-delete").modal("show");
+        } else {
+            $("#dialog-return").find(".modal-body").html("请选择推荐");
+            $("#dialog-return").modal("show");
+        }
+    })
+
+
+    //修改推荐时，保存
+    $(".update-new-recommend").click(function (e) {
+        if ($("input[name='table_id_recommend_dialog']").length == 0) {
+            $("#dialog-return").find(".modal-body").html("请选择菜品");
+            $("#dialog-return").modal("show");
+        }
+
+        var form = new FormData();
+
+        form.append("id", $("input[id='id_recommend_upate']").val());
+        form.append("createTime", $("input[id='createTime_recommend']").val());
+        form.append("type", $("select[id='type_recommend']").val());
+        form.append("foodID", $("input[name='table_id_recommend_dialog']").val());
+        form.append("enable", $("select[id='enable_recommend_update']").val());//默认启用
+
+        $.ajax({
+            url: "/admin/activity/recommend/update",
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                switch (r.status) {
+                    case "SUCCEED" :
+                        //清空选项
+                        $("input[name='table_id_recommend_dialog']").removeAttr("checked");
+                        IDMapForRecommendAdd = new Map();
+
+                        $("#dialog-return").find(".modal-body").html("修改成功");
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.update-new-close").click();
+                        $(".panel.panel-default").find("button[name='refresh']").click();
+
+                        break
+
+                    case "FAILED" :
+                        if (flag_ == 'add') {
+                            message = "新增失败";
+                        } else {
+                            message = "修改失败";
+                        }
+
+                        $("#dialog-return").find(".modal-body").html(message);
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.add-new-close").click();
+
+                        break
+                }
+            },
+            error: function (r) {
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
+    })
+
+
+    //删除折扣确认按钮
+    $(".btn.btn-danger.btn-discount-delete-confirm").click(function () {
+        console.log('clicked the delete');
+
+        var list_id = new Array();
+
+        var selectedBox = $("input[name='table_id_discount']:checked");
+
+        for(var i = 0; i <  selectedBox.length; i++){
+            list_id.push( parseInt(selectedBox[i].value) );
+        }
+
+        console.log(list_id);
+
+        var form = new FormData();
+
+        form.append("list_ID", list_id);
+
+        $.ajax({
+            url: "/admin/activity/discount/delete",
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                switch (r.status) {
+                    case "SUCCEED" :
+                        $("#dialog-return").find(".modal-body").html("删除成功");
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.btn-delete-cancel").click();
+                        $(".panel.panel-default").find("button[name='refresh']").click();
+
+                        break
+
+                    case "FAILED" :
+                        $("#dialog-return").find(".modal-body").html("删除失败");
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        break
+                }
+            },
+            error: function (r) {
+
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
+    })
+
+    //删除推荐确认按钮
+    $(".btn.btn-danger.btn-recommend-delete-confirm").click(function () {
+        console.log('clicked the delete');
+
+        var list_id = new Array();
+
+        var selectedBox = $("input[name='table_id_recommend']:checked");
+
+        for(var i = 0; i <  selectedBox.length; i++){
+            list_id.push( parseInt(selectedBox[i].value) );
+        }
+
+        console.log(list_id);
+
+        var form = new FormData();
+
+        form.append("list_ID", list_id);
+
+        $.ajax({
+            url: "/admin/activity/recommend/delete",
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (r) {
+                switch (r.status) {
+                    case "SUCCEED" :
+                        $("#dialog-return").find(".modal-body").html("删除成功");
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.btn-delete-cancel").click();
+                        $(".panel.panel-default").find("button[name='refresh']").click();
+
+                        break
+
+                    case "FAILED" :
+                        $("#dialog-return").find(".modal-body").html("删除失败");
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        break
+                }
+            },
+            error: function (r) {
+
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
+    })
+
+
+
+    function single_select(e){
+        $("input[name='table_id_recommend_dialog']").removeAttr("checked");
+        $(e).prop("checked",true);
+    }
+
+    function doAllCheck(e){
+        var list = $('input[name='+e+']');
+
+        for(i in list){
+            list[i].checked = !list[i].checked;
+        }
+    }
+
+    function _formatte_id_discount(value, row, index) {
+        if(index == 0){
+            contactsNameMap = new Map();
+        }
+
+        contactsNameMap.set(value,row.name);
+
+        return '<input name="table_id_discount" type="checkbox" value="' + value + '" />';
+    }
+
+    function _formatte_id_recommend(value, row, index) {
+        if(index == 0){
+            contactsNameMap = new Map();
+        }
+
+        contactsNameMap.set(value,row.name);
+
+        return '<input name="table_id_recommend" type="checkbox" value="' + value + '" />';
+    }
+
+    function _formatte_id_recommend_dialog(value, row, index) {
+        return '<input name="table_id_recommend_dialog" type="checkbox" onclick="checkBoxClick(this)" value="' + value + '" />';
+    }
+
+    function _formatte_id_recommend_dialog_update(value, row, index) {
+        return '<input name="table_id_recommend_dialog" type="checkbox" onclick="single_select(this)" value="' + value + '" />';
+    }
+
+    function _formatte_image(value, row, index) {
+        var imgSrc = value;
+
+        console.log("图像信息 :"+value);
+
+        if(value == ""){
+            imgSrc = "/images/default_avatar_male.jpg";
+
+            return s = '<a class = "view"  href="javascript:void(0)"><img style="height:60px;border-radius:20%"  src=' + imgSrc+' /></a>';
+        }
+
+        var s = '<a class = "view"  href="javascript:void(0)"><img style="height:60px;border-radius:20%"  src="' + imgSrc+ '" /></a>';
+
+        return s;
+    }
+
+    function _formatte_select(value, row, index) {
+        var styles = value;
+
+        var select = '<select class="form-control">'
+
+        for(i in styles){
+            select += '<option> '+i+' </option>';
+        }
+
+        select += '</select>'
+
+        return select;
+    }
+
+    function _formatte_select_enable(value, row, index) {
+        return $.trim(value) ==$.trim('1') ? "是":"否" ;
+    }
+
+    function _formatte_time(value, row, index) {
+        if(value==undefined){
+            return '-'
+        }
+
+        return getFormattedTime(value);
+    }
+
+    function _formatte_discount(value,row,index){
+        if(value == undefined || value==0){
+            return "-";
+        }
+
+        return value*100+"折"
+    }
+
+    function _formatte_discount_type(value, row, index){
+        switch (value){
+            case 1 :
+                return "满减";
+            case 0 :
+                return "折扣";
+
+        }
+    }
+
+    function _formatte_recommend_type(value, row, index){
+        switch (value){
+            case 1 :
+                return "列表";
+            case 0 :
+                return "轮播";
+
+        }
+    }
+
+    function displayLineChart(callback) {
+        var ctx = document.getElementById("line-chart").getContext("2d");
+
+        lineChart = new Chart(ctx).Line(data_chart, options);
+
+        callback();
+    }
+
+    //注销
+    $(".btn.btn-danger.btn-logout").click(function () {
+        window.location.href = "/logout";
+    })
+</script>
+
+</body>
+</html>

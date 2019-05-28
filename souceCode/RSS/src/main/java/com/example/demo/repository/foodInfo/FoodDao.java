@@ -2,8 +2,6 @@ package com.example.demo.repository.foodInfo;
 
 import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.model.admin.FoodForRecommendModel;
-import com.example.demo.model.customer.FoodForCustomerRecommendModel;
-import com.sun.org.glassfish.gmbal.ParameterNames;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

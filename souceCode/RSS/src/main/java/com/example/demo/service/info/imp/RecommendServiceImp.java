@@ -1,8 +1,6 @@
 package com.example.demo.service.info.imp;
 
-import com.example.demo.domain.info.RecommendFood;
 import com.example.demo.model.customer.FoodForCustomerRecommendModel;
-import com.example.demo.repository.foodInfo.FoodDao;
 import com.example.demo.repository.info.RecommendFoodDao;
 import com.example.demo.service.info.RecommendFoodService;
 import org.springframework.beans.factory.annotation.Autowired;

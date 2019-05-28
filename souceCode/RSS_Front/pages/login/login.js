@@ -1,5 +1,8 @@
-//index.js
-//获取应用实例
+import Toast from '../../dist/toast/toast';
+
+// Toast('我是提示文案，建议不超过十五字~');
+
+
 const app = getApp()
 
 Page({
@@ -39,7 +42,9 @@ Page({
   },
 
   onLoad: function () {
+
     var that = this;
+
 
     //获取头像
     wx.getUserInfo({
@@ -52,6 +57,12 @@ Page({
       }
     })
 
+    Toast.loading({
+      mask: true,
+      message: '验证登录信息',
+      duration: 0
+    });
+
     //登录,获取用户信息
     wx.login({
       success(res) {
@@ -63,7 +74,7 @@ Page({
               "code" : res.code
             },
 
-            success: res => {
+            success: res => {              
               app.globalData.userInfo = res.data.userInfo;
 
               that.checkLoginStatus(res.data.userInfo.openid);
@@ -81,7 +92,6 @@ Page({
     })
   },
 
-
   getUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -92,6 +102,8 @@ Page({
   },
 
   checkLoginStatus(openid){
+    Toast.clear();
+
     var that = this;
 
     wx.request({
@@ -105,12 +117,16 @@ Page({
           var identity = res.data.identity;
 
           switch(identity){
+            case 0 : //未登录
+              Toast.fail("请先登录");
+              break;
+
             case 1 : //服务员
               that.toWaiterWorkingBench();
 
               break;
             case 2 : //厨师
-              that.toWaiterWorkingBench();
+              that.toCookerWorkingBench();
               
               break;
             case 3: //客户
@@ -122,7 +138,7 @@ Page({
           }
 
           console.log(res);
-        })
+        });
 
         var identity = res.data.identity;
 
@@ -148,5 +164,9 @@ Page({
     })
   },
 
-  toCookerWoringBench(){}
+  toCookerWorkingBench(){
+    wx.redirectTo({
+      url: '/pages/forCookerService/cooker',
+    })
+  },
 })

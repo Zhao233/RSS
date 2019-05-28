@@ -14,9 +14,14 @@ App({
   },
 
   info:{
-    hostname:"localhost",
+    hostname:"140.143.56.249",
     port:8881,
   },
+
+  // info: {
+  //   hostname: "localhost",
+  //   port: 8881,
+  // },
 
   onLaunch: function (options) {
     var that = this;
@@ -70,7 +75,6 @@ App({
 
   },
   
-
   //全局方法
   showToast : function (message) {
     wx.showToast({
@@ -100,8 +104,10 @@ App({
         break;
 
       case "FAILED":
+        failed();
+
         if (res.data.message != undefined) {
-          this.showToast(res.data.message)
+          
         }
     }
   },

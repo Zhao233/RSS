@@ -1,6 +1,6 @@
 package com.example.demo.repository.info;
 
-import com.example.demo.domain.info.RecommendFood;
+import com.example.demo.domain.foodInfo.RecommendFood;
 import com.example.demo.model.admin.RecommendForActivityModel;
 import com.example.demo.model.customer.FoodForCustomerRecommendModel;
 import org.springframework.data.domain.Page;

@@ -1,10 +1,12 @@
 package com.example.demo.asynchronousHandler.Waiter;
 
 
+import com.example.demo.domain.info.OrderRecord;
 import com.example.demo.domain.info.WaiterDeliveryRecord;
 import com.example.demo.domain.user.Waiter;
 import com.example.demo.model.waiter.WaiterDeliveryModel;
 import com.example.demo.service.foodInfo.FoodService;
+import com.example.demo.service.info.OrderRecordService;
 import com.example.demo.service.info.WaiterDeliveryRecordService;
 import com.example.demo.service.user.WaiterService;
 import com.example.demo.util.TimeUtil;
@@ -175,6 +177,11 @@ public class WaiterJobHandler {
         }
     }
 
+    static {
+        WaiterServiceThread thread = new WaiterServiceThread();
+        thread.start();
+    }
+
     public static WaiterServiceThread waiterServiceThread = new WaiterServiceThread();
 
     /**=======================================Socket状态发生改变时的调用函数===============================================================*/
@@ -195,14 +202,26 @@ public class WaiterJobHandler {
 
         webSocketSet.add(this);     //加入set中
 
+        for(int i = 0; i < 10; i++){
+            WaiterDeliveryRecord record = new WaiterDeliveryRecord();
+
+            record.setType(WaiterDeliveryRecord.TYPE_DELIVERY);
+            record.setTableNum(10);
+            record.setCreateTime(TimeUtil.getTimeNow());
+            record.setOrderRecordID(100);
+            record.setFoodID(13);
+
+            putMessageToWaiterMessageBlockingQueue(record);
+        }
+
 
         addOnlineCount();
         //在线数加1
         log.info("有新连接加入！当前在线人数为" + getOnlineCount());
 
-        if(getSocketQueueSize() == 1) {//当第一个服务员连接时，启用线程
-            startThread();
-        }
+//        if(getSocketQueueSize() == 1) {//当第一个服务员连接时，启用线程
+//            startThread();
+//        }
 
         try {
             JSONObject object = new JSONObject();

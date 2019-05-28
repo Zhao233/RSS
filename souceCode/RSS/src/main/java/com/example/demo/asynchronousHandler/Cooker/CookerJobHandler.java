@@ -59,7 +59,7 @@ public class CookerJobHandler {
     /**
      * 内在属性
      * */
-    private Cooker cooker;
+    public Cooker cooker;
     private int status = STATUS_WORKING;
     private Session session;
 
@@ -108,7 +108,6 @@ public class CookerJobHandler {
         public void run(){
             log.info("监听线程已启动");
 
-
             while (true){
                 if(messageQueue.size() != 0 ){//持续读取消息队列
 
@@ -129,11 +128,11 @@ public class CookerJobHandler {
                         }
 
                         CookerDeliveryRecord cookerDeliveryRecord = CookerJobHandler.getFirstCookerDeliveryRecord();
-                        Food food = foodService.getOne(cookerDeliveryRecord.getFoodId());
+                        //Food food = foodService.getOne(cookerDeliveryRecord.getFoodId());
 
-                        if(socket.cooker.getRole() != food.getRole()){ //如果菜品的制作类型不属于该厨师，就遍历下一个
-                            continue;
-                        }
+//                        if(socket.cooker.getRole() != food.getRole()){ //如果菜品的制作类型不属于该厨师，就遍历下一个
+//                            continue;
+//                        }
 
                         cookerDeliveryRecord.setCookerID(socket.cooker.getId());
                         cookerDeliveryRecordService.save(cookerDeliveryRecord);
@@ -143,9 +142,14 @@ public class CookerJobHandler {
                         model.setCreateTime(TimeUtil.getFormattedTime( cookerDeliveryRecord.getCreateTime() ));
                         model.setOrderID(cookerDeliveryRecord.getOrderRecordId());
                         model.setTableNum(cookerDeliveryRecord.getTableNum());
-                        model.setFoodPicUrl(food.getPicUrl());
+                        model.setFoodPicUrl("https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555679336967.jpg");
 
                         JSONObject jsonObject = JSONObject.fromObject(model);
+
+                        jsonObject.put("status","SUCCEED");
+                        jsonObject.put("type",TYPE_GETMISSION);
+                        jsonObject.put("data", model);
+
                         String jsonMessage = jsonObject.toString();
 
                         try {
@@ -165,6 +169,10 @@ public class CookerJobHandler {
     /**
      * 当Socket类被实例化时，建立监听线程
      * */
+    static {
+        CookerServiceThread thread = new CookerServiceThread();
+        thread.start();
+    }
 
 
     public static CookerServiceThread cookerServiceThread = new CookerServiceThread();
@@ -188,6 +196,17 @@ public class CookerJobHandler {
         webSocketSet.add(this);     //加入set中
 
         addOnlineCount();
+
+        for(int i = 0; i < 10; i++){
+            CookerDeliveryRecord record = new CookerDeliveryRecord();
+
+            record.setTableNum(10);
+            record.setCreateTime(TimeUtil.getTimeNow());
+            record.setFoodId(Long.valueOf(13));
+
+            putMessageToCookerMessageBlockingQueue(record);
+        }
+
         //在线数加1
         log.info("有新连接加入！当前在线人数为" + getOnlineCount());
 
@@ -213,9 +232,9 @@ public class CookerJobHandler {
         subOnlineCount();           //在线数减1
         log.info("有一连接关闭！当前在线人数为" + getOnlineCount());
 
-        if( getSocketQueueSize() == 0){//当没有人在线时，线程停止工作
-            CookerJobHandler.cookerServiceThread.wait();
-        }
+//        if( getSocketQueueSize() == 0){//当没有人在线时，线程停止工作
+//            CookerJobHandler.cookerServiceThread.wait();
+//        }
     }
 
     /**
@@ -274,7 +293,7 @@ public class CookerJobHandler {
     /**
      * 向已连接对象发送消息
      * */
-    public void sendMessage(String message) throws IOException {
+    public synchronized void sendMessage(String message) throws IOException {
         this.session.getBasicRemote().sendText(message);
     }
 
@@ -315,7 +334,7 @@ public class CookerJobHandler {
     /**
      * 外部程序将订单记录传至阻塞队列中等待处理
      * */
-    public synchronized static boolean putMessageToWaiterMessageBlockingQueue(CookerDeliveryRecord record){
+    public synchronized static boolean putMessageToCookerMessageBlockingQueue(CookerDeliveryRecord record){
         return messageQueue.add(record);
     }
 

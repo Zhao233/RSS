@@ -1,10 +1,16 @@
 package com.example.demo.controller.weApp;
 
+import com.example.demo.domain.info.FrequentlyUsedFood;
+import com.example.demo.domain.user.Cooker;
 import com.example.demo.domain.user.Customer;
 import com.example.demo.domain.user.Waiter;
+import com.example.demo.repository.info.FrequentlyUsedFoodDao;
+import com.example.demo.service.info.FrequentlyUsedFoodService;
+import com.example.demo.service.user.CookerService;
 import com.example.demo.service.user.CustomerService;
 import com.example.demo.service.user.LoginService;
 import com.example.demo.service.user.WaiterService;
+import com.example.demo.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +28,13 @@ public class LoginCheckController {
 
     @Autowired
     private WaiterService waiterService;
+
+    @Autowired
+    private CookerService cookerService;
+
+    @Autowired
+    private FrequentlyUsedFoodService frequentlyUsedFoodService;
+
 
     @ResponseBody
     @RequestMapping("/loginCheck")
@@ -50,11 +63,11 @@ public class LoginCheckController {
             return map;
         }
 
-        isLogin = customerService.isLogin(openid);//客户登录
-        identity = 3;
-        if( !isLogin ) {// 未注册
-            map.put("status", "FAILED");
+        isLogin = cookerService.isLogin(openid);//厨师登录
+        identity = 2;
 
+        if( !isLogin ) {//未注册
+            map.put("status", "FAILED");
         }
 
         if(isLogin){//已注册
@@ -64,7 +77,19 @@ public class LoginCheckController {
             return map;
         }
 
+        isLogin = customerService.isLogin(openid);//客户登录
+        identity = 3;
+        if( !isLogin ) {// 未注册
+            map.put("identity", 0);
+            map.put("status", "SUCCEED");
+        }
 
+        if(isLogin){//已注册
+            map.put("identity", identity);
+            map.put("status", "SUCCEED");
+
+            return map;
+        }
 
         return map;
     }
@@ -90,14 +115,15 @@ public class LoginCheckController {
         /**
          * 厨师的录入
          */
-//        isExist = waiterService.checkIsWaiterExistByLoginID(loginID);
-//
-//        if(isExist == 3){//录入成功
-//            cookerService.registerWaiter(openid, loginID);
+        isExist = cookerService.checkIsCookerExistByLoginID(loginID);
 
-//            map.put("status", "SUCCEED");
-//            return map;
-//        }
+        if(isExist == 2){//录入成功
+            Cooker cooker = cookerService.registerCooker(openid, loginID);
+
+            map.put("status", "SUCCEED");
+            map.put("userInfo", cooker);
+            return map;
+        }
 
         /**
          * 客户的录入
@@ -106,6 +132,13 @@ public class LoginCheckController {
 
         if(isExist == 1){//后台未录入
             Customer customer = customerService.registerCustomer(openid);
+
+            FrequentlyUsedFood frequentlyUsedFood = new FrequentlyUsedFood();
+            frequentlyUsedFood.setUserID(customer.getId());
+            frequentlyUsedFood.setFoodsId("");
+            frequentlyUsedFood.setNums("");
+            frequentlyUsedFood.setStylesId("");
+            frequentlyUsedFood.setCreateTime(TimeUtil.getTimeNow());
 
             map.put("status", "SUCCEED");
             map.put("userInfo", customer);

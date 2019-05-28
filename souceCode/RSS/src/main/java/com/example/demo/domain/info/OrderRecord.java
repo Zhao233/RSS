@@ -29,6 +29,9 @@ public class OrderRecord {
     @Column(name = "styles_id")
     private String stylesID;
 
+    @Column(name = "table_num")
+    private Integer tableNum;
+
     @Column(name = "settlement_amount")
     private double settlementAmount;
 
@@ -66,8 +69,10 @@ public class OrderRecord {
      * 获取支付信息时的类型
      * */
     public static final int TYPE_ACCOUNT_MONTH = 1;
-    public static final int TYPE_ACCOUNT_WEEK = 2;
-    public static final int TYPE_ACCOUNT_DAY = 3;
+    public static final int TYPE_ACCOUNT_WEEK  = 2;
+    public static final int TYPE_ACCOUNT_DAY   = 3;
+    public static final int TYPE_ACCOUNT_ALL   = 4;
+
 
     /***
      * 获取订单次数的的类型

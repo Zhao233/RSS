@@ -1,12 +1,11 @@
 package com.example.demo.timeTask;
 
 import com.example.demo.domain.info.OrderRecord;
-import com.example.demo.domain.info.PopularFoods;
+import com.example.demo.domain.foodInfo.PopularFoods;
 import com.example.demo.service.info.OrderRecordService;
 import com.example.demo.service.info.PopularFoodsService;
 import com.example.demo.util.StringTranslator;
 import com.example.demo.util.TimeUtil;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -61,13 +60,6 @@ public class timerTask {
         popularFoods.setEndTime(popularFoods.getCreateTime());
 
         popularFoodsService.addOne(popularFoods);
-
-
-//        iterator_id = set_id.iterator();
-//
-//        while( iterator_id.hasNext() ){
-//
-//        }
 
     }
 

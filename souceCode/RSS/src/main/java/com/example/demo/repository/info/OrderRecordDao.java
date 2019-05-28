@@ -19,6 +19,10 @@ public interface OrderRecordDao extends JpaRepository<OrderRecord,Long> {
             "(orderRecord.createTime > ?1 AND orderRecord.createTime < ?2  )")
     Double getAccount(Timestamp startTime, Timestamp endTime);
 
+    @Query(value = "SELECT SUM(orderRecord.settlementAmount) FROM OrderRecord orderRecord " +
+            "WHERE orderRecord.isPaid = 1 ")
+    Double getAllAccount();
+
     @Query(value = "SELECT SUM(orderRecord) " +
                    "FROM OrderRecord orderRecord " +
                    "WHERE orderRecord.isPaid = 1" +

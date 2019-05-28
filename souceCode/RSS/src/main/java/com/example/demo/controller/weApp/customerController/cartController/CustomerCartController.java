@@ -1,10 +1,17 @@
 package com.example.demo.controller.weApp.customerController.cartController;
 
+import com.example.demo.asynchronousHandler.Cooker.CookerJobHandler;
 import com.example.demo.domain.foodInfo.Food;
-import com.example.demo.domain.info.DiscountRecord;
+import com.example.demo.domain.foodInfo.DiscountRecord;
+import com.example.demo.domain.info.CookerDeliveryRecord;
+import com.example.demo.domain.info.OrderRecord;
+import com.example.demo.domain.user.Cooker;
 import com.example.demo.service.foodInfo.FoodService;
 import com.example.demo.service.info.DiscountService;
 import com.example.demo.service.info.OrderRecordService;
+import com.example.demo.service.user.CustomerService;
+import com.example.demo.util.StringTranslator;
+import com.example.demo.util.TimeUtil;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,11 +37,15 @@ public class CustomerCartController {
     @Autowired
     private OrderRecordService orderRecordService;
 
+    @Autowired
+    private CustomerService customerService;
+
     @ResponseBody
     @RequestMapping("/onSubmit")
     private Map<String, Object> submitCartList(@RequestParam(value = "foodIDList") String foodIDList,
                                                @RequestParam(value = "foodNumList") String foodNumList,
                                                @RequestParam(value = "styleIDList") String styleIDList,
+                                               @RequestParam(value = "tableNum") Integer tableNum,
                                                @RequestParam(value = "discountID", required = false) Long discountID,
                                                @RequestParam(value = "openID" ) String openID,
                                                @RequestParam(value = "expirationTime" ) String expirationTime,
@@ -49,6 +60,10 @@ public class CustomerCartController {
         LinkedList<Integer> foodNumList_ = new LinkedList<>();
         LinkedList<Long> styleIDList_ = new LinkedList<>();
 
+        Double discount = discountService.getDiscountNum(discountID);
+
+        Long userID = customerService.getIDByOpenID(openID);
+
         for(int i = 0; i < array_foodIDList.size(); i++){
             Long id =  Long.valueOf( String.valueOf( array_foodIDList.get(i) ) );
             int num = (int)array_foodNumList.get(i);
@@ -58,7 +73,7 @@ public class CustomerCartController {
         }
 
         if( checkFoodAccount(foodIDList_, foodNumList_, account) ){
-            Long recordID = orderRecordService.addOne(foodIDList_, foodNumList_, styleIDList_, discountID, openID, Long.parseLong(expirationTime), account);
+            Long recordID = orderRecordService.addOne(foodIDList_, foodNumList_, styleIDList_, discountID, openID, Long.parseLong(expirationTime), account, tableNum);
 
             map.put("status", "SUCCEED");
             map.put("nonPaymentRecordID", recordID);
@@ -84,6 +99,23 @@ public class CustomerCartController {
         return map;
     }
 
+    @ResponseBody
+    @RequestMapping("/payForOrder")
+    private Map<String, Object> payForTheOrderRecord(@RequestParam("orderRecordID") Long recordID,
+                                                     @RequestParam("orderRecordID") String payment){
+        Map<String, Object> map = new HashMap<>();
+
+        OrderRecord record = orderRecordService.getOrderRecordByID(recordID);
+
+        //支付完成
+
+
+        sendCookerDeliveryRecordsToCookerFromOrder(record);
+        map.put("status", "SUCCEED");
+        return map;
+    }
+
+
     public boolean checkFoodAccount(List<Long> foodIDList,List<Integer> foodNumList, double account){
         double account_food = 0;
 
@@ -94,6 +126,36 @@ public class CustomerCartController {
         }
 
         return account_food == account;
+    }
+
+    private void sendCookerDeliveryRecordsToCookerFromOrder(OrderRecord record){
+        List<Long> foods_id = new LinkedList<>();
+        List<Integer> foods_num = new LinkedList<>();
+
+        foods_id = StringTranslator.getListFromString(record.getFoodsID(),0);
+        foods_num = StringTranslator.getListFromString(record.getFoodsNum(), 1);
+
+        Integer tableNum = record.getTableNum();
+
+        LinkedList<CookerDeliveryRecord> list = new LinkedList<>();
+
+        for(int i = 0; i < foods_id.size(); i++){
+            Long foodID = foods_id.get(i);
+
+                for( int j = 0; j < foods_num.get(i); j++ ){
+
+                    CookerDeliveryRecord deliveryRecord = new CookerDeliveryRecord();
+                    deliveryRecord.setFoodId(foodID);
+                    deliveryRecord.setTableNum(tableNum);
+                    deliveryRecord.setOrderRecordId(record.getId());
+                    deliveryRecord.setIsComplete(0);
+                    deliveryRecord.setCreateTime(TimeUtil.getTimeNow());
+
+                    CookerJobHandler.putMessageToCookerMessageBlockingQueue(deliveryRecord);//将任务发送给厨师
+                }
+
+        }
+
     }
 
 }

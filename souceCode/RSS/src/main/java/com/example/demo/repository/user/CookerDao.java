@@ -18,7 +18,7 @@ public interface CookerDao extends JpaRepository<Cooker,Long> {
     Page<Cooker> getAll(String search, Pageable pageable);
 
     /**=========================For Cooker==========================*/
-    @Query(value = "SELECT cooker FROM Cooker cooker WHERE cooker.userID = ?1 AND cooker.enable = 1")
+    @Query(value = "SELECT cooker FROM Cooker cooker WHERE cooker.openID = ?1 AND cooker.enable = 1")
     Cooker getCookerByOpenID(String openid);
 
     @Query(value = "SELECT cooker FROM Cooker cooker WHERE cooker.loginID = ?1 AND cooker.enable = 1")
