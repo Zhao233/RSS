@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerDao extends JpaRepository<Customer,Long> {
-    @Query(value = "SELECT customer FROM Customer customer where customer.userName like %?1%")
+    /**==============================For Admin=========================================**/
+    @Query(value = "SELECT customer FROM Customer customer WHERE customer.userName LIKE %?1%")
     Page<Customer> getAll(String search, Pageable pageable);
 
     @Query(value = "SELECT customer.id FROM Customer customer WHERE customer.openID = ?1")

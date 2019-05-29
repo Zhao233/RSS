@@ -1,6 +1,8 @@
 <!--index.wxml-->
 <view class="container" style='padding: 0;'>
   <scroll-view style='height:100%; margin-bottom:50px'>
+          <view style='text-align:center;margin-top:10px' wx:if="{{orderList.length == 0}}" > 没有常用菜品 </view>
+
       <block wx:for="{{frequentlyUsedFoodList_list}}">
         <view style='margin:10rpx'>
 

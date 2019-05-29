@@ -10,9 +10,10 @@ public interface CustomerService {
 
     Long getIDByOpenID(String openID);
 
+    Customer registerCustomer(String openID, String name);
+
     boolean isLogin(String openid);
 
     int checkIsCustomerExistByLoginID(String loginID);
 
-    Customer registerCustomer(String openid);
 }

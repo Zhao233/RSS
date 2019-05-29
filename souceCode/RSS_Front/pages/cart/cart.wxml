@@ -1,6 +1,7 @@
 <!--index.wxml-->
 <view class="container" style='padding: 0;'>
   <scroll-view style='height:100%; margin-bottom:50px'>
+      <view style='text-align:center;margin-top:10px' wx:if='{{food_cart.length == 0}}'>购物车中无菜品</view>
       <block wx:for="{{food_cart}}">
         <view style='margin:10rpx'>
 

@@ -44,6 +44,18 @@ public class CookerServiceImp implements CookerService {
         cookerDao.deleteById(id);
     }
 
+    @Override
+    public Cooker registerCooker(String loginID, String openid, String name) {
+        Cooker cooker = cookerDao.getCookerByLoginID(loginID);
+
+        cooker.setOpenID(openid);
+        cooker.setName(name);
+        cooker.setUpdateTime(TimeUtil.getTimeNow());
+        cookerDao.save(cooker);
+
+        return cooker;
+    }
+
     /**=========================For Cooker==========================*/
 
     @Override
@@ -73,16 +85,7 @@ public class CookerServiceImp implements CookerService {
         return 3;
     }
 
-    @Override
-    public Cooker registerCooker(String loginID, String openid) {
-        Cooker cooker = cookerDao.getCookerByLoginID(loginID);
 
-        cooker.setOpenID(openid);
-        cooker.setUpdateTime(TimeUtil.getTimeNow());
-        cookerDao.save(cooker);
-
-        return cooker;
-    }
 
     @Override
     public Cooker getCookerByOpenID(String openID) {

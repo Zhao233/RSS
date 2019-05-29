@@ -8,6 +8,9 @@ Page({
     frequentlyUsedFoodList:new Map,
     frequentlyUsedFoodList_list : [],
     userInfo: {},
+
+    isEmpty : false,
+
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
@@ -34,6 +37,13 @@ Page({
         var frequentlyUsedModel = res.data.FrequentlyUsedFood;
 
         var foodList = frequentlyUsedModel.foodList;
+        
+        if(foodList.length == 0){
+          that.setData({
+            isEmpty : true
+          })
+        }
+
         var styleList = frequentlyUsedModel.styleList;
         var numList = frequentlyUsedModel.numList;
 
@@ -139,6 +149,12 @@ Page({
     var styleIds = new Array;
     var nums = new Array;
 
+    if (this.data.isEmpty ){
+      app.showToast("没有常用菜品");
+
+      return;
+    }
+
     for(var x of  this.data.frequentlyUsedFoodList){
       foodIDs.push(x[1].id);
       styleIds.push(x[1].styleID.id);
@@ -164,9 +180,11 @@ Page({
           app.showToast("保存成功");
         });
       },
+
       fail(res) {
         app.showToast("网络请求失败")
       }
+
     })
   },
 

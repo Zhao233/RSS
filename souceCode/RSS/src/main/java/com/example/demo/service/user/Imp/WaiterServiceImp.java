@@ -42,6 +42,33 @@ public class WaiterServiceImp implements WaiterService {
         waiterDao.deleteById(id);
     }
 
+    @Override
+    public Waiter registerWaiter(String loginID, String openid, String name) {
+        Waiter waiter = waiterDao.getWaiterByLoginID(loginID);
+
+//        if(waiter == null){//后台未录入
+//            map.put("status", "FAILED");
+//            map.put("message", "登录码错误或管理员未录入信息，请重新输入，或联系管理员");
+//
+//            return map;
+//        }
+//
+//        if(waiter != null && waiter.getUserID() != null){//后台已存在
+//            map.put("status", "FAILED");
+//            map.put("message", "登录码错误或管理员未录入信息，请重新输入，或联系管理员");
+//
+//            return map;
+//        }
+
+        waiter.setUserID(openid);
+        waiter.setName(name);
+        waiter.setUpdateTime(TimeUtil.getTimeNow());
+        waiterDao.save(waiter);
+
+        return waiter;
+
+    }
+
 
     /**=========================For Waiter==========================*/
 
@@ -74,31 +101,7 @@ public class WaiterServiceImp implements WaiterService {
         return 3;
     }
 
-    @Override
-    public Waiter registerWaiter(String loginID, String openid) {
-        Waiter waiter = waiterDao.getWaiterByLoginID(loginID);
 
-//        if(waiter == null){//后台未录入
-//            map.put("status", "FAILED");
-//            map.put("message", "登录码错误或管理员未录入信息，请重新输入，或联系管理员");
-//
-//            return map;
-//        }
-//
-//        if(waiter != null && waiter.getUserID() != null){//后台已存在
-//            map.put("status", "FAILED");
-//            map.put("message", "登录码错误或管理员未录入信息，请重新输入，或联系管理员");
-//
-//            return map;
-//        }
-
-        waiter.setUserID(openid);
-        waiter.setUpdateTime(TimeUtil.getTimeNow());
-        waiterDao.save(waiter);
-
-        return waiter;
-
-    }
 
     @Override
     public Waiter getWaiterByOpenID(String openID) {

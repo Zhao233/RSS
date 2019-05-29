@@ -26,6 +26,24 @@ public class CustomerServiceImp implements CustomerService {
         return customerDao.getIdByOpenID(openID);
     }
 
+    @Override
+    public Customer registerCustomer(String openID, String name) {
+        if( !isLogin(openID) ){
+
+            Customer customer = new Customer();
+            customer.setOpenID( openID );
+            customer.setUserName(name);
+            customer.setCreateTime( TimeUtil.getTimeNow() );
+            customer.setLogInTimes(0);
+
+            customerDao.save(customer);
+
+            return customer;
+        }
+
+        return null;
+    }
+
 
     /**=====================================For Customer=================================*/
     @Override
@@ -47,22 +65,7 @@ public class CustomerServiceImp implements CustomerService {
         return 3;
     }
 
-    @Override
-    public Customer registerCustomer(String openID) {
-        if( !isLogin(openID) ){
 
-            Customer customer = new Customer();
-            customer.setOpenID( openID );
-            customer.setCreateTime( TimeUtil.getTimeNow() );
-            customer.setLogInTimes(0);
-
-            customerDao.save(customer);
-
-            return customer;
-        }
-
-        return null;
-    }
 
 
 }

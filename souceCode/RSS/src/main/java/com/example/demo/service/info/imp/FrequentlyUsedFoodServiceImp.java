@@ -52,7 +52,7 @@ public class FrequentlyUsedFoodServiceImp implements FrequentlyUsedFoodService {
         FoodForCustomerFrequentlyModel temp_foodModel = new FoodForCustomerFrequentlyModel(frequentlyUsedFoodList.getId(), frequentlyUsedFoodList.getUserID(), foodList, styleList, nums);
 
         return temp_foodModel;
-        }
+    }
 
     @Override
     public boolean addFoodToFrequentlyUsedFoodList(String openID, Long foodID, Long styID) {
@@ -60,25 +60,25 @@ public class FrequentlyUsedFoodServiceImp implements FrequentlyUsedFoodService {
 
         Long customerID = customerDao.getIdByOpenID(openID);
 
-        if(frequentlyUsedFoodList == null){
-            frequentlyUsedFoodList = new FrequentlyUsedFood();
-
-            frequentlyUsedFoodList.setFoodsId(String.valueOf(foodID));
-            frequentlyUsedFoodList.setStylesId(String.valueOf(0));
-            frequentlyUsedFoodList.setNums("1");
-            frequentlyUsedFoodList.setCreateTime(TimeUtil.getTimeNow());
-            frequentlyUsedFoodList.setUserID(customerID);
-
-            frequentlyUsedFoodDao.save(frequentlyUsedFoodList);
-            return frequentlyUsedFoodList.getFoodsId() != null;
-        }
+//        if(frequentlyUsedFoodList == null){
+//            frequentlyUsedFoodList = new FrequentlyUsedFood();
+//
+//            frequentlyUsedFoodList.setFoodsId(String.valueOf(foodID));
+//            frequentlyUsedFoodList.setStylesId(String.valueOf(0));
+//            frequentlyUsedFoodList.setNums("1");
+//            frequentlyUsedFoodList.setCreateTime(TimeUtil.getTimeNow());
+//            frequentlyUsedFoodList.setUserID(customerID);
+//
+//            frequentlyUsedFoodDao.save(frequentlyUsedFoodList);
+//            return frequentlyUsedFoodList.getFoodsId() != null;
+//        }
 
         String foodIDs = frequentlyUsedFoodList.getFoodsId();
-        //String styleIDs = frequentlyUsedFoodList.getStylesId();
+        String styleIDs = frequentlyUsedFoodList.getStylesId();
         String nums = frequentlyUsedFoodList.getNums();
 
         String[] foodIDs_ = foodIDs.split("_");
-        //String[] styleIDs_ = styleIDs.split("_");
+        String[] styleIDs_ = styleIDs.split("_");
 
         for(String temp_foodID : foodIDs_){
             if( temp_foodID.equals( String.valueOf(foodID) ) ){
@@ -86,12 +86,18 @@ public class FrequentlyUsedFoodServiceImp implements FrequentlyUsedFoodService {
             }
         }
 
-        foodIDs += "_"+foodID;
-        //styleIDs += "_1";
-        nums += "_1";
+        if(foodIDs.length() == 0){
+            foodIDs += foodID;
+            styleIDs += "1";
+            nums += "1";
+        } else {
+            foodIDs += "_"+foodID;
+            styleIDs += "_1";
+            nums += "_1";
+        }
 
         frequentlyUsedFoodList.setFoodsId(foodIDs);
-        //frequentlyUsedFoodList.setStylesId(styleIDs);
+        frequentlyUsedFoodList.setStylesId(styleIDs);
         frequentlyUsedFoodList.setNums(nums);
 
         frequentlyUsedFoodDao.save(frequentlyUsedFoodList);

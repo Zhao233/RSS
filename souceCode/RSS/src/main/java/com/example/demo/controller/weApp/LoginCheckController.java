@@ -97,7 +97,8 @@ public class LoginCheckController {
     @ResponseBody
     @RequestMapping("/login")
     public Map<String, Object> weappLogin(@RequestParam("openid") String openid,
-                                          @RequestParam(value = "loginID", required = false) String loginID){
+                                          @RequestParam(value = "loginID", required = false) String loginID,
+                                          @RequestParam(value = "name", required = false) String name){
         Map<String, Object> map = new HashMap<>();
 
         int isExist = 0;
@@ -105,7 +106,7 @@ public class LoginCheckController {
         isExist = waiterService.checkIsWaiterExistByLoginID(loginID);
 
         if(isExist == 3){//录入成功
-            Waiter waiter = waiterService.registerWaiter(loginID, openid);
+            Waiter waiter = waiterService.registerWaiter(loginID, openid, name);
 
             map.put("status", "SUCCEED");
             map.put("userInfo", waiter);
@@ -118,7 +119,7 @@ public class LoginCheckController {
         isExist = cookerService.checkIsCookerExistByLoginID(loginID);
 
         if(isExist == 2){//录入成功
-            Cooker cooker = cookerService.registerCooker(openid, loginID);
+            Cooker cooker = cookerService.registerCooker(openid, loginID, name);
 
             map.put("status", "SUCCEED");
             map.put("userInfo", cooker);
@@ -131,7 +132,7 @@ public class LoginCheckController {
         isExist = customerService.checkIsCustomerExistByLoginID(loginID);
 
         if(isExist == 1){//后台未录入
-            Customer customer = customerService.registerCustomer(openid);
+            Customer customer = customerService.registerCustomer(openid, name);
 
             frequentlyUsedFoodService.saveEmptyFrequentlyUsedFoodList(customer.getId());
 

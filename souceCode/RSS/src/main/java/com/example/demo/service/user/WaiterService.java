@@ -15,12 +15,13 @@ public interface WaiterService {
 
     void deleteOne(long id);
 
+    Waiter registerWaiter(String loginID, String openid, String name);
+
     /**=========================For Waiter==========================*/
     boolean isLogin(String openid);
 
     int checkIsWaiterExistByLoginID(String loginID);
 
-    Waiter registerWaiter(String loginID, String openid);
 
     Waiter getWaiterByOpenID(String openID);
 }

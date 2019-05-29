@@ -17,12 +17,13 @@ public interface CookerService {
 
     void deleteOne(long id);
 
+    Cooker registerCooker(String loginID, String openid, String name);
+
     /**=========================For Waiter==========================*/
     boolean isLogin(String openid);
 
     int checkIsCookerExistByLoginID(String loginID);
 
-    Cooker registerCooker(String loginID, String openid);
 
     Cooker getCookerByOpenID(String openID);
 }
