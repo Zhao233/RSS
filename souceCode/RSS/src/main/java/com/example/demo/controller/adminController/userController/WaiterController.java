@@ -2,9 +2,11 @@ package com.example.demo.controller.adminController.userController;
 
 import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.domain.foodInfo.Menu;
+import com.example.demo.domain.info.WaiterDeliveryRecord;
 import com.example.demo.domain.user.Cooker;
 import com.example.demo.domain.user.Waiter;
 import com.example.demo.service.foodInfo.MenuService;
+import com.example.demo.service.info.WaiterDeliveryRecordService;
 import com.example.demo.service.user.WaiterService;
 import com.example.demo.util.LoginCheck;
 import com.example.demo.util.TimeUtil;
@@ -19,15 +21,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin/waiter")
 public class WaiterController {
     @Autowired
     private WaiterService waiterService;
+
+    @Autowired
+    private WaiterDeliveryRecordService waiterDeliveryRecordService;
 
     @ResponseBody
     @RequestMapping(value="/getAll")
@@ -122,6 +126,53 @@ public class WaiterController {
         map.put("status","SUCCEED");
 
         return map;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getWaiterServiceInfo")
+    public Map<String, Object> getWaiterServiceInfo(@RequestParam(name = "waiterID") Long waiterID) {
+        Map<String, Object> map = new HashMap();
+
+        List<Integer> serviceTimes = new LinkedList<>();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+
+        Integer totalServiceTimes = waiterDeliveryRecordService.getAllServiceTimes(waiterID);
+        Integer monthServiceTimes = waiterDeliveryRecordService.getServiceTime(WaiterDeliveryRecord.TYPE_SERVICE_MONTH, waiterID);
+        Integer weekServiceTimes = waiterDeliveryRecordService.getServiceTime(WaiterDeliveryRecord.TYPE_SERVICE_WEEK, waiterID);
+        Integer dayServiceTimes = waiterDeliveryRecordService.getServiceTime(WaiterDeliveryRecord.TYPE_SERVICE_DAY, waiterID);
+
+        serviceTimes = waiterDeliveryRecordService.getServiceTimeByTime(new Timestamp(calendar.getTime().getTime()), waiterID);
+
+        map.put("totalServiceTimes", totalServiceTimes);
+        map.put("monthServiceTimes", monthServiceTimes);
+        map.put("weekServiceTimes", weekServiceTimes);
+        map.put("dayServiceTimes", dayServiceTimes);
+        map.put("serviceTimes", serviceTimes);
+
+        map.put("status", "SUCCEED");
+
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping("/getOrderNumbers")
+    public Map<String, Object> getOrderNumbers(@RequestParam("startTime") String startTime,
+                                               @RequestParam("waiterID") Long waiterID){
+        HashMap<String, Object> res = new HashMap<>();
+
+        List<Integer> serviceTimes = new LinkedList<>();
+        Timestamp timestamp = TimeUtil.StringToTimeStamp(startTime);
+
+        serviceTimes = waiterDeliveryRecordService.getServiceTimeByTime(timestamp, waiterID);
+
+        res.put("status", "SUCCEED");
+        res.put("serviceTimes", serviceTimes);
+
+        return res;
     }
 
 }

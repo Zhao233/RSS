@@ -25,8 +25,7 @@ public class WaiterDeliveryRecordServiceImp implements WaiterDeliveryRecordServi
 
     /**===============================For Admin=============================================*/
     @Override
-    public Integer getServiceTime(int type, String openid) {
-        Long id = waiterDao.getWaiterByLoginID(openid).getId();
+    public Integer getServiceTime(int type, Long waiterID) {
         Integer times = new Integer(0);
 
         Calendar calendar = Calendar.getInstance();
@@ -35,21 +34,21 @@ public class WaiterDeliveryRecordServiceImp implements WaiterDeliveryRecordServi
         Timestamp time_end = new Timestamp(calendar.getTime().getTime());
 
         switch ( type ){
-            case 1 :
+            case WaiterDeliveryRecord.TYPE_SERVICE_MONTH :
                 time_end = new Timestamp(calendar.getTime().getTime());
 
                 time_start = getTimeWithMonth();
 
                 break;
 
-            case 2 :
+            case WaiterDeliveryRecord.TYPE_SERVICE_WEEK  :
                 time_end = new Timestamp(calendar.getTime().getTime());
 
                 time_start = getTimeWithWeek();
 
                 break;
 
-            case 3:
+            case WaiterDeliveryRecord.TYPE_SERVICE_DAY :
                 time_end = new Timestamp(calendar.getTime().getTime());
 
                 time_start = getTimeWithDay();
@@ -57,7 +56,7 @@ public class WaiterDeliveryRecordServiceImp implements WaiterDeliveryRecordServi
                 break;
         }
 
-        times = waiterDeliveryRecordDao.getDeliveryTime(time_start, time_end, id);
+        times = waiterDeliveryRecordDao.getDeliveryTime(time_start, time_end, waiterID);
 
         if(times == null){
             return Integer.valueOf(0);
@@ -67,26 +66,22 @@ public class WaiterDeliveryRecordServiceImp implements WaiterDeliveryRecordServi
     }
 
     @Override
-    public Integer getAllServiceTimes(String openid){
-        Long id = waiterDao.getWaiterByOpenID(openid).getId();
-
+    public Integer getAllServiceTimes(Long waiterID){
         Integer num = new Integer(0);
 
-        num = waiterDeliveryRecordDao.getAllDeliveryTimes(id);
+        num = waiterDeliveryRecordDao.getAllDeliveryTimes(waiterID);
 
         return num == null? 0 : num;
     }
 
     @Override
-    public List<Integer> getServiceTimeByTime(Timestamp startTime, String openid) {
-        Long id = waiterDao.getWaiterByOpenID(openid).getId();
-
+    public List<Integer> getServiceTimeByTime(Timestamp startTime, Long waiterID) {
         List<Integer> serviceNumbers = new LinkedList<>();
         List<CookerDeliveryRecord> cookerDeliveryRecords = new LinkedList<>();
 
         Timestamp star = TimeUtil.getTimeNow();
 
-        cookerDeliveryRecords = waiterDeliveryRecordDao.getAllCookerDeliveryRecord(startTime, TimeUtil.getTimeNow(), id);
+        cookerDeliveryRecords = waiterDeliveryRecordDao.getAllCookerDeliveryRecord(startTime, TimeUtil.getTimeNow(), waiterID);
 
         int index_orderRecord = 0;
 

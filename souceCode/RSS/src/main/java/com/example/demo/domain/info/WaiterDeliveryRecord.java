@@ -77,4 +77,9 @@ public class WaiterDeliveryRecord {
      * */
     @Column(name = "update_time")
     private Timestamp updateTime;
+
+    public static final int TYPE_SERVICE_MONTH = 1;
+    public static final int TYPE_SERVICE_WEEK  = 2;
+    public static final int TYPE_SERVICE_DAY   = 3;
+    public static final int TYPE_SERVICE_ALL   = 4;
 }

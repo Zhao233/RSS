@@ -8,11 +8,11 @@ import java.util.List;
 public interface WaiterDeliveryRecordService {
 
 
-    Integer getServiceTime(int type, String openid);
+    Integer getServiceTime(int type, Long waiterID);
 
-    Integer getAllServiceTimes(String openid);
+    Integer getAllServiceTimes(Long waiterID);
 
-    List<Integer> getServiceTimeByTime(Timestamp startTime, String openid);
+    List<Integer> getServiceTimeByTime(Timestamp startTime, Long waiterID);
 
     /**=================================For Customer=========================================*/
 
