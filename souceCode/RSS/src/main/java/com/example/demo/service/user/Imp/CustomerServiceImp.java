@@ -1,5 +1,6 @@
 package com.example.demo.service.user.Imp;
 
+import com.example.demo.domain.info.CookerDeliveryRecord;
 import com.example.demo.domain.user.Customer;
 import com.example.demo.repository.user.CustomerDao;
 import com.example.demo.service.user.CustomerService;
@@ -8,6 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service("customerService")
 public class CustomerServiceImp implements CustomerService {
@@ -44,7 +50,6 @@ public class CustomerServiceImp implements CustomerService {
         return null;
     }
 
-
     /**=====================================For Customer=================================*/
     @Override
     public boolean isLogin(String openID) {
@@ -66,6 +71,30 @@ public class CustomerServiceImp implements CustomerService {
     }
 
 
+    public Timestamp getTimeWithMonth(){
+        Calendar calendar = Calendar.getInstance();
 
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+
+        return new Timestamp(calendar.getTime().getTime());
+    }
+    public Timestamp getTimeWithWeek(){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.DAY_OF_WEEK, 2);
+        calendar.set(Calendar.MINUTE, 0);
+
+        return new Timestamp(calendar.getTime().getTime());
+    }
+    public Timestamp getTimeWithDay(){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+
+        return new Timestamp(calendar.getTime().getTime());
+    }
 
 }

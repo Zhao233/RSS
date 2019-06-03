@@ -1,4 +1,4 @@
-package com.example.demo.repository.info;
+package com.example.demo.repository.foodInfo;
 
 import com.example.demo.domain.foodInfo.PopularFoods;
 import org.springframework.data.jpa.repository.JpaRepository;

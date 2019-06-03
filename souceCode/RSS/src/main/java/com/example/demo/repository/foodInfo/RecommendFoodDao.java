@@ -1,4 +1,4 @@
-package com.example.demo.repository.info;
+package com.example.demo.repository.foodInfo;
 
 import com.example.demo.domain.foodInfo.RecommendFood;
 import com.example.demo.model.admin.RecommendForActivityModel;

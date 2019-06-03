@@ -1,19 +1,19 @@
 package com.example.demo.controller.adminController.userController;
 
+import com.example.demo.domain.info.CookerDeliveryRecord;
 import com.example.demo.domain.user.Cooker;
 import com.example.demo.repository.user.CookerRoleDao;
+import com.example.demo.service.info.CookerDeliveryRecordService;
 import com.example.demo.service.user.CookerService;
 import com.example.demo.util.TimeUtil;
+import org.omg.CORBA.OBJECT_NOT_EXIST;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +24,9 @@ import java.util.Map;
 public class CookerController {
     @Autowired
     private CookerService cookerService;
+
+    @Autowired
+    private CookerDeliveryRecordService cookerDeliveryRecordService;
 
     @Autowired
     CookerRoleDao cookerRoleDao;
@@ -154,4 +157,24 @@ public class CookerController {
         return map;
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/getCookerServiceRecord")
+    public Map<String, Object>  getCookerServiceRecord(){
+        Map<String, Object> res = new HashMap<>();
+
+
+
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getCookerServiceTimes")
+    public Map<String, Object> getCookerServiceTimes(@RequestParam(value = "") String date){
+        Map<String, Object> res = new HashMap<>();
+
+
+
+        return res;
+    }
 }

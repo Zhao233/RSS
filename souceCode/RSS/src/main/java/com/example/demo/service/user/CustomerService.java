@@ -4,6 +4,9 @@ import com.example.demo.domain.user.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 public interface CustomerService {
     /**================================For Admin====================================*/
     Page<Customer> getAll(String search, Pageable pageable);

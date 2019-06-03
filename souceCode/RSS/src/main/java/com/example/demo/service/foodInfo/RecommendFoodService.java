@@ -1,4 +1,4 @@
-package com.example.demo.service.info;
+package com.example.demo.service.foodInfo;
 
 import com.example.demo.model.customer.FoodForCustomerRecommendModel;
 

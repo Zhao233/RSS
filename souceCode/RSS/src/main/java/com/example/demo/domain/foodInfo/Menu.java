@@ -28,4 +28,7 @@ public class Menu {
 
     @Column(name = "update_time")
     private Timestamp updateTime;
+
+
+
 }

@@ -1,15 +1,21 @@
 package com.example.demo.service.info.imp;
 
 import com.example.demo.domain.info.OrderRecord;
+import com.example.demo.domain.user.Cooker;
+import com.example.demo.domain.user.Customer;
 import com.example.demo.model.customer.OrderRecordModel;
 import com.example.demo.repository.info.OrderRecordDao;
 import com.example.demo.service.foodInfo.FoodService;
-import com.example.demo.service.info.DiscountService;
+import com.example.demo.service.foodInfo.DiscountService;
 import com.example.demo.service.info.OrderRecordService;
 import com.example.demo.service.user.CustomerService;
 import com.example.demo.util.   StringTranslator;
 import com.example.demo.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -310,6 +316,73 @@ public class OrderRecordServiceImp implements OrderRecordService {
         }
 
         return res;
+    }
+
+    @Override
+    public Page<OrderRecord> getAllByUserID(int offset, int limit, Long userID) {
+        Pageable pageable = new PageRequest(offset, limit, new Sort(Sort.Direction.DESC, "id"));
+
+        Page<OrderRecord> page;
+
+        page = orderRecordDao.getAllByUserID(userID, pageable);
+        return page;
+    }
+
+
+    /**
+     * 获取消费额
+     *
+     * type：
+     * 1 月消费额
+     * 2 星期消费额
+     * 3 今日消费额
+     */
+    @Override
+    public Double getAccount(int type,Long id) {
+        Double account = new Double(0);
+
+        Calendar calendar = Calendar.getInstance();
+
+        Timestamp time_start = null;
+        Timestamp time_end = new Timestamp(calendar.getTime().getTime());
+
+        switch (type){
+            case OrderRecord.TYPE_ACCOUNT_MONTH :
+
+                time_end = new Timestamp(calendar.getTime().getTime());
+
+                time_start = getTimeWithMonth();
+
+                break;
+
+            case OrderRecord.TYPE_ACCOUNT_WEEK:
+                time_end = new Timestamp(calendar.getTime().getTime());
+
+                time_start = getTimeWithWeek();
+
+                break;
+
+            case OrderRecord.TYPE_ACCOUNT_DAY:
+
+                time_end = new Timestamp(calendar.getTime().getTime());
+
+                time_start = getTimeWithDay();
+
+                break;
+
+            case OrderRecord.TYPE_ACCOUNT_ALL:
+                account = orderRecordDao.getAllAccount(id);
+
+                return account == null ? 0 : account;
+        }
+
+        account = orderRecordDao.getAccount(time_start, time_end, id);
+
+        if(account == null){
+            return Double.valueOf(0);
+        }
+
+        return account;
     }
 
     public Timestamp getTimeWithMonth(){

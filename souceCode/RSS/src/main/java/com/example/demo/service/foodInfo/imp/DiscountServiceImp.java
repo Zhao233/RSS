@@ -1,8 +1,8 @@
-package com.example.demo.service.info.imp;
+package com.example.demo.service.foodInfo.imp;
 
 import com.example.demo.domain.foodInfo.DiscountRecord;
-import com.example.demo.repository.info.DiscountRecordDao;
-import com.example.demo.service.info.DiscountService;
+import com.example.demo.repository.foodInfo.DiscountRecordDao;
+import com.example.demo.service.foodInfo.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

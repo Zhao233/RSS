@@ -1,7 +1,10 @@
 package com.example.demo.service.info;
 
 import com.example.demo.domain.info.OrderRecord;
+import com.example.demo.domain.user.Cooker;
 import com.example.demo.model.customer.OrderRecordModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -18,6 +21,8 @@ public interface OrderRecordService {
      * 3 今日消费额
      */
     Double getAccount(int type);
+    Double getAccount(int type, Long id);
+
 
     /**
      * type:
@@ -32,6 +37,10 @@ public interface OrderRecordService {
      * */
     HashMap<Long, Integer> getAllOrderByTime(int type);
 
+    /**
+     * 获取某一客户所有已支付的订单
+     * */
+    Page<OrderRecord> getAllByUserID(int offset, int limit, Long userID);
 
     Long addOne(List<Long> foodIDList, List<Integer> foodNumList, List<Long> styleIDList, Long discountID, String openid, long expirationTime, Double account, Integer tableNum);
 

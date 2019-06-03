@@ -167,7 +167,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="_table_user_search" class="table table-striped table-bordered table-hover" data-toolbar="#toolbar">
+                                <table id="_table_user_search" class="table table-striped table-bordered table-hover" >
                                     <thead>
                                     <tr>
                                         <th data-field="id" class="W30" data-formatter="_formatte_id"><input id="doAllCheckBtn" type="checkbox" onclick="doAllCheck(this)"></th>
@@ -182,14 +182,6 @@
                                     </thead>
 
                                 </table>
-
-                                <div id="toolbar">
-                                    <button class="btn btn-primary open-add-dialog" data-toggle="modal">新增
-                                    </button>
-                                    <button class="btn btn-success open-update-dialog" data-toggle="modal">修改
-                                    </button>
-                                    <button class="btn btn-danger delete-dialog">删除</button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -201,110 +193,6 @@
     </div>
 
 
-    <!--弹出框-->
-
-    <!--添加，修改弹出框-->
-    <div id="dialog-update" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">设备管理 | <span id="dialog-visitor-management-update-title"></span></h4>
-                </div>
-
-                <div class="modal-body">
-                    <form role="form" class="form-horizontal add-new-user form-uploadfiles"
-                          enctype="multipart/form-data"
-                          method="POST">
-                        <input type="text" style="display:none;" id="id" name="id"/>
-                        <input type="text" style="display:none;" id="deviceId_old" name="deviceId_old"/>
-                        <input type="text" style="display:none;" id="createTime" name="createTime"/>
-                        <input type="text" style="display:none;" id="updateTime" name="updateTime"/>
-
-                        <div class="row">
-                            <div class="col-sm-12 ">
-                                <div class="form-group">
-                                    <label for="mac_id" class="col-sm-4 control-label">设备Id</label>
-
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="mac_id" name="mac_id"
-                                               data-toggle="tooltip" data-placement="top" maxlength="30"
-                                               required="required"/>
-                                    </div>
-
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="name" class="col-sm-4 control-label">设备名称</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="name" name="name"
-                                               data-toggle="tooltip" data-placement="top" maxlength="30"
-                                               required="required"/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="attributionOfDevice" class="col-sm-4 control-label">设备归属</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="attributionOfDevice" name="attributionOfDevice"
-                                               maxlength="30"/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="organization_name" class="col-sm-4 control-label">组织</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="organization_name" name="organization_name"
-                                               maxlength="30"/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="addressOfDevice" class="col-sm-4 control-label">设备安装地址</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="addressOfDevice" name="addressOfDevice"
-                                               maxlength="30"/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="type" class="col-sm-4 control-label">类型</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="type" name="type"
-                                               maxlength="30"/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="level" class="col-sm-4 control-label">等级</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="level" name="level"
-                                               maxlength="30"/>
-                                    </div>
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-9" style="text-align: right;padding-top: 20px;">
-                                <button type="button" class="btn btn-primary add-new">保存</button>
-                                <button type="button" class="btn btn-default add-new-close" data-dismiss="modal">取消</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
 
     <!--提示弹出框-->
     <div id="dialog-return" class="modal fade" style="z-index:99999" tabindex="-1" role="dialog">
@@ -364,33 +252,6 @@
             },
             onPostBody : function(){
                 adjustTableHeight($(".fixed-table-body"),20);//custom-script
-            },
-            onSort(name,order){
-                $(".temperature").find(".sortable").empty();
-                $(".humidity").find(".sortable").empty();
-
-                $(".temperature").find(".sortable").append("温度");
-                $(".humidity").find(".sortable").append("湿度");
-
-                if(name == "temperature"){
-
-                    $(".humidity").find(".sortable").append('<i class="glyphicon sort_default"></i>');
-
-                    if(order == "asc"){
-                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
-                    } else {
-                        $(".temperature").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
-                    }
-
-                } else {//humidity
-                    $(".temperature").find(".sortable").append('<i class="glyphicon sort_default"></i>');
-
-                    if (order == "asc") {
-                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_asc"></i>');
-                    } else {
-                        $(".humidity").find(".sortable").append('<i class="glyphicon sort_desc"></i>');
-                    }
-                }
             }
         });
     });

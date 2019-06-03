@@ -1,11 +1,11 @@
-package com.example.demo.service.info.imp;
+package com.example.demo.service.foodInfo.imp;
 
 import com.example.demo.domain.foodInfo.Food;
 import com.example.demo.domain.foodInfo.PopularFoods;
 import com.example.demo.model.admin.PopularFoodModel;
 import com.example.demo.repository.foodInfo.FoodDao;
-import com.example.demo.repository.info.PopularFoodsDao;
-import com.example.demo.service.info.PopularFoodsService;
+import com.example.demo.repository.foodInfo.PopularFoodsDao;
+import com.example.demo.service.foodInfo.PopularFoodsService;
 import com.example.demo.util.StringTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

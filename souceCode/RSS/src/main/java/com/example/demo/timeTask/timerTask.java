@@ -3,7 +3,7 @@ package com.example.demo.timeTask;
 import com.example.demo.domain.info.OrderRecord;
 import com.example.demo.domain.foodInfo.PopularFoods;
 import com.example.demo.service.info.OrderRecordService;
-import com.example.demo.service.info.PopularFoodsService;
+import com.example.demo.service.foodInfo.PopularFoodsService;
 import com.example.demo.util.StringTranslator;
 import com.example.demo.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
