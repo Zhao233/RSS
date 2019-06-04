@@ -14,17 +14,17 @@ public interface WaiterDeliveryRecordDao extends JpaRepository<WaiterDeliveryRec
 
     /**=============================================== For Admin ================================================================*/
 
-    @Query(value = "SELECT SUM(deliveryRecord) FROM WaiterDeliveryRecord deliveryRecord " +
+    @Query(value = "SELECT COUNT(deliveryRecord) FROM WaiterDeliveryRecord deliveryRecord " +
             "WHERE deliveryRecord.isComplete = 1 " +
             "AND deliveryRecord.waiterID = ?3 " +
             "AND" +
             "(deliveryRecord.createTime > ?1 AND deliveryRecord.createTime < ?2  )")
-    int getServiceTimes(Timestamp startTime, Timestamp endTime, Long waiterID);
+    Integer getServiceTimes(Timestamp startTime, Timestamp endTime, Long waiterID);
 
-    @Query(value = "SELECT SUM(deliveryRecord) FROM WaiterDeliveryRecord deliveryRecord " +
+    @Query(value = "SELECT COUNT(deliveryRecord) FROM WaiterDeliveryRecord deliveryRecord " +
             "WHERE deliveryRecord.isComplete = 1 " +
             "AND deliveryRecord.waiterID = ?1 ")
-    int getAllDeliveryTimes(Long waiterID);
+    Integer getAllServiceTimes(Long waiterID);
 
     @Query(value = "SELECT deliveryRecord FROM WaiterDeliveryRecord  deliveryRecord " +
             "WHERE deliveryRecord.isComplete =1 " +

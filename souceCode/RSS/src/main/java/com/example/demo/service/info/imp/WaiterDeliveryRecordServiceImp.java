@@ -58,15 +58,14 @@ public class WaiterDeliveryRecordServiceImp implements WaiterDeliveryRecordServi
 
         times = waiterDeliveryRecordDao.getServiceTimes(time_start, time_end, waiterID);
 
-        return times;
+        return times==null? 0 : times;
     }
 
     @Override
     public Integer getAllServiceTimes(Long waiterID){
         Integer num = new Integer(0);
 
-        num = waiterDeliveryRecordDao.getAllDeliveryTimes(waiterID);
-
+        num = waiterDeliveryRecordDao.getAllServiceTimes(waiterID);
         return num == null? 0 : num;
     }
 
@@ -74,8 +73,6 @@ public class WaiterDeliveryRecordServiceImp implements WaiterDeliveryRecordServi
     public List<Integer> getServiceTimeByTime(Timestamp startTime, Long waiterID) {
         List<Integer> serviceNumbers = new LinkedList<>();
         List<WaiterDeliveryRecord> waiterDeliveryRecords = new LinkedList<>();
-
-        Timestamp star = TimeUtil.getTimeNow();
 
         waiterDeliveryRecords = waiterDeliveryRecordDao.getAllWaiterDeliveryRecord(startTime, TimeUtil.getTimeNow(), waiterID);
 

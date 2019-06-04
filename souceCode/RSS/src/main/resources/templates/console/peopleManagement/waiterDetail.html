@@ -448,11 +448,10 @@
         $.ajax({
             url: "/admin/waiter/getWaiterServiceInfo",
             type: "POST",
-            processData: false,
-            data:{
-                "waiterID" : waiterID
+            dataType : 'JSON',
+            data : {
+                waiterID : waiterID
             },
-            contentType: false,
             success: function (res) {
                 switch (res.status) {
                     case "SUCCEED" :
@@ -461,11 +460,13 @@
                         $("#weekServiceTimes").html(res.weekServiceTimes);
                         $("#dayServiceTimes").html(res.dayServiceTimes);
 
-                        data_chart.datasets[0].data = orderNumber;
+                        data_chart.datasets[0].data = res.serviceTimes;
 
                         //createPopularFoods(popularFood);
 
                         displayLineChart( adjustItemHeight );
+
+                        break;
                     case "FAILED" :
                         $("#dialog-return").find(".modal-body").html(message);
 
