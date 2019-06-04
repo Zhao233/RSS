@@ -56,11 +56,7 @@ public class WaiterDeliveryRecordServiceImp implements WaiterDeliveryRecordServi
                 break;
         }
 
-        times = waiterDeliveryRecordDao.getDeliveryTime(time_start, time_end, waiterID);
-
-        if(times == null){
-            return Integer.valueOf(0);
-        }
+        times = waiterDeliveryRecordDao.getServiceTimes(time_start, time_end, waiterID);
 
         return times;
     }
@@ -77,11 +73,11 @@ public class WaiterDeliveryRecordServiceImp implements WaiterDeliveryRecordServi
     @Override
     public List<Integer> getServiceTimeByTime(Timestamp startTime, Long waiterID) {
         List<Integer> serviceNumbers = new LinkedList<>();
-        List<CookerDeliveryRecord> cookerDeliveryRecords = new LinkedList<>();
+        List<WaiterDeliveryRecord> waiterDeliveryRecords = new LinkedList<>();
 
         Timestamp star = TimeUtil.getTimeNow();
 
-        cookerDeliveryRecords = waiterDeliveryRecordDao.getAllCookerDeliveryRecord(startTime, TimeUtil.getTimeNow(), waiterID);
+        waiterDeliveryRecords = waiterDeliveryRecordDao.getAllWaiterDeliveryRecord(startTime, TimeUtil.getTimeNow(), waiterID);
 
         int index_orderRecord = 0;
 
@@ -102,8 +98,8 @@ public class WaiterDeliveryRecordServiceImp implements WaiterDeliveryRecordServi
 
             int orderTime = 0;
 
-            for(;index_orderRecord < cookerDeliveryRecords.size(); index_orderRecord++){
-                Timestamp temp_timestamp = cookerDeliveryRecords.get(index_orderRecord).getCreateTime();
+            for(;index_orderRecord < waiterDeliveryRecords.size(); index_orderRecord++){
+                Timestamp temp_timestamp = waiterDeliveryRecords.get(index_orderRecord).getCreateTime();
 
                 Calendar temp_calendar = Calendar.getInstance();
                 temp_calendar.setTime(temp_timestamp);
@@ -157,28 +153,29 @@ public class WaiterDeliveryRecordServiceImp implements WaiterDeliveryRecordServi
     }
 
     public Timestamp getTimeWithMonth(){
-        Calendar calendar = Calendar.getInstance();
+        Calendar temp_calendar = Calendar.getInstance();
 
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
+        temp_calendar.set(Calendar.DAY_OF_MONTH, 1);
+        temp_calendar.set(Calendar.HOUR_OF_DAY, 0);
+        temp_calendar.set(Calendar.MINUTE, 0);
 
-        return new Timestamp(calendar.getTime().getTime());
+        return new Timestamp(temp_calendar.getTime().getTime());
     }
     public Timestamp getTimeWithWeek(){
-        Calendar calendar = Calendar.getInstance();
+        Calendar temp_calendar = Calendar.getInstance();
 
-        calendar.set(Calendar.DAY_OF_WEEK, 2);
-        calendar.set(Calendar.MINUTE, 0);
+        temp_calendar.set(Calendar.DAY_OF_WEEK, 2);
+        temp_calendar.set(Calendar.HOUR_OF_DAY, 0);
+        temp_calendar.set(Calendar.MINUTE, 0);
 
-        return new Timestamp(calendar.getTime().getTime());
+        return new Timestamp(temp_calendar.getTimeInMillis());
     }
     public Timestamp getTimeWithDay(){
-        Calendar calendar = Calendar.getInstance();
+        Calendar temp_calendar = Calendar.getInstance();
 
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
+        temp_calendar.set(Calendar.HOUR_OF_DAY, 0);
+        temp_calendar.set(Calendar.MINUTE, 0);
 
-        return new Timestamp(calendar.getTime().getTime());
+        return new Timestamp(temp_calendar.getTime().getTime());
     }
 }

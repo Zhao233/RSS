@@ -447,10 +447,10 @@
 
         $.ajax({
             url: "/admin/waiter/getWaiterServiceInfo",
-            type: "post",
+            type: "POST",
             processData: false,
             data:{
-                "waiterID" : parseInt(waiterID)
+                "waiterID" : waiterID
             },
             contentType: false,
             success: function (res) {
