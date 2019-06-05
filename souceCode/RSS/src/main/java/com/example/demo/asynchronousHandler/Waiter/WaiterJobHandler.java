@@ -202,19 +202,6 @@ public class WaiterJobHandler {
 
         webSocketSet.add(this);     //加入set中
 
-        for(int i = 0; i < 10; i++){
-            WaiterDeliveryRecord record = new WaiterDeliveryRecord();
-
-            record.setType(WaiterDeliveryRecord.TYPE_DELIVERY);
-            record.setTableNum(10);
-            record.setCreateTime(TimeUtil.getTimeNow());
-            record.setOrderRecordID(100);
-            record.setFoodID(13);
-
-            putMessageToWaiterMessageBlockingQueue(record);
-        }
-
-
         addOnlineCount();
         //在线数加1
         log.info("有新连接加入！当前在线人数为" + getOnlineCount());
