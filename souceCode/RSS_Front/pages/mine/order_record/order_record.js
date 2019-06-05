@@ -72,6 +72,8 @@ Page({
           }
         }
 
+        temp_orderList.reverse();
+
         that.setData({
           orderList: temp_orderList
         })

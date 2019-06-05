@@ -113,6 +113,7 @@ Page({
     var styleIDList = new Array;
     var openid = app.globalData.userInfo.openid;
     var account = this.data.account;
+    var tableNum = app.globalData.tableNum;
 
     var discountID = 90000;
 
@@ -142,7 +143,8 @@ Page({
         "discountID": discountID,
         "openID": openid,
         "account": account,
-        "expirationTime": expirationTime.getTime()
+        "expirationTime": expirationTime.getTime(),
+        "tableNum" : tableNum
       },
 
       success(res) {

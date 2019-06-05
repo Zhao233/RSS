@@ -13,15 +13,20 @@ App({
     quickService_styleIDList: [],
   },
 
-  info:{
-    hostname:"140.143.56.249",
-    port:8881,
-  },
-
-  // info: {
-  //   hostname: "localhost",
-  //   port: 8881,
+  // info:{
+  //   hostname:"140.143.56.249",
+  //   port:8881,
   // },
+
+  //   info:{
+  //   hostname:"192.168.1.107",
+  //   port:8881,
+  // },
+
+  info: {
+    hostname: "localhost",
+    port: 8881,
+  },
 
   onLaunch: function (options) {
     var that = this;

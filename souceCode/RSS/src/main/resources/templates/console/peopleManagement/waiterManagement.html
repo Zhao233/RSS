@@ -697,6 +697,10 @@
     }
 
     function _formatte_to_detail(value, row, index){
+        if(value == undefined){
+            return "-";
+        }
+
         return '<a href="/admin/waiterDetail?waiterID=' + row.id +'">'+value+'</a>';
     }
 

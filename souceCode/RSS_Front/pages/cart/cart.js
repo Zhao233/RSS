@@ -132,8 +132,15 @@ Page({
       },
 
       success(res) {
-        app.internetResponseHandler(res, function(){
+        app.internetResponseHandler(res, 
+        function(){
           app.showToast("添加成功");
+        },
+        function(){
+          
+        },
+        function(){
+          app.showToast("快速点餐中已存在该菜品");
         });
       },
       fail(res) {

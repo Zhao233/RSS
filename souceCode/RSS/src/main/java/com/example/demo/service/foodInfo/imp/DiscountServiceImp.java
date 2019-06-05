@@ -60,6 +60,10 @@ public class DiscountServiceImp implements DiscountService {
 
     @Override
     public Double getDiscountNum(Long discountID) {
+        if(discountID == 90000){
+            return Double.valueOf(1);
+        }
+
         return discountRecordDao.getOne(discountID).getDiscount();
     }
 }
