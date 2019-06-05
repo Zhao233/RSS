@@ -1,5 +1,6 @@
 package com.example.demo.service.info.imp;
 
+import com.example.demo.asynchronousHandler.Cooker.CookerJobHandler;
 import com.example.demo.domain.info.CookerDeliveryRecord;
 import com.example.demo.domain.info.OrderRecord;
 import com.example.demo.repository.info.CookerDeliveryRecordDao;
@@ -138,6 +139,21 @@ public class CookerDeliveryRecordServiceImp implements CookerDeliveryRecordServi
         return serviceNumbers;
     }
 
+    @Override
+    public void sendCookerDeliveryRecordFromOrderInfo(Long orderRecordID, Integer tableNum, List<Long> foodList, List<Integer> numList){
+        for(int i = 0; i<foodList.size(); i++ ){
+            for(int j = 0; j < numList.get(i); j++){
+                CookerDeliveryRecord record = new CookerDeliveryRecord();
+                record.setOrderRecordId(orderRecordID);
+                record.setFoodId(foodList.get(i));
+                record.setTableNum(tableNum);
+                record.setIsComplete(0);
+                record.setCreateTime(TimeUtil.getTimeNow());
+
+                CookerJobHandler.putMessageToCookerMessageBlockingQueue(record);
+            }
+        }
+    }
     /**============================== For Cooker =============================================*/
 
     @Override

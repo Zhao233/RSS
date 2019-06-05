@@ -7,6 +7,7 @@ import com.example.demo.domain.info.CookerDeliveryRecord;
 import com.example.demo.domain.info.OrderRecord;
 import com.example.demo.service.foodInfo.FoodService;
 import com.example.demo.service.foodInfo.DiscountService;
+import com.example.demo.service.info.CookerDeliveryRecordService;
 import com.example.demo.service.info.OrderRecordService;
 import com.example.demo.service.user.CustomerService;
 import com.example.demo.util.StringTranslator;
@@ -38,6 +39,9 @@ public class CustomerCartController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private CookerDeliveryRecordService cookerDeliveryRecordService;
 
     @ResponseBody
     @RequestMapping("/onSubmit")
@@ -73,6 +77,8 @@ public class CustomerCartController {
 
         if( checkFoodAccount(foodIDList_, foodNumList_, account) ){
             Long recordID = orderRecordService.addOne(foodIDList_, foodNumList_, styleIDList_, discountID, openID, Long.parseLong(expirationTime), account, tableNum);
+
+            cookerDeliveryRecordService.sendCookerDeliveryRecordFromOrderInfo(recordID,tableNum, foodIDList_, foodNumList_);
 
             map.put("status", "SUCCEED");
             map.put("nonPaymentRecordID", recordID);

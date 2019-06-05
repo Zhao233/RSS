@@ -124,6 +124,19 @@ public class WaiterDeliveryRecordServiceImp implements WaiterDeliveryRecordServi
         return serviceNumbers;
     }
 
+    @Override
+    public void sendWaiterDeliveryRecordFromCookerDeliveryRecord(CookerDeliveryRecord cookerDeliveryRecord){
+        WaiterDeliveryRecord record = new WaiterDeliveryRecord();
+        record.setFoodID(cookerDeliveryRecord.getFoodId());
+        record.setOrderRecordID(cookerDeliveryRecord.getOrderRecordId());
+        record.setTableNum(cookerDeliveryRecord.getTableNum());
+        record.setIsComplete(0);
+        record.setCreateTime(TimeUtil.getTimeNow());
+        record.setType(WaiterDeliveryRecord.TYPE_DELIVERY);
+
+        WaiterJobHandler.putMessageToWaiterMessageBlockingQueue(record);
+    }
+
     /**===============================For Customer=============================================*/
     @Override
     public WaiterDeliveryRecord callWaiter(String openid, Integer tableNum) {

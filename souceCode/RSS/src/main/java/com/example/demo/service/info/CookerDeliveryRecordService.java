@@ -29,6 +29,8 @@ public interface CookerDeliveryRecordService {
     List<Integer> getServiceTimeByTime(Timestamp timestamp, String openid);
 
 
+    void sendCookerDeliveryRecordFromOrderInfo(Long orderRecordID, Integer tableNum, List<Long> foodList, List<Integer> numList);
+
     /**===========================For Cooker===========================================*/
     CookerDeliveryRecord save(CookerDeliveryRecord record);
 

@@ -1,5 +1,6 @@
 package com.example.demo.service.info;
 
+import com.example.demo.domain.info.CookerDeliveryRecord;
 import com.example.demo.domain.info.WaiterDeliveryRecord;
 
 import java.sql.Timestamp;
@@ -13,6 +14,8 @@ public interface WaiterDeliveryRecordService {
     Integer getAllServiceTimes(Long waiterID);
 
     List<Integer> getServiceTimeByTime(Timestamp startTime, Long waiterID);
+
+    void sendWaiterDeliveryRecordFromCookerDeliveryRecord(CookerDeliveryRecord cookerDeliveryRecord);
 
     /**=================================For Customer=========================================*/
 

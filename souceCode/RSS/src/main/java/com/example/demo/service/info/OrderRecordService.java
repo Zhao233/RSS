@@ -47,4 +47,5 @@ public interface OrderRecordService {
     List<OrderRecordModel> getAllOrderRecordModel(String openID);
 
     OrderRecord getOrderRecordByID(Long orderRecord);
+
 }
