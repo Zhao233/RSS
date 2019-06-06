@@ -2,6 +2,8 @@ package com.example.demo.repository.info;
 
 import com.example.demo.domain.info.CookerDeliveryRecord;
 import com.example.demo.domain.info.WaiterDeliveryRecord;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -26,7 +28,11 @@ public interface WaiterDeliveryRecordDao extends JpaRepository<WaiterDeliveryRec
             "AND deliveryRecord.waiterID = ?1 ")
     Integer getAllServiceTimes(Long waiterID);
 
-    @Query(value = "SELECT deliveryRecord FROM WaiterDeliveryRecord  deliveryRecord " +
+    @Query(value = "SELECT deliveryRecord FROM WaiterDeliveryRecord deliveryRecord " +
+            "WHERE deliveryRecord.isComplete = 1")
+    List<WaiterDeliveryRecord> getRecentWaiterServiceRecord(Long waiterID, Pageable pageable);
+
+    @Query(value = "SELECT deliveryRecord FROM WaiterDeliveryRecord deliveryRecord " +
             "WHERE deliveryRecord.isComplete =1 " +
             "AND deliveryRecord.waiterID = ?3 "+
             "AND" +

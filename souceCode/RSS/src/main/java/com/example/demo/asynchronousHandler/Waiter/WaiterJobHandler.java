@@ -386,6 +386,7 @@ public class WaiterJobHandler {
         }
 
         waiterDeliveryRecord.setIsComplete(1);
+        waiterDeliveryRecord.setUpdateTime(TimeUtil.getTimeNow());
 
         return waiterDeliveryRecordService.save(waiterDeliveryRecord);
     }

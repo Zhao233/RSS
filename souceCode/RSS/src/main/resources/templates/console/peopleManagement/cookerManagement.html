@@ -755,6 +755,10 @@
     }
 
     function _formatte_to_detail(value, row, index){
+        if(value == undefined){
+            return "-";
+        }
+
         return '<a href="/admin/cookerDetail?cookerID=' + row.id +'">'+value+'</a>';
     }
 

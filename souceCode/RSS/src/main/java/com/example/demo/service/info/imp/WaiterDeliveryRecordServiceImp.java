@@ -3,11 +3,16 @@ package com.example.demo.service.info.imp;
 import com.example.demo.asynchronousHandler.Waiter.WaiterJobHandler;
 import com.example.demo.domain.info.CookerDeliveryRecord;
 import com.example.demo.domain.info.WaiterDeliveryRecord;
+import com.example.demo.model.waiter.WaiterServiceForWaiterDetailModel;
+import com.example.demo.repository.foodInfo.FoodDao;
 import com.example.demo.repository.info.WaiterDeliveryRecordDao;
 import com.example.demo.repository.user.WaiterDao;
 import com.example.demo.service.info.WaiterDeliveryRecordService;
 import com.example.demo.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -22,6 +27,9 @@ public class WaiterDeliveryRecordServiceImp implements WaiterDeliveryRecordServi
 
     @Autowired
     private WaiterDeliveryRecordDao waiterDeliveryRecordDao;
+
+    @Autowired
+    private FoodDao foodDao;
 
     /**===============================For Admin=============================================*/
     @Override
@@ -122,6 +130,45 @@ public class WaiterDeliveryRecordServiceImp implements WaiterDeliveryRecordServi
         }
 
         return serviceNumbers;
+    }
+
+    /**
+     *获取10条最近服务记录
+     */
+    @Override
+    public List<WaiterServiceForWaiterDetailModel> getRecentWaiterServiceRecords(Long waiterID){
+        Pageable pageable = new PageRequest(0, 10, new Sort(Sort.Direction.DESC, "id"));
+
+        List<WaiterDeliveryRecord> list = waiterDeliveryRecordDao.getRecentWaiterServiceRecord(waiterID, pageable);
+        LinkedList<WaiterServiceForWaiterDetailModel> res = new LinkedList<>();
+
+        for(WaiterDeliveryRecord temp : list){
+            int type = temp.getType();
+            Long foodID = temp.getFoodID();
+            Timestamp completeTime = temp.getUpdateTime();
+
+            String picUrl = foodDao.getFoodPicUrlById(foodID);
+            String serviceType = "";
+
+            switch (type){
+                case WaiterDeliveryRecord.TYPE_DELIVERY :
+                    serviceType = "派送";
+
+                    break;
+                case WaiterDeliveryRecord.TYPE_SERVICE:
+                    serviceType = "到桌服务";
+                    break;
+            }
+
+            WaiterServiceForWaiterDetailModel waiterServiceForWaiterDetail = new WaiterServiceForWaiterDetailModel();
+            waiterServiceForWaiterDetail.setCompleteTime(completeTime);
+            waiterServiceForWaiterDetail.setPicUrl(picUrl);
+            waiterServiceForWaiterDetail.setServiceType(serviceType);
+
+            res.add(waiterServiceForWaiterDetail);
+        }
+
+        return res;
     }
 
     @Override

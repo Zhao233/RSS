@@ -1,14 +1,10 @@
 package com.example.demo.controller.adminController.userController;
 
-import com.example.demo.domain.foodInfo.Food;
-import com.example.demo.domain.foodInfo.Menu;
 import com.example.demo.domain.info.WaiterDeliveryRecord;
-import com.example.demo.domain.user.Cooker;
 import com.example.demo.domain.user.Waiter;
-import com.example.demo.service.foodInfo.MenuService;
+import com.example.demo.model.waiter.WaiterServiceForWaiterDetailModel;
 import com.example.demo.service.info.WaiterDeliveryRecordService;
 import com.example.demo.service.user.WaiterService;
-import com.example.demo.util.LoginCheck;
 import com.example.demo.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -134,6 +130,7 @@ public class WaiterController {
         Map<String, Object> map = new HashMap();
 
         List<Integer> serviceTimes = new LinkedList<>();
+        List<WaiterServiceForWaiterDetailModel> recentServiceList = new LinkedList<>();
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -146,20 +143,21 @@ public class WaiterController {
         Integer dayServiceTimes = waiterDeliveryRecordService.getServiceTime(WaiterDeliveryRecord.TYPE_SERVICE_DAY, waiterID);
 
         serviceTimes = waiterDeliveryRecordService.getServiceTimeByTime(new Timestamp(calendar.getTime().getTime()), waiterID);
+        recentServiceList = waiterDeliveryRecordService.getRecentWaiterServiceRecords(waiterID);
 
         map.put("totalServiceTimes", totalServiceTimes);
         map.put("monthServiceTimes", monthServiceTimes);
         map.put("weekServiceTimes", weekServiceTimes);
         map.put("dayServiceTimes", dayServiceTimes);
-        map.put("serviceTimes", serviceTimes);
+        map.put("serviceTimes", serviceTimes == null ? new LinkedList<Integer>() : serviceTimes);
+        map.put("recentServiceList", recentServiceList == null ? new LinkedList<Integer>() : recentServiceList);
 
         map.put("status", "SUCCEED");
-
         return map;
     }
 
     @ResponseBody
-    @RequestMapping("/getOrderNumbers")
+    @RequestMapping("/getServiceNumbers")
     public Map<String, Object> getOrderNumbers(@RequestParam("startTime") String startTime,
                                                @RequestParam("waiterID") Long waiterID){
         HashMap<String, Object> res = new HashMap<>();

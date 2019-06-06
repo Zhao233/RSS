@@ -1,7 +1,10 @@
 package com.example.demo.controller.adminController.userController;
 
 import com.example.demo.domain.info.CookerDeliveryRecord;
+import com.example.demo.domain.info.WaiterDeliveryRecord;
 import com.example.demo.domain.user.Cooker;
+import com.example.demo.model.cooker.CookerServiceForCookerDetailModel;
+import com.example.demo.model.waiter.WaiterServiceForWaiterDetailModel;
 import com.example.demo.repository.user.CookerRoleDao;
 import com.example.demo.service.info.CookerDeliveryRecordService;
 import com.example.demo.service.user.CookerService;
@@ -15,9 +18,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin/cooker")
@@ -159,22 +161,52 @@ public class CookerController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/getCookerServiceRecord")
-    public Map<String, Object>  getCookerServiceRecord(){
-        Map<String, Object> res = new HashMap<>();
+    @RequestMapping(value = "/getCookerServiceInfo")
+    public Map<String, Object> getWaiterServiceInfo(@RequestParam(name = "cookerID") Long cookerID) {
+        Map<String, Object> map = new HashMap();
 
+        List<Integer> serviceTimes = new LinkedList<>();
+        List<CookerServiceForCookerDetailModel> recentServiceList = new LinkedList<>();
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
 
-        return res;
+        Integer totalServiceTimes = cookerDeliveryRecordService.getAllServiceTimes(cookerID);
+        Integer monthServiceTimes = cookerDeliveryRecordService.getServiceTime(WaiterDeliveryRecord.TYPE_SERVICE_MONTH, cookerID);
+        Integer weekServiceTimes = cookerDeliveryRecordService.getServiceTime(WaiterDeliveryRecord.TYPE_SERVICE_WEEK, cookerID);
+        Integer dayServiceTimes = cookerDeliveryRecordService.getServiceTime(WaiterDeliveryRecord.TYPE_SERVICE_DAY, cookerID);
+
+        serviceTimes = cookerDeliveryRecordService.getServiceTimeByTime(new Timestamp(calendar.getTime().getTime()), cookerID);
+        recentServiceList = cookerDeliveryRecordService.getRecentCookerServiceRecords(cookerID);
+
+        map.put("totalServiceTimes", totalServiceTimes);
+        map.put("monthServiceTimes", monthServiceTimes);
+        map.put("weekServiceTimes", weekServiceTimes);
+        map.put("dayServiceTimes", dayServiceTimes);
+        map.put("serviceTimes", serviceTimes == null ? new LinkedList<Integer>() : serviceTimes);
+        map.put("recentServiceList", recentServiceList == null ? new LinkedList<Integer>() : recentServiceList);
+
+        map.put("status", "SUCCEED");
+        return map;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getCookerServiceTimes")
-    public Map<String, Object> getCookerServiceTimes(@RequestParam(value = "") String date){
-        Map<String, Object> res = new HashMap<>();
+    @RequestMapping("/getServiceNumbers")
+    public Map<String, Object> getOrderNumbers(@RequestParam("startTime") String startTime,
+                                               @RequestParam("cookerID") Long cookerID){
+        HashMap<String, Object> res = new HashMap<>();
 
+        List<Integer> serviceTimes = new LinkedList<>();
+        Timestamp timestamp = TimeUtil.StringToTimeStamp(startTime);
 
+        serviceTimes = cookerDeliveryRecordService.getServiceTimeByTime(timestamp, cookerID);
+
+        res.put("status", "SUCCEED");
+        res.put("serviceTimes", serviceTimes);
 
         return res;
     }
+
 }

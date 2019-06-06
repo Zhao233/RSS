@@ -2,18 +2,22 @@ package com.example.demo.service.info.imp;
 
 import com.example.demo.asynchronousHandler.Cooker.CookerJobHandler;
 import com.example.demo.domain.info.CookerDeliveryRecord;
-import com.example.demo.domain.info.OrderRecord;
+import com.example.demo.domain.info.WaiterDeliveryRecord;
+import com.example.demo.domain.user.Cooker;
+import com.example.demo.model.cooker.CookerServiceForCookerDetailModel;
+import com.example.demo.model.waiter.WaiterServiceForWaiterDetailModel;
+import com.example.demo.repository.foodInfo.FoodDao;
 import com.example.demo.repository.info.CookerDeliveryRecordDao;
 import com.example.demo.repository.user.CookerDao;
 import com.example.demo.service.info.CookerDeliveryRecordService;
-import com.example.demo.service.user.CookerService;
 import com.example.demo.util.TimeUtil;
-import net.bytebuddy.dynamic.scaffold.MethodGraph;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,10 +31,12 @@ public class CookerDeliveryRecordServiceImp implements CookerDeliveryRecordServi
     @Autowired
     private CookerDeliveryRecordDao cookerDeliveryRecordDao;
 
+    @Autowired
+    private FoodDao foodDao;
+
     /**============================== For Admin =============================================*/
     @Override
-    public Integer getServiceTime(int type, String openid) {
-        Long id = cookerDao.getCookerByOpenID(openid).getId();
+    public Integer getServiceTime(int type, Long cookerID) {
         Integer times = new Integer(0);
 
         Calendar calendar = Calendar.getInstance();
@@ -61,7 +67,7 @@ public class CookerDeliveryRecordServiceImp implements CookerDeliveryRecordServi
                 break;
         }
 
-        times = cookerDeliveryRecordDao.getDeliveryTime(time_start, time_end, id);
+        times = cookerDeliveryRecordDao.getDeliveryTime(time_start, time_end, cookerID);
 
         if(times == null){
             return Integer.valueOf(0);
@@ -71,25 +77,22 @@ public class CookerDeliveryRecordServiceImp implements CookerDeliveryRecordServi
     }
 
     @Override
-    public Integer getAllServiceTimes(String openid){
-        Long id = cookerDao.getCookerByOpenID(openid).getId();
+    public Integer getAllServiceTimes(Long cookerID){
         Integer num = new Integer(0);
 
-        num = cookerDeliveryRecordDao.getAllDeliveryTimes(id);
+        num = cookerDeliveryRecordDao.getAllDeliveryTimes(cookerID);
 
         return num == null? 0 : num;
     }
 
     @Override
-    public List<Integer> getServiceTimeByTime(Timestamp startTime, String openid) {
-        Long id = cookerDao.getCookerByOpenID(openid).getId();
-
+    public List<Integer> getServiceTimeByTime(Timestamp startTime, Long cookerID) {
         List<Integer> serviceNumbers = new LinkedList<>();
         List<CookerDeliveryRecord> cookerDeliveryRecords = new LinkedList<>();
 
         Timestamp star = TimeUtil.getTimeNow();
 
-        cookerDeliveryRecords = cookerDeliveryRecordDao.getAllCookerDeliveryRecord(startTime, TimeUtil.getTimeNow(), id);
+        cookerDeliveryRecords = cookerDeliveryRecordDao.getAllCookerDeliveryRecord(startTime, TimeUtil.getTimeNow(), cookerID);
 
         int index_orderRecord = 0;
 
@@ -137,6 +140,30 @@ public class CookerDeliveryRecordServiceImp implements CookerDeliveryRecordServi
         }
 
         return serviceNumbers;
+    }
+
+    @Override
+    public List<CookerServiceForCookerDetailModel> getRecentCookerServiceRecords(Long cookerID){
+        Pageable pageable = new PageRequest(0, 10, new Sort(Sort.Direction.DESC, "id"));
+
+        List<CookerDeliveryRecord> list = cookerDeliveryRecordDao.getRecentWaiterServiceRecord(cookerID, pageable);
+        LinkedList<CookerServiceForCookerDetailModel> res = new LinkedList<>();
+
+        for(CookerDeliveryRecord temp : list){
+            Long foodID = temp.getFoodId();
+            Timestamp completeTime = temp.getUpdateTime();
+
+            String picUrl = foodDao.getFoodPicUrlById(foodID);
+
+
+            CookerServiceForCookerDetailModel cookerServiceForCookerDetailModel = new CookerServiceForCookerDetailModel();
+            cookerServiceForCookerDetailModel.setCompleteTime(completeTime);
+            cookerServiceForCookerDetailModel.setPicUrl(picUrl);
+
+            res.add(cookerServiceForCookerDetailModel);
+        }
+
+        return res;
     }
 
     @Override
