@@ -17,13 +17,6 @@ spring:
     password: "root_RSS"
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-      # local server configuration(Sql Server)
-      # url: jdbc:sqlserver://139.198.19.162:1433;DatabaseName=device_status_db
-      # url: jdbc:sqlserver://localhost:1433;DatabaseName=device_status_db?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
-      # river-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      # username: "sa"
-      # password: "Bjpv2017"
-
     hikari:
       maximum-pool-size: 20
       minimum-idle: 5

@@ -221,7 +221,6 @@ public class OrderRecordServiceImp implements OrderRecordService {
     public List<Integer> getOrderTime(Timestamp startTime) {
         List<Integer> orderNumbers = new LinkedList<>();
 
-        Timestamp endTIme = TimeUtil.getTimeNow();
         List<OrderRecord> orderRecordList = new ArrayList<>();
 
         orderRecordList = orderRecordDao.getAllOrderByTime(startTime, TimeUtil.getTimeNow());

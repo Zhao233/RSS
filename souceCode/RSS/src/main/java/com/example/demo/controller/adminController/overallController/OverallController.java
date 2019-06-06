@@ -4,6 +4,7 @@ import com.example.demo.domain.info.OrderRecord;
 import com.example.demo.model.admin.PopularFoodModel;
 import com.example.demo.service.info.OrderRecordService;
 import com.example.demo.service.foodInfo.PopularFoodsService;
+import com.example.demo.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,7 +69,14 @@ public class OverallController {
     public Map<String, Object> getOrderNumbers(@RequestParam("startTime") String startTime ){
         HashMap<String, Object> res = new HashMap<>();
 
+        Timestamp startTime_timestamp = TimeUtil.StringToTimeStamp(startTime);
 
+        List<Integer> orderNumber = new LinkedList<>();
+        orderNumber = orderRecordService.getOrderTime( startTime_timestamp );
+
+        res.put( "orderNumber", orderNumber );
+
+        res.put("status","SUCCEED");
         return res;
     }
 }

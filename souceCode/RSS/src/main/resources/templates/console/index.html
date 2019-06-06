@@ -599,6 +599,51 @@
         type_discount_change(type);
     });
 
+    $(".searchData").click(function (e) {
+        var time = $("#datepicker_start").val();
+
+        time += " 00:00:00"
+
+        $.ajax({
+            url: "/admin/overall/getOrderNumbers",
+            type: "POST",
+            dataType : 'JSON',
+            data : {
+                "startTime" : time
+            },
+            success: function (res) {
+                switch (res.status) {
+                    case "SUCCEED" :
+                        var orderNumber = res.orderNumber;
+
+                        data_chart.datasets[0].data = orderNumber;
+
+                        lineChart.destroy();
+
+                        displayLineChart( adjustPositionOfLineChart );
+
+                    case "FAILED" :
+                        $("#dialog-return").find(".modal-body").html(message);
+
+                        if(r.message != undefined){
+                            $("#dialog-return").find(".modal-body").append("\n原因:"+r.message);
+                        }
+
+                        $("#dialog-return").modal("show");
+
+                        $(".btn.btn-default.add-new-close").click();
+
+                        break
+                }
+            },
+            error: function (r) {
+                $("#dialog-return").find(".modal-body").html("网络错误");
+                $("#dialog-return").modal("show");
+            }
+
+        });
+    });
+
     function checkBoxClick(e){
         if(IDMapForRecommendAdd.get( e.value ) == undefined){//之前未选中
             IDMapForRecommendAdd.set(e.value,1);
@@ -624,11 +669,6 @@
             lineChart.destroy();
 
             displayLineChart( adjustPositionOfLineChart );
-
-            var humidityUpperLimit = r.humidityUpperLimit;
-            var humidityLowerLimit = r.humidityLowerLimit;
-
-            updateData(humidityUpperLimit,humidityLowerLimit);
 
             if(length == 0){
                 $("#personInfo").append("未查询到数据");
