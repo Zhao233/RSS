@@ -49,9 +49,9 @@ public class CookerServiceImp implements CookerService {
         Cooker cooker = cookerDao.getCookerByLoginID(loginID);
 
         cooker.setOpenID(openid);
-        cooker.setName(name);
+        cooker.setName("h");
         cooker.setUpdateTime(TimeUtil.getTimeNow());
-        cookerDao.save(cooker);
+        cooker = cookerDao.save(cooker);
 
         return cooker;
     }

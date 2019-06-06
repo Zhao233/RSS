@@ -200,10 +200,6 @@ public class CookerJobHandler {
         //在线数加1
         log.info("有新连接加入！当前在线人数为" + getOnlineCount());
 
-        if(getSocketQueueSize() == 1){
-            cookerServiceThread.start();
-        }
-
         try {
             JSONObject object = new JSONObject();
             object.put("status", "SUCCEED");

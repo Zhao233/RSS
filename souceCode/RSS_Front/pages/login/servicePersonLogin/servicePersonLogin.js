@@ -7,10 +7,26 @@ Page({
     loginCode : '',
 
     user: null,
+    userType:"",
     countDown : 3,
     popupShow : false,
 
     canIUse: wx.canIUse('button.open-type.getUserInfo')
+  },
+
+  toServiceWorkBench : function(userType){
+    switch(userType){
+      case "waiter" : 
+        wx.redirectTo({
+          url: '/pages/forWaiterService/waiter',
+        })
+        break;
+      case "cooker":
+        wx.redirectTo({
+          url: '/pages/forCookerService/cooker',
+        })
+        break;
+    }
   },
 
   onOpenPopup : function(e){
@@ -45,10 +61,14 @@ Page({
           that.onClosePopup();
           
           console.log("跳转至工作页面");
+
+          that.toServiceWorkBench(that.data.userType);
         }
       }, 1000)
     })
   },
+
+
 
   loginWithLoginCode : function(res){
     var that = this;
@@ -64,8 +84,10 @@ Page({
           var user = res.data.userInfo;
 
           that.setData({
-            user : user
+            user : user,
+            userType : res.data.userType
           })
+
           that.onOpenPopup();
           that.countDown();
         })

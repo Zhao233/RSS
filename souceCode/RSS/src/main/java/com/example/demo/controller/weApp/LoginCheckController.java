@@ -109,6 +109,7 @@ public class LoginCheckController {
             Waiter waiter = waiterService.registerWaiter(loginID, openid, name);
 
             map.put("status", "SUCCEED");
+            map.put("userType", "waiter");
             map.put("userInfo", waiter);
             return map;
         }
@@ -118,11 +119,18 @@ public class LoginCheckController {
          */
         isExist = cookerService.checkIsCookerExistByLoginID(loginID);
 
-        if(isExist == 2){//录入成功
-            Cooker cooker = cookerService.registerCooker(openid, loginID, name);
+        if(isExist == 3){//录入成功
+            Cooker cooker = cookerService.registerCooker(loginID,openid, name);
 
             map.put("status", "SUCCEED");
+            map.put("userType", "cooker");
             map.put("userInfo", cooker);
+            return map;
+        }
+
+        if(loginID != null){
+
+            map.put("status", "FAILED");
             return map;
         }
 
@@ -137,6 +145,7 @@ public class LoginCheckController {
             frequentlyUsedFoodService.saveEmptyFrequentlyUsedFoodList(customer.getId());
 
             map.put("status", "SUCCEED");
+            map.put("userType", "customer");
             map.put("userInfo", customer);
             return map;
         }

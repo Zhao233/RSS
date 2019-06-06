@@ -20,7 +20,7 @@ Page({
       url: "http://" + app.info.hostname + ':' + app.info.port + '/weapp/login',
       data: {
         "openid": app.globalData.userInfo.openid,
-        "name": that.data.userInfo.nickName
+        "name": ""
       },
 
       success: res => {
@@ -78,7 +78,7 @@ Page({
             success: res => {              
               app.globalData.userInfo = res.data.userInfo;
 
-              that.checkLoginStatus(res.data.userInfo.openid, that.data.userInfo.nickName);
+              that.checkLoginStatus(res.data.userInfo.openid, "");
 
               console.log(res);
             },

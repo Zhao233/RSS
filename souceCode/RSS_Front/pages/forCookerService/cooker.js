@@ -58,7 +58,7 @@ Page({
 
     if(!socketOpen) {
       wx.connectSocket({
-        url: 'ws://localhost:8881/websocket/cooker/'+app.globalData.userInfo.openid
+        url: 'ws://'+app.info.hostname+':'+app.info.port+'/websocket/cooker/'+app.globalData.userInfo.openid
       });
 
       //端口打开的监听注册

@@ -113,8 +113,6 @@ public class CustomerCartController {
         OrderRecord record = orderRecordService.getOrderRecordByID(recordID);
 
         //支付完成
-
-
         sendCookerDeliveryRecordsToCookerFromOrder(record);
         map.put("status", "SUCCEED");
         return map;
