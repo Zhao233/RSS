@@ -113,6 +113,12 @@ public class CookerJobHandler {
 
                     while(true){//持续遍历已连接厨师列表
 
+                        try {
+                            this.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
                         int index = getNextCooker();//获取下一个厨师的index
 
                         log.info("waiter index : "+index);
@@ -134,15 +140,20 @@ public class CookerJobHandler {
 //                            continue;
 //                        }
 
+                        if(cookerDeliveryRecord == null){
+                            continue;
+                        }
+
                         cookerDeliveryRecord.setCookerID(socket.cooker.getId());
                         cookerDeliveryRecordService.save(cookerDeliveryRecord);
 
+                        String picUrl = foodService.getFoodPicUrlByFoodID(cookerDeliveryRecord.getFoodId());
 
                         CookerDeliveryModel model = new CookerDeliveryModel();
                         model.setCreateTime(TimeUtil.getFormattedTime( cookerDeliveryRecord.getCreateTime() ));
                         model.setOrderID(cookerDeliveryRecord.getOrderRecordId());
                         model.setTableNum(cookerDeliveryRecord.getTableNum());
-                        model.setFoodPicUrl("https://rss-1252828635.cos.ap-beijing.myqcloud.com/image/1555679336967.jpg");
+                        model.setFoodPicUrl(picUrl);
 
                         JSONObject jsonObject = JSONObject.fromObject(model);
 

@@ -105,6 +105,13 @@ public class WaiterJobHandler {
             while (true){
                 if(getMessageQueueSize() != 0 ){
                     while(true){
+
+                        try {
+                            this.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
                         int index = getNextWaiter();
 
                         log.info("waiter index : "+index);
