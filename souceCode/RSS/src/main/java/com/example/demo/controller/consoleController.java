@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
 public class consoleController {
@@ -86,6 +87,8 @@ public class consoleController {
         if (admin != null) {
             admin.setPassword(null);
             request.getSession().setAttribute("admin", admin);
+
+            return "redirect:/admin/index";
         }
 
         return "redirect:/login";
@@ -115,6 +118,15 @@ public class consoleController {
         }
 
         return new ModelAndView("login");
+    }
+
+    @RequestMapping("/logout")
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if( request.getSession().getAttribute("admin") != null){
+            request.getSession().setAttribute("admin",null);
+        }
+
+        response.sendRedirect("/login");
     }
 
 }
