@@ -238,10 +238,14 @@
 
                                 <div class="form-group">
                                     <label for="loginID" class="col-sm-4 control-label">登陆码</label>
-                                    <div class="col-sm-7">
+                                    <div class="col-sm-5">
                                         <input type="text" class="form-control" id="loginID" name="loginID"
                                                data-toggle="tooltip" data-placement="top" maxlength="30"
-                                               required="required"/>
+                                               required="required" readonly/>
+                                    </div>
+
+                                    <div class="col-sm-2" style="display: flex; justify-content: flex-end;padding-left: 0px;">
+                                        <input type="button" class="form-control" id="createLoginIDButton" value="生成"/>
                                     </div>
                                     <div class="col-sm-1"></div>
                                 </div>
@@ -485,6 +489,40 @@
         _reset_input(from.find("input"));
     }
 
+    $("#createLoginIDButton").click(function(){
+        $.ajax({
+            url: "/admin/util/getRandomLoginCode",
+            type: "get",
+            processData: false,
+            contentType: false,
+            async : false,
+            success: function (res) {
+                console.log(res);
+
+                switch (res.status) {
+                    case "SUCCEED" :
+                        $("#loginID").val(res.loginCode);
+
+                        break;
+                    case "FAILED":
+                        var message = "网络请求失败";
+
+                        if(res.message != undefined) {
+                            message += "  "+res.message;
+                        }
+
+                        $("#dialog-return").find(".modal-body").html(message);
+                        $("#dialog-return").modal("show");
+                        break;
+                }
+            },
+            fail : function(res) {
+
+            }
+
+        })
+    })
+
     //打开添加弹出框
     $(".btn.btn-primary.open-add-dialog").click(function () {
         window.flag = 'add';
@@ -575,7 +613,7 @@
             isComplete = false;
         }
         if ($("input[id='phoneNumber']").val() == "") {
-            _set($("input[id='phoneNumber']"), "设备归属");
+            _set($("input[id='phoneNumber']"), "电话号码");
             isComplete = false;
         }
         if ($("input[id='role']").val() == "") {
@@ -585,6 +623,10 @@
         if ($("input[id='enable']").val() == "") {
             _set($("input[id='enable']"), "是否启动");
             isComplete = false;
+        }
+
+        if(!isComplete){
+            return ;
         }
 
         var flag_ = window.flag;
@@ -672,7 +714,7 @@
         }
 
         if (id.length > 0) {
-            $("#dialog-delete").find(".modal-body").html("是否删除一级菜单?</br>");
+            $("#dialog-delete").find(".modal-body").html("是否删除选中的厨师?</br>");
 
             for(var i = 0; i < id.length; i++){
                 $("#dialog-delete").find(".modal-body").append("</br>"+contactsNameMap.get( parseInt(id[i]) ));

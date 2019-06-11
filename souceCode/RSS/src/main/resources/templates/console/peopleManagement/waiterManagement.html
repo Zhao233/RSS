@@ -235,10 +235,13 @@
 
                                 <div class="form-group">
                                     <label for="loginID" class="col-sm-4 control-label">登录码</label>
-                                    <div class="col-sm-7">
+                                    <div class="col-sm-5" >
                                         <input type="text" class="form-control" id="loginID" name="loginID"
                                                data-toggle="tooltip" data-placement="top" maxlength="30"
-                                               required="required"/>
+                                               required="required" readonly/>
+                                    </div>
+                                    <div class="col-sm-2" style="display: flex; justify-content: flex-end;padding-left: 0px;">
+                                        <input type="button" class="form-control" id="createLoginIDButton" value="生成"/>
                                     </div>
                                     <div class="col-sm-1"></div>
                                 </div>
@@ -383,7 +386,7 @@
             onPostBody : function(){
                 adjustTableHeight($(".fixed-table-body"),20);//custom-script
             },
-            onSort(name,order){
+            onSort: function(name,order){
                 $(".temperature").find(".sortable").empty();
                 $(".humidity").find(".sortable").empty();
 
@@ -428,6 +431,44 @@
 
         _reset_input(from.find("input"));
     }
+
+    $("#test").click(function(){
+        console.log("test");
+    })
+
+    $("#createLoginIDButton").click(function(){
+        $.ajax({
+            url: "/admin/util/getRandomLoginCode",
+            type: "get",
+            processData: false,
+            contentType: false,
+            async : false,
+            success: function (res) {
+                console.log(res);
+
+                switch (res.status) {
+                    case "SUCCEED" :
+                        $("#loginID").val(res.loginCode);
+
+                        break;
+                    case "FAILED":
+                        var message = "网络请求失败";
+
+                        if(res.message != undefined) {
+                            message += "  "+res.message;
+                        }
+
+                        $("#dialog-return").find(".modal-body").html(message);
+                        $("#dialog-return").modal("show");
+                        break;
+                }
+            },
+            fail : function(res) {
+
+            }
+
+        })
+    })
 
     //打开添加弹出框
     $(".btn.btn-primary.open-add-dialog").click(function () {
@@ -512,25 +553,17 @@
         var isFormatted = true;
 
         //check input
-        if ($("input[id='login_ID']").val() == "") {
-            _set($("input[id='login_ID']"), "设备id");
-            isComplete = false;
-        }
         if ($("input[id='name']").val() == "") {
             _set($("input[id='name']"), "名称");
             isComplete = false;
         }
         if ($("input[id='phoneNumber']").val() == "") {
-            _set($("input[id='phoneNumber']"), "设备归属");
+            _set($("input[id='phoneNumber']"), "电话号码");
             isComplete = false;
         }
-        if ($("input[id='role']").val() == "") {
-            _set($("input[id='role']"), "电话号码");
-            isComplete = false;
-        }
-        if ($("input[id='enable']").val() == "") {
-            _set($("input[id='enable']"), "是否启动");
-            isComplete = false;
+
+        if(!isComplete){
+            return;
         }
 
         var flag_ = window.flag;
@@ -613,7 +646,7 @@
         }
 
         if (id.length > 0) {
-            $("#dialog-delete").find(".modal-body").html("是否删除一级菜单?</br>");
+            $("#dialog-delete").find(".modal-body").html("是否删除选择的服务员?</br>");
 
             for(var i = 0; i < id.length; i++){
                 $("#dialog-delete").find(".modal-body").append("</br>"+contactsNameMap.get( parseInt(id[i]) ));
@@ -621,7 +654,7 @@
 
             $("#dialog-delete").modal("show");
         } else {
-            $("#dialog-return").find(".modal-body").html("请选择厨师");
+            $("#dialog-return").find(".modal-body").html("请选择服务员");
             $("#dialog-return").modal("show");
         }
     })
