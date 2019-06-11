@@ -17,6 +17,8 @@ public interface WaiterService {
 
     Waiter registerWaiter(String loginID, String openid, String name);
 
+    Waiter getWaiterByLoginID(String secret);
+
     /**=========================For Waiter==========================*/
     boolean isLogin(String openid);
 

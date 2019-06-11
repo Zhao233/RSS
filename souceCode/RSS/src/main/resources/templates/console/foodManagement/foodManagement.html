@@ -595,8 +595,12 @@
 
         //check input
         if ($("input[id='name']").val() == "") {
-            _set($("input[id='name']"), "设备名称");
+            _set($("input[id='name']"), "名称");
             isComplete = false;
+        }
+
+        if(!isComplete){
+            return;
         }
 
         var flag_ = window.flag;
@@ -607,7 +611,10 @@
         var file = $("#avatar-2")[0].files[0];
 
         if(file == undefined){
-            $("#dialog-return").find(".modal-body").html("请选择图片")
+            $("#dialog-return").find(".modal-body").html("请选择图片");
+            $("#dialog-return").modal("show");
+
+            return ;
         }
 
         form.append("file", file);
@@ -691,7 +698,7 @@
         }
 
         if (id.length > 0) {
-            $("#dialog-delete").find(".modal-body").html("是否删除一级菜单?</br>");
+            $("#dialog-delete").find(".modal-body").html("是否删除菜品?</br>");
 
             for(var i = 0; i < id.length; i++){
                 $("#dialog-delete").find(".modal-body").append("</br>"+contactsNameMap.get( parseInt(id[i]) ));

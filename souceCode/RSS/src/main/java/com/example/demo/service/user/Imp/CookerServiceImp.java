@@ -56,6 +56,11 @@ public class CookerServiceImp implements CookerService {
         return cooker;
     }
 
+    @Override
+    public Cooker getCookerByLoginID(String loginID) {
+        return cookerDao.getCookerByLoginID(loginID);
+    }
+
     /**=========================For Cooker==========================*/
 
     @Override

@@ -5,6 +5,7 @@ import com.example.demo.domain.info.OrderRecord;
 import com.example.demo.domain.info.WaiterDeliveryRecord;
 import com.example.demo.domain.user.Waiter;
 import com.example.demo.model.waiter.WaiterDeliveryModel;
+import com.example.demo.repository.user.WaiterDao;
 import com.example.demo.service.foodInfo.FoodService;
 import com.example.demo.service.info.OrderRecordService;
 import com.example.demo.service.info.WaiterDeliveryRecordService;
@@ -77,6 +78,8 @@ public class WaiterJobHandler {
     public static WaiterDeliveryRecordService waiterDeliveryRecordService;
     public static FoodService foodService;
 
+    public static WaiterDao waiterDao;
+
     @Autowired
     public void setWaiterService(WaiterDeliveryRecordService waiterService){
         WaiterJobHandler.waiterDeliveryRecordService = waiterService;
@@ -88,6 +91,10 @@ public class WaiterJobHandler {
     @Autowired
     public void setWaiterService(WaiterService waiterService){
         WaiterJobHandler.waiterService = waiterService;
+    }
+    @Autowired
+    public void setWaiterDao(WaiterDao waiterDao){
+        WaiterJobHandler.waiterDao = waiterDao;
     }
 
     /**

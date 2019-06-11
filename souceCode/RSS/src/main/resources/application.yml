@@ -12,9 +12,14 @@ spring:
   # 配置数据库连接信息
   datasource:
     # local server configuration(Mysql)
-    url: jdbc:mysql://cdb-fqh1b3fq.bj.tencentcdb.com:10104/RSS?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+#    url: jdbc:mysql://cdb-fqh1b3fq.bj.tencentcdb.com:10104/RSS?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+#    username: root
+#    password: "root_RSS"
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    url: jdbc:mysql://cdb-gz3faj1o.bj.tencentcdb.com:10054/RSS?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
     username: root
-    password: "root_RSS"
+    password: "root_rss"
     driver-class-name: com.mysql.cj.jdbc.Driver
 
     hikari:

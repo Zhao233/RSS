@@ -19,6 +19,8 @@ public interface CookerService {
 
     Cooker registerCooker(String loginID, String openid, String name);
 
+    Cooker getCookerByLoginID(String secret);
+
     /**=========================For Waiter==========================*/
     boolean isLogin(String openid);
 
