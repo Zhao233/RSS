@@ -1,8 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.user.Admin;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class consoleController {
@@ -73,8 +78,43 @@ public class consoleController {
     }
 
 
+    @RequestMapping("/logged")
+    public String logged(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        Admin admin = (Admin) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (admin != null) {
+            admin.setPassword(null);
+            request.getSession().setAttribute("admin", admin);
+        }
+
+        return "redirect:/login";
+
+//        if(user.getRole().equals("PM"))
+//        {
+//            return "redirect:/console/employee_management";
+//        }else if(user.getRole().equals("S")){
+//            return "redirect:/console/employee_management";
+//        }else if(user.getRole().equals("C")){
+//            return "redirect:/console/employee_management";
+//        }else if(user.getRole().equals("A")){
+//            return "redirect:/console/employee_management";
+//        }else {
+//            return "redirect:/console";
+//        }
+
+    }
+
+    @RequestMapping(value = {"/", "/login"})
+    public ModelAndView toHome(HttpServletRequest request, HttpServletResponse response) {
+        Admin admin = (Admin)request.getSession().getAttribute("admin");
 
 
+        if (admin != null) {
+            return new ModelAndView("console/index");
+        }
 
+        return new ModelAndView("login");
+    }
 
 }
